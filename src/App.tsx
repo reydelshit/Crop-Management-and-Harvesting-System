@@ -1,11 +1,7 @@
-import Login from './pages/Login'
+import Login from './components/Login'
 
 function App() {
-  return (
-    <div className="w-dvw h-dvh flex justify-center items-center flex-col ">
-      <Login />
-    </div>
-  )
+  return <div>app</div>
 }
 
 export default App
