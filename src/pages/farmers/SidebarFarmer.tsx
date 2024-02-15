@@ -1,11 +1,6 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AiOutlineSchedule } from 'react-icons/ai'
-import { LuListChecks } from 'react-icons/lu'
 import { RxDashboard } from 'react-icons/rx'
-import { LiaNotesMedicalSolid } from 'react-icons/lia'
-import { AiOutlineQuestion } from 'react-icons/ai'
-import { MdOutlineMedication } from 'react-icons/md'
+
 export default function Sidebar() {
   return (
     <div className="block w-[17rem] h-screen">

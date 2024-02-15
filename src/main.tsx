@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Login from './components/Login'
 import LayoutFarmer from './root/LayoutFarmer'
 import FarmerRoot from './root/FarmerRoot'
 import LayoutQA from './root/LayoutQA'
 import QualityARoot from './root/QualityARoot'
+import Login from './Login'
 
 const logoutUser = async () => {
   localStorage.removeItem('token')

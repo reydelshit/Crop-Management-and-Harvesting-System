@@ -5,10 +5,17 @@ import axios from 'axios'
 import { useState } from 'react'
 
 import { UserType } from '@/entities/types'
+import { Navigate } from 'react-router-dom'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 
 export default function Login() {
+  const cmhsLoginToken = localStorage.getItem('cmhs_token')
+
+  if (cmhsLoginToken) {
+    return <Navigate to="/" replace={true} />
+  }
+
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [errorInput, setErrorInput] = useState<string>('')
