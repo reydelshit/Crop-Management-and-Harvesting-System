@@ -3,19 +3,23 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from './App'
 import Login from './components/Login'
-import Layout from './Layout'
+import LayoutFarmer from './root/LayoutFarmer'
 import FarmerRoot from './root/FarmerRoot'
+import LayoutQA from './root/LayoutQA'
 import QualityARoot from './root/QualityARoot'
 
+const logoutUser = async () => {
+  localStorage.removeItem('token')
+  window.location.href = '/login'
+}
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Layout>
+      <LayoutFarmer>
         <FarmerRoot />
-      </Layout>
+      </LayoutFarmer>
     ),
     errorElement: <div>Not found</div>,
   },
@@ -28,7 +32,11 @@ const router = createBrowserRouter([
 
   {
     path: 'qa',
-    element: <QualityARoot />,
+    element: (
+      <LayoutQA>
+        <QualityARoot />
+      </LayoutQA>
+    ),
     errorElement: <div>Not found</div>,
 
     children: [
@@ -37,6 +45,11 @@ const router = createBrowserRouter([
         element: <div>yes</div>,
       },
     ],
+  },
+
+  {
+    path: 'logout',
+    action: logoutUser,
   },
 ])
 

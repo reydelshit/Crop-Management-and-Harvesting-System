@@ -1,16 +1,18 @@
-export default function Layout({ children }: { children: React.ReactNode }) {
+import { Navigate } from 'react-router-dom'
+
+export default function LayoutQA({ children }: { children: React.ReactNode }) {
   const cmhsLoginToken = localStorage.getItem('cmhs_token')
   const accountType = localStorage.getItem('cmhs_account_type')
 
   if (accountType === 'qa' && cmhsLoginToken) {
-    return (window.location.href = '/qa')
-  }
-
-  if (accountType === 'farmer' && cmhsLoginToken) {
     return <div>{children}</div>
   }
 
+  if (accountType === 'farmer' && cmhsLoginToken) {
+    return <Navigate to="/" replace={true} />
+  }
+
   if (!accountType || !cmhsLoginToken) {
-    return (window.location.href = '/login')
+    return <Navigate to="/login" replace={true} />
   }
 }
