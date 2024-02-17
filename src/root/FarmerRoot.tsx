@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom'
 
-import Sidebar from '@/pages/farmers/SidebarFarmer'
-import Farmers from '@/pages/farmers/Farmers'
+import Sidebar from '@/pages/SidebarFarmer'
+import Farmers from '@/pages/Farmers'
 
 export default function FarmerRoot() {
   const location = useLocation()

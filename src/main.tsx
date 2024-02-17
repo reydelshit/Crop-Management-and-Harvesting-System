@@ -8,6 +8,10 @@ import FarmerRoot from './root/FarmerRoot'
 import LayoutQA from './root/LayoutQA'
 import QualityARoot from './root/QualityARoot'
 import Login from './Login'
+import ViewCrops from './pages/ViewCrops'
+import FieldManagement from './pages/FieldManagement'
+import Reporting from './pages/Reporting'
+import ScheduleGeneration from './pages/ScheduleGeneration'
 
 const logoutUser = async () => {
   localStorage.removeItem('token')
@@ -22,6 +26,25 @@ const router = createBrowserRouter([
       </LayoutFarmer>
     ),
     errorElement: <div>Not found</div>,
+
+    children: [
+      {
+        path: 'crops/:id',
+        element: <ViewCrops />,
+      },
+      {
+        path: 'manage-field',
+        element: <FieldManagement />,
+      },
+      {
+        path: 'reporting',
+        element: <Reporting />,
+      },
+      {
+        path: 'generate-schedule',
+        element: <ScheduleGeneration />,
+      },
+    ],
   },
 
   {
