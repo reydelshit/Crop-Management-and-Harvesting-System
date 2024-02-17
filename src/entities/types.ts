@@ -6,7 +6,7 @@ export type UserType = {
 }
 
 export type CropTypes = {
-  crops_id: string
+  crops_id: number
   crops_name: string
   expected_harvest: string
   ogc: string
