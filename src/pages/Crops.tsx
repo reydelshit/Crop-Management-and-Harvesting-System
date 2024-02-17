@@ -359,7 +359,7 @@ export default function Crops() {
                 Cancel
               </Button>
               <Button type="submit" className="mt-2">
-                Submit
+                Update
               </Button>
             </div>
           </form>
