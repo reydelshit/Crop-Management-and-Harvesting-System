@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { CropTypes } from '@/entities/types'
 import { PiDotsThreeVerticalBold } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
-
+import DefaultCropsImage from '@/assets/default-image.jpg'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -228,13 +228,13 @@ export default function Crops() {
       {showAddCrops && (
         <div className="absolute w-full h-full top-0 z-50 bg-[#f2f2f0] bg-opacity-80 flex justify-center items-center">
           <form
-            className="bg-white w-[35rem] h-fit p-4 rounded-md border-[#618264] border-2"
+            className="bg-white w-[35rem] h-fit p-4 rounded-md "
             onSubmit={handleSubmit}
           >
             <div className="mb-2">
               <img
                 className="w-[40rem]  h-[25rem] object-cover rounded-lg mb-4"
-                src={image! ? image! : 'https://via.placeholder.com/150'}
+                src={image! ? image! : DefaultCropsImage}
               />
               <Label>Image</Label>
               <Input
