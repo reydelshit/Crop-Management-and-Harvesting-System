@@ -23,6 +23,7 @@ export default function Crops() {
   const [crops, setCrops] = useState<CropTypes[]>([])
   const [showUpdateForm, setShowUpdateForm] = useState(false)
   const [cropsId, setCropsId] = useState(0)
+  const [searchCrops, setSearchCrops] = useState('')
 
   const [updateCropsDefault, setUpdateCropsDefault] =
     useState<CropTypes | null>(null)
@@ -145,17 +146,26 @@ export default function Crops() {
     <div className="relative w-full h-full">
       <h1 className="font-bold text-4xl my-[1.5rem]">Crops</h1>
 
-      <div className="h-[5rem] flex items-center mb-4">
+      <div className="h-[5rem] flex items-center justify-between mb-4">
         <Button
           onClick={() => setShowAddCrops(!showAddCrops)}
           className="mt-2 w-[10rem] h-[3.5rem]"
         >
           Add Crops
         </Button>
+
+        <Input
+          onChange={(e) => setSearchCrops(e.target.value)}
+          className="w-[40%]"
+          placeholder="search crops"
+        />
       </div>
 
       <div className="w-full grid grid-cols-4 grid-rows-2 gap-4 h-[45rem]">
         {crops
+          .filter((crop) =>
+            crop.crops_name.toLowerCase().includes(searchCrops.toLowerCase()),
+          )
           .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
           .map((crop, index) => {
             return (
