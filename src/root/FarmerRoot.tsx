@@ -8,7 +8,7 @@ export default function FarmerRoot() {
 
   // console.log(location.pathname)
   return (
-    <div className="flex w-full ">
+    <div className="flex w-full bg-primary-red">
       <Sidebar />
       <div className="w-full border-2 px-2">
         {location.pathname === '/' ? <Farmers /> : <Outlet />}

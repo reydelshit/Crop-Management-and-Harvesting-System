@@ -29,7 +29,7 @@ export default function ViewCrops() {
 
   return (
     <div className="w-full h-dvh flex flex-row justify-around pl-[20rem] py-[2rem] border-2">
-      <div>
+      <div className="text-primary-yellow">
         <h1 className="uppercase font-bold text-[5rem]">{crops.crops_name}</h1>
 
         <div className="flex justify-between items-start my-[2rem] flex-col">

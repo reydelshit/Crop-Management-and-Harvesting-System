@@ -52,21 +52,21 @@ export default function Login() {
   }
   return (
     <div className="w-dvw h-dvh flex justify-between items-center flex-row ">
-      <div className="bg-[#D04848] text-[#F3B95F] shadow-slate-400 w-[40%] px-[5rem] h-full flex justify-center items-center flex-col p-4 rounded-md">
+      <div className="bg-primary-red text-primary-yellow shadow-slate-400 w-[40%] px-[5rem] h-full flex justify-center items-center flex-col p-4 rounded-md">
         <h1 className="mb-[7rem] font-semibold text-3xl">
           CROP MANAGEMENT AND HARVESTING SCHEDULE SYSTEM
         </h1>
         {/* <Label className="mb-1 self-start text-sm">Username</Label> */}
         <Input
           onChange={handleChange}
-          className="mb-8 border-4 border-[#F3B95F] rounded-full p-8 w-full text-[#F3B95F] focus:outline-none placeholder:text-[#F3B95F] placeholder:text-2xl placeholder:font-semibold"
+          className="mb-8 border-4 text-2xl border-primary-yellow rounded-full p-8 w-full text-primary-yellow focus:outline-none placeholder:text-primary-yellow placeholder:text-2xl placeholder:font-semibold"
           placeholder="Username"
           name="username"
         />
 
         {/* <Label className="mb-1 self-start text-sm">Password</Label> */}
         <Input
-          className="mb-2 border-4 border-[#F3B95F] rounded-full p-8 w-full text-[#F3B95F] focus:outline-none placeholder:text-[#F3B95F] placeholder:text-2xl placeholder:font-semibold"
+          className="mb-2 border-4 text-2xl border-primary-yellow rounded-full p-8 w-full text-primary-yellow focus:outline-none placeholder:text-primary-yellow placeholder:text-2xl placeholder:font-semibold"
           type="password"
           onChange={handleChange}
           name="password"
@@ -75,15 +75,15 @@ export default function Login() {
 
         <a
           onClick={handleLogin}
-          className="text-[#F3B95F] bg-inherit text-3xl outline-none font-semibold cursor-pointer my-[1.5rem] hover:text-white"
+          className="text-primary-yellow bg-inherit text-3xl outline-none font-semibold cursor-pointer my-[1.5rem] hover:text-white"
         >
           Login
         </a>
 
-        {errorInput && <p className="text-red-500">{errorInput}</p>}
+        {errorInput && <p className="text-primary-red">{errorInput}</p>}
       </div>
 
-      <div className="w-[60%] bg-[#F3B95F] h-full items-center flex justify-center relative">
+      <div className="w-[60%] bg-primary-yellow h-full items-center flex justify-center relative">
         <img className="w-[80%] absolute" src={Farmer} alt="farmer" />
 
         <div className="w-full h-full flex justify-end items-center">

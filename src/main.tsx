@@ -5,13 +5,13 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LayoutFarmer from './root/LayoutFarmer'
 import FarmerRoot from './root/FarmerRoot'
-import LayoutQA from './root/LayoutQA'
-import QualityARoot from './root/QualityARoot'
+
 import Login from './Login'
 import ViewCrops from './pages/ViewCrops'
 import FieldManagement from './pages/FieldManagement'
 import Reporting from './pages/Reporting'
 import ScheduleGeneration from './pages/ScheduleGeneration'
+import Crops from './pages/Crops'
 
 const logoutUser = async () => {
   localStorage.removeItem('token')
@@ -28,6 +28,10 @@ const router = createBrowserRouter([
     errorElement: <div>Not found</div>,
 
     children: [
+      {
+        path: 'crops',
+        element: <Crops />,
+      },
       {
         path: 'crops/:id',
         element: <ViewCrops />,
@@ -53,22 +57,22 @@ const router = createBrowserRouter([
     errorElement: <div>Not found</div>,
   },
 
-  {
-    path: 'qa',
-    element: (
-      <LayoutQA>
-        <QualityARoot />
-      </LayoutQA>
-    ),
-    errorElement: <div>Not found</div>,
+  // {
+  //   path: 'qa',
+  //   element: (
+  //     <LayoutQA>
+  //       <QualityARoot />
+  //     </LayoutQA>
+  //   ),
+  //   errorElement: <div>Not found</div>,
 
-    children: [
-      {
-        path: 'visit',
-        element: <div>yes</div>,
-      },
-    ],
-  },
+  //   children: [
+  //     {
+  //       path: 'visit',
+  //       element: <div>yes</div>,
+  //     },
+  //   ],
+  // },
 
   {
     path: 'logout',

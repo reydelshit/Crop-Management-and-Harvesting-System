@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import Search from '@/lib/Search'
 
 export default function Crops() {
   const [image, setImage] = useState<string | null>(null)
@@ -143,25 +144,25 @@ export default function Crops() {
       })
   }
   return (
-    <div className="relative w-full h-full">
-      <h1 className="font-bold text-4xl my-[1.5rem]">Crops</h1>
+    <div className="w-full h-dvh flex justify-center items-start flex-col pl-[20rem] border-none relative">
+      <div className="my-[4rem] flex justify-between items-center w-full">
+        <h1 className="text-[5rem] font-semibold text-primary-yellow">
+          Crop Management
+        </h1>
 
-      <div className="h-[5rem] flex items-center justify-between mb-4">
-        <Button
-          onClick={() => setShowAddCrops(!showAddCrops)}
-          className="mt-2 w-[10rem] h-[3.5rem]"
-        >
-          Add Crops
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button
+            onClick={() => setShowAddCrops(!showAddCrops)}
+            className="mt-2 w-[10rem] h-[3.5rem] bg-primary-yellow font-bold text-xl text-primary-red"
+          >
+            Add Crops
+          </Button>
 
-        <Input
-          onChange={(e) => setSearchCrops(e.target.value)}
-          className="w-[40%]"
-          placeholder="search crops"
-        />
+          <Search onChange={(e) => setSearchCrops(e.target.value)} />
+        </div>
       </div>
 
-      <div className="w-full grid grid-cols-4 grid-rows-2 gap-4 h-[45rem]">
+      <div className="w-full grid grid-cols-4 grid-rows-2 gap-4 h-[40rem]">
         {crops
           .filter((crop) =>
             crop.crops_name.toLowerCase().includes(searchCrops.toLowerCase()),
@@ -171,11 +172,11 @@ export default function Crops() {
             return (
               <div
                 key={index}
-                className="w-full border-2 rounded-lg overflow-hidden shadow-sm relative cursor-pointer hover:shadow-lg hover:shadow-violet-400 hover:text-violet-600 transition-all duration-300 ease-in-out"
+                className="w-full h-[20rem] overflow-hidden shadow-sm relative text-primary-yellow cursor-pointer hover:shadow-sm hover:shadow-primary-yellow hover:text-white transition-all duration-300 ease-in-out"
               >
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="absolute right-2 top-2 bg-violet-400 p-1 rounded-md">
-                    <PiDotsThreeVerticalBold className="text-2xl text-white" />
+                  <DropdownMenuTrigger className="absolute right-2 top-2 bg-primary-yellow p-1 rounded-md">
+                    <PiDotsThreeVerticalBold className="text-2xl text-primary-red" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuLabel>Options</DropdownMenuLabel>
@@ -195,19 +196,28 @@ export default function Crops() {
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <img
-                  className="object-cover h-[80%] w-full"
+                  className="object-cover h-[70%] w-full bg-primary-yellow"
                   src={crop.crops_img}
                 />
 
                 <h1 className="uppercase font-semibold text-center mt-2 text-2xl">
-                  <Link to={`/crops/${crop.crops_id}`}>{crop.crops_name}</Link>
+                  <Link
+                    className="flex flex-col"
+                    to={`/crops/${crop.crops_id}`}
+                  >
+                    {crop.crops_name}
+
+                    <Button className="p-4 text-primary-red bg-primary-yellow rounded-full w-[80%] self-center hover:border-primary-yellow hover:border-4 hover:bg-primary-red hover:text-primary-yellow">
+                      DETAILS
+                    </Button>
+                  </Link>
                 </h1>
               </div>
             )
           })}
       </div>
 
-      <div className="w-full h-[5rem] flex mt-[2rem] items-center justify-center">
+      <div className="w-full h-[5rem] flex items-center justify-center">
         <Button
           onClick={() => pageChangeHandler(currentPage - 1)}
           disabled={currentPage === 1}
