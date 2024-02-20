@@ -16,6 +16,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import Search from '@/lib/Search'
+import CropsForm from '@/components/crops/CropsFom'
+import Pagination from '@/components/crops/Pagination'
 
 export default function Crops() {
   const [image, setImage] = useState<string | null>(null)
@@ -217,96 +219,27 @@ export default function Crops() {
           })}
       </div>
 
-      <div className="w-full h-[5rem] flex items-center justify-center">
-        <Button
-          onClick={() => pageChangeHandler(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </Button>
-        <span className="mx-2 font-bold">
-          Page {currentPage} of {Math.ceil(crops.length / itemsPerPage)}
-        </span>
-        <Button
-          onClick={() => pageChangeHandler(currentPage + 1)}
-          disabled={currentPage === Math.ceil(crops.length / itemsPerPage)}
-        >
-          Next
-        </Button>
-      </div>
+      <Pagination
+        crops={crops}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        pageChangeHandler={pageChangeHandler}
+      />
 
       {showAddCrops && (
-        <div className="absolute w-full h-full top-0 z-50 bg-[#f2f2f0] bg-opacity-80 flex justify-center items-center">
-          <form
-            className="bg-white w-[35rem] h-fit p-4 rounded-md "
-            onSubmit={handleSubmit}
-          >
-            <div className="mb-2">
-              <img
-                className="w-[40rem]  h-[25rem] object-cover rounded-lg mb-4"
-                src={image! ? image! : DefaultCropsImage}
-              />
-              <Label>Image</Label>
-              <Input
-                required
-                type="file"
-                accept="image/*"
-                onChange={handleChangeImage}
-                name="crops_img"
-              />
-            </div>
-
-            <div>
-              <Label>Crop Name</Label>
-              <Input required onChange={handleInputChange} name="crops_name" />
-            </div>
-
-            <div>
-              <Label>planting_date</Label>
-              <Input
-                required
-                type="date"
-                onChange={handleInputChange}
-                name="planting_date"
-              />
-            </div>
-
-            <div>
-              <Label>expected_harvest </Label>
-              <Input
-                required
-                type="date"
-                onChange={handleInputChange}
-                name="expected_harvest"
-              />
-            </div>
-
-            <div>
-              <Label>ogc</Label>
-              <Input required onChange={handleInputChange} name="ogc" />
-            </div>
-
-            <div>
-              <Label>variety</Label>
-              <Input required onChange={handleInputChange} name="variety" />
-            </div>
-
-            <div className="gap-2 flex">
-              <Button onClick={() => setShowAddCrops(false)} className="mt-2">
-                Cancel
-              </Button>
-              <Button type="submit" className="mt-2">
-                Submit
-              </Button>
-            </div>
-          </form>
-        </div>
+        <CropsForm
+          setShowAddCrops={setShowAddCrops}
+          handleSubmit={handleSubmit}
+          image={image}
+          handleChangeImage={handleChangeImage}
+          handleInputChange={handleInputChange}
+        />
       )}
 
       {showUpdateForm && (
-        <div className="absolute top-0 h-full w-full bg-white bg-opacity-90 flex justify-center items-center">
+        <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
           <form
-            className="bg-white w-[35rem] h-fit p-4 rounded-md border-[#618264] border-2"
+            className="bg-white w-[35rem] h-fit p-4 rounded-md ml-[-15rem]"
             onSubmit={handleUpdateCrops}
           >
             <div className="mb-2">
@@ -315,7 +248,7 @@ export default function Crops() {
                 src={
                   updateCropsDefault?.crops_img
                     ? updateCropsDefault?.crops_img!
-                    : 'https://via.placeholder.com/150'
+                    : DefaultCropsImage
                 }
               />
               <Label>Image</Label>
@@ -375,10 +308,16 @@ export default function Crops() {
             </div>
 
             <div className="gap-2 flex">
-              <Button onClick={() => setShowUpdateForm(false)} className="mt-2">
+              <Button
+                onClick={() => setShowUpdateForm(false)}
+                className="mt-2 bg-primary-yellow p-2 text-primary-red font-bold w-[8rem]"
+              >
                 Cancel
               </Button>
-              <Button type="submit" className="mt-2">
+              <Button
+                type="submit"
+                className="mt-2 bg-primary-yellow p-2 text-primary-red font-bold w-[8rem]"
+              >
                 Update
               </Button>
             </div>

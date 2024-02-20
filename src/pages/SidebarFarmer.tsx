@@ -4,10 +4,8 @@ import { GiPlantSeed } from 'react-icons/gi'
 import { GrAnalytics } from 'react-icons/gr'
 import { GrSchedules } from 'react-icons/gr'
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
 
 export default function Sidebar() {
-  const [selectedPage, setSelectedPage] = useState('' as string)
   const currentPath = useLocation().pathname
 
   const handleLogout = () => {
@@ -21,7 +19,7 @@ export default function Sidebar() {
         <div className="flex flex-col font-semibold px-[1rem]">
           <Link
             className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
-              currentPath == '/'
+              currentPath == '/' || currentPath.includes('/crops')
                 ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
                 : ''
             } `}

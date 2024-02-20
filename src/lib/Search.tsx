@@ -8,7 +8,7 @@ export default function Search({
   return (
     <Input
       onChange={onChange}
-      className="p-8 w-[20rem] text-primary-yellow text-2xl rounded-full bg-inherit border-4 border-primary-yellow placeholder:text-primary-yellow placeholder:text-center placeholder:font-semibold"
+      className="p-7 w-[20rem] text-primary-yellow text-2xl rounded-full bg-inherit border-4 border-primary-yellow placeholder:text-primary-yellow placeholder:text-center placeholder:font-semibold"
       type="text"
       placeholder="SEARCH"
     />
