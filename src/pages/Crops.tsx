@@ -197,7 +197,7 @@ export default function Crops() {
         <div className="flex items-center gap-4">
           <Button
             onClick={() => setShowAddCrops(!showAddCrops)}
-            className="mt-2 w-[10rem] h-[3.5rem] bg-primary-yellow font-bold text-xl text-primary-red"
+            className="mt-2 w-[10rem] h-[3.5rem] bg-primary-yellow font-bold text-xl text-primary-red hover:bg-primary-red hover:text-primary-yellow transition-all duration-300 ease-in-out hover:border-primary-yellow hover:border-4"
           >
             Add Crops
           </Button>

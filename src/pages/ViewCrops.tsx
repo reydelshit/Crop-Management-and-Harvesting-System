@@ -311,7 +311,7 @@ export default function ViewCrops() {
                     <TableCell>
                       {row.editMode ? (
                         <Button
-                          onClick={() => handleSave(index, row.suitable_id)}
+                          onClick={() => handleSave(index)}
                           className="bg-primary-yellow text-primary-red w-[5rem] font-bold hover:bg-primary-red hover:text-primary-yellow"
                         >
                           Save
