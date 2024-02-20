@@ -4,7 +4,7 @@ import { GiPlantSeed } from 'react-icons/gi'
 import { GrAnalytics } from 'react-icons/gr'
 import { GrSchedules } from 'react-icons/gr'
 import { Button } from '@/components/ui/button'
-
+import { MdOutlineAnalytics } from 'react-icons/md'
 export default function Sidebar() {
   const currentPath = useLocation().pathname
 
@@ -27,6 +27,17 @@ export default function Sidebar() {
           >
             <GiPlantSeed className="text-md h-[1.5rem] w-[1.5rem]" />
             Crops
+          </Link>
+          <Link
+            className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
+              currentPath == '/analytics'
+                ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
+                : ''
+            } `}
+            to="/analytics"
+          >
+            <MdOutlineAnalytics className="text-md h-[1.5rem] w-[1.5rem]" />
+            Analytics
           </Link>
           <Link
             className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${

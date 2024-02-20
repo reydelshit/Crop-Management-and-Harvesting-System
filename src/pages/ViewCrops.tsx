@@ -13,32 +13,149 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 export default function ViewCrops() {
   const [crops, setCrops] = useState({} as CropTypes)
   const { id } = useParams()
+  const user_id = localStorage.getItem('cmhs_token')
 
   const [rowData, setRowData] = useState([
     {
       month: 'January',
-      suitability: 'Moderately Suitable',
-      notes:
-        'Notes Temperatures are favorable, but rainfall might be lower than ideal in some areas. Choose early-maturing, drought-tolerant varieties if planting',
+      suitability: '',
+      notes: '',
       editMode: false,
     },
     {
       month: 'February',
-      suitability: 'Moderately Suitable',
-      notes:
-        'Similar to January, temperatures are suitable, but rainfall might require close monitoring and supplemental irrigation if needed.				',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'March',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'April',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'May',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'June',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'July',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'August',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'September',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'October',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'November',
+      suitability: '',
+      notes: '',
+      editMode: false,
+    },
+    {
+      month: 'December',
+      suitability: '',
+      notes: '',
       editMode: false,
     },
   ])
+
+  const fetchSuitableData = async () => {
+    await axios
+      .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable.php`, {
+        params: {
+          suitable_crops_id: id,
+          user_id: user_id,
+        },
+      })
+      .then((res) => {
+        console.log(res.data, 'suitable')
+
+        if (res.data.length === 0) {
+          return
+        }
+
+        setRowData((prevData) => {
+          return prevData.map((item) => {
+            const correspondingData = res.data.find(
+              (data: any) => data.suitable_month === item.month,
+            )
+
+            if (correspondingData) {
+              return {
+                ...item,
+                suitability: correspondingData.suitability,
+                notes: correspondingData.suitable_notes,
+              }
+            } else {
+              return item
+            }
+          })
+        })
+      })
+  }
 
   const handleSave = (index: number) => {
     setRowData((prevData) => {
       const newData = [...prevData]
       newData[index].editMode = false
+
+      const rowData = newData[index]
+      console.log(rowData, index)
+
+      axios
+        .post(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable.php`, {
+          suitable_month: rowData.month,
+          suitable_notes: rowData.notes,
+          suitable_index: index,
+          suitable_crops_id: id,
+          suitability: rowData.suitability,
+          user_id: user_id,
+        })
+        .then((res) => {
+          console.log(res.data)
+        })
 
       return newData
     })
@@ -61,10 +178,11 @@ export default function ViewCrops() {
 
   useEffect(() => {
     handleFetchCrops()
+    fetchSuitableData()
   }, [])
 
   return (
-    <div className="w-full h-dvh flex justify-around pl-[20rem] flex-col">
+    <div className="w-full min-h-dvh flex justify-around pl-[20rem] flex-col">
       <div className="px-[2rem] flex justify-between items-center w-full">
         <h1 className="text-[5rem] font-semibold text-primary-yellow">
           Crop Management
@@ -81,101 +199,140 @@ export default function ViewCrops() {
           </div>
           <div className="text-primary-yellow">
             <h1 className="uppercase font-bold text-[5rem]">
-              {crops.crops_name}
+              {crops.crops_name ? crops.crops_name : 'N/A'}
             </h1>
 
             <div className="flex justify-between items-start my-[2rem] flex-col">
-              <p className="text-[2rem]">
-                Planted Date: {moment(crops.planting_date).format('LL')}
+              <p className="text-[1.5rem]">
+                Planted Method:{' '}
+                {crops.planting_method ? crops.planting_method : 'N/A'}
               </p>
 
-              <p className="text-[2rem]">
-                Expected Harvest: {moment(crops.expected_harvest).format('LL')}
+              <p className="text-[1.5rem]">
+                Expected Yield:{' '}
+                {crops.expected_yield ? crops.expected_yield : 'N/A'}
               </p>
-              <p className="text-[2rem]">OGC: {crops.ogc}</p>
-              <p className="text-[2rem]">Variety: {crops.variety}</p>
+              <p className="text-[1.5rem]">
+                Harvesting Calendar:{' '}
+                {crops.harvesting_cal ? crops.harvesting_cal : 'N/A'}
+              </p>
+
+              <p className="text-[1.5rem]">
+                Pesticide Schedule: {crops.pest ? crops.pest : 'N/A'}
+              </p>
+              <p className="text-[1.5rem]">
+                Variety: {crops.variety ? crops.variety : 'N/A'}
+              </p>
+              <p className="text-[1.5rem]">
+                Observation/Notes: {crops.obnotes ? crops.obnotes : 'N/A'}
+              </p>
+
+              <p className="text-[1.5rem]">Date created: {crops.created_at}</p>
             </div>
           </div>
         </div>
 
         <div className="w-[70%]">
-          <div className="flex justify-end">
-            <Button>Add Details</Button>
-          </div>
           <Table className="w-full">
-            <TableHeader>
-              <TableRow className="text-primary-yellow">
-                <TableHead className="text-primary-yellow text-xl">
+            <TableHeader className="bg-primary-yellow border-4 border-primary-yellow">
+              <TableRow className="text-primary-red">
+                <TableHead className="text-primary-red text-xl w-[10rem]">
                   Month
                 </TableHead>
-                <TableHead className="text-primary-yellow text-xl w-[10rem]">
+                <TableHead className="text-primary-red text-xl w-[20rem]">
                   Suitability for {crops.crops_name} planting
                 </TableHead>
-                <TableHead className="text-primary-yellow text-xl text-start w-[30rem]">
+                <TableHead className="text-primary-red text-xl text-start w-[25rem]">
                   Notes
                 </TableHead>
-                <TableHead className="text-primary-yellow text-xl  w-[5rem]"></TableHead>
+                <TableHead className="text-primary-red text-xl w-[5rem]"></TableHead>
               </TableRow>
             </TableHeader>
+
             <TableBody className="border-4 border-primary-yellow">
-              {rowData.map((row, index) => (
-                <TableRow key={index} className="text-white border-none">
-                  <TableCell>{row.month}</TableCell>
-                  <TableCell>
-                    {row.editMode ? (
-                      <Input
-                        className="text-black w-full p-2 outline-none"
-                        type="text"
-                        value={row.suitability}
-                        onChange={(e) =>
-                          setRowData((prevData) => {
-                            const newData = [...prevData]
-                            newData[index].suitability = e.target.value
-                            return newData
-                          })
-                        }
-                      />
-                    ) : (
-                      row.suitability
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {row.editMode ? (
-                      <Input
-                        className="text-black w-full p-2 outline-none"
-                        type="text"
-                        value={row.notes}
-                        onChange={(e) =>
-                          setRowData((prevData) => {
-                            const newData = [...prevData]
-                            newData[index].notes = e.target.value
-                            return newData
-                          })
-                        }
-                      />
-                    ) : (
-                      row.notes
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {row.editMode ? (
-                      <Button onClick={() => handleSave(index)}>Save</Button>
-                    ) : (
-                      <Button
-                        onClick={() =>
-                          setRowData((prevData) => {
-                            const newData = [...prevData]
-                            newData[index].editMode = true // Enable edit mode for the current row
-                            return newData
-                          })
-                        }
-                      >
-                        Edit
-                      </Button>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {rowData &&
+                rowData.map((row, index) => (
+                  <TableRow key={index} className="text-white border-2">
+                    <TableCell>{row.month}</TableCell>
+                    <TableCell>
+                      {row.editMode ? (
+                        <Select
+                          defaultValue={row.suitability}
+                          onValueChange={(e: string) => {
+                            const selectedValue = e
+                            setRowData((prevData) => {
+                              const newData = [...prevData]
+                              newData[index].suitability = selectedValue
+                              return newData
+                            })
+                          }}
+                        >
+                          <SelectTrigger className="w-[180px] bg-primary-yellow text-black">
+                            <SelectValue placeholder="Choose Suitability" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Highly Suitable">
+                              Highly Suitable
+                            </SelectItem>
+                            <SelectItem value="Suitable">Suitable</SelectItem>
+                            <SelectItem value="Moderately">
+                              Moderately Suitable
+                            </SelectItem>
+                            <SelectItem value="Less Suitable">
+                              Less Suitable
+                            </SelectItem>
+                            <SelectItem value="Not Suitable">
+                              Not Suitable
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      ) : (
+                        row.suitability
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {row.editMode ? (
+                        <Input
+                          className="w-full p-2 outline-none bg-primary-yellow text-black focus:outline-none"
+                          type="text"
+                          value={row.notes}
+                          onChange={(e) =>
+                            setRowData((prevData) => {
+                              const newData = [...prevData]
+                              newData[index].notes = e.target.value
+                              return newData
+                            })
+                          }
+                        />
+                      ) : (
+                        row.notes
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {row.editMode ? (
+                        <Button
+                          onClick={() => handleSave(index, row.suitable_id)}
+                          className="bg-primary-yellow text-primary-red w-[5rem] font-bold hover:bg-primary-red hover:text-primary-yellow"
+                        >
+                          Save
+                        </Button>
+                      ) : (
+                        <Button
+                          className="bg-primary-yellow text-primary-red w-[5rem] font-bold hover:bg-primary-red hover:text-primary-yellow"
+                          onClick={() =>
+                            setRowData((prevData) => {
+                              const newData = [...prevData]
+                              newData[index].editMode = true
+                              return newData
+                            })
+                          }
+                        >
+                          Edit
+                        </Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </div>

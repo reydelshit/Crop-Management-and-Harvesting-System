@@ -29,6 +29,8 @@ export default function Crops() {
   const [searchCrops, setSearchCrops] = useState('')
   const [error, setError] = useState('')
 
+  const user_id = localStorage.getItem('cmhs_token')
+
   const [updateCropsDefault, setUpdateCropsDefault] =
     useState<CropTypes | null>(null)
 
@@ -37,7 +39,11 @@ export default function Crops() {
 
   const fetchCrops = async () => {
     await axios
-      .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/crops.php`)
+      .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/crops.php`, {
+        params: {
+          user_id: user_id,
+        },
+      })
       .then((res) => {
         console.log(res.data)
         if (res.data) {
@@ -66,11 +72,14 @@ export default function Crops() {
   }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(cropsDetails)
     if (
       cropsDetails.crops_name === undefined ||
-      cropsDetails.planting_date === undefined ||
-      cropsDetails.expected_harvest === undefined ||
-      cropsDetails.ogc === undefined ||
+      cropsDetails.planting_method === undefined ||
+      cropsDetails.expected_yield === undefined ||
+      cropsDetails.harvesting_cal === undefined ||
+      cropsDetails.pest === undefined ||
+      cropsDetails.obnotes === undefined ||
       cropsDetails.variety === undefined ||
       image === null
     ) {
@@ -86,6 +95,7 @@ export default function Crops() {
         },
         ...cropsDetails,
         crops_img: image,
+        user_id: user_id,
       })
       .then((res) => {
         if (res.data) {
@@ -144,18 +154,37 @@ export default function Crops() {
     axios
       .put(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/crops.php`, {
         crops_id: cropsId,
-        crops_name: cropsDetails?.crops_name,
-        planting_date: cropsDetails?.planting_date,
-        expected_harvest: cropsDetails?.expected_harvest,
-        ogc: cropsDetails?.ogc,
+        crops_name: cropsDetails.crops_name
+          ? cropsDetails.crops_name
+          : updateCropsDefault?.crops_name!,
+        planting_method: cropsDetails.planting_method
+          ? cropsDetails.planting_method
+          : updateCropsDefault?.planting_method!,
+        expected_yield: cropsDetails.expected_yield
+          ? cropsDetails.expected_yield
+          : updateCropsDefault?.expected_yield!,
+        harvesting_cal: cropsDetails.harvesting_cal
+          ? cropsDetails.harvesting_cal
+          : updateCropsDefault?.harvesting_cal!,
+        pest: cropsDetails.pest ? cropsDetails.pest : updateCropsDefault?.pest!,
+        obnotes: cropsDetails.obnotes
+          ? cropsDetails.obnotes
+          : updateCropsDefault?.obnotes!,
+        variety: cropsDetails.variety
+          ? cropsDetails.variety
+          : updateCropsDefault?.variety!,
         crops_img:
           image && image.length ? image : updateCropsDefault?.crops_img!,
-        variety: cropsDetails?.variety,
+        user_id: user_id,
       })
       .then((res) => {
-        console.log(res.data)
-        setShowUpdateForm(false)
-        fetchCrops()
+        if (res.data.status === 'success') {
+          setShowUpdateForm(false)
+          fetchCrops()
+          window.location.reload()
+        }
+
+        // if()
       })
   }
   return (
@@ -276,49 +305,60 @@ export default function Crops() {
             </div>
 
             <div>
-              <Label>Crop Name</Label>
+              <Label>Crop name</Label>
               <Input
                 defaultValue={updateCropsDefault?.crops_name}
                 onChange={handleInputChange}
                 name="crops_name"
               />
             </div>
-
             <div>
-              <Label>planting_date</Label>
-              <Input
-                defaultValue={updateCropsDefault?.planting_date}
-                type="date"
-                onChange={handleInputChange}
-                name="planting_date"
-              />
-            </div>
-
-            <div>
-              <Label>expected_harvest </Label>
-              <Input
-                defaultValue={updateCropsDefault?.expected_harvest}
-                type="date"
-                onChange={handleInputChange}
-                name="expected_harvest"
-              />
-            </div>
-
-            <div>
-              <Label>ogc</Label>
-              <Input
-                defaultValue={updateCropsDefault?.ogc}
-                onChange={handleInputChange}
-                name="ogc"
-              />
-            </div>
-
-            <div>
-              <Label>variety</Label>
+              <Label>Variety</Label>
               <Input
                 defaultValue={updateCropsDefault?.variety}
                 onChange={handleInputChange}
                 name="variety"
+              />
+            </div>
+            <div>
+              <Label>Planting Method</Label>
+              <Input
+                defaultValue={updateCropsDefault?.planting_method}
+                onChange={handleInputChange}
+                name="planting_method"
+              />
+            </div>
+            <div>
+              <Label>Expectedly Yield: (eg. around 5 months)</Label>
+              <Input
+                defaultValue={updateCropsDefault?.expected_yield}
+                onChange={handleInputChange}
+                name="expected_yield"
+              />
+            </div>
+            <div>
+              <Label>Harvesting Calendar (eg. around 5 months)</Label>
+              <Input
+                defaultValue={updateCropsDefault?.harvesting_cal}
+                onChange={handleInputChange}
+                name="harvesting_cal"
+              />
+            </div>
+            <div>
+              <Label>Pesticide Schedule</Label>
+              <Input
+                defaultValue={updateCropsDefault?.pest}
+                onChange={handleInputChange}
+                name="pest"
+              />
+            </div>
+
+            <div>
+              <Label>Observation / Notes</Label>
+              <Input
+                defaultValue={updateCropsDefault?.obnotes}
+                onChange={handleInputChange}
+                name="obnotes"
               />
             </div>
 

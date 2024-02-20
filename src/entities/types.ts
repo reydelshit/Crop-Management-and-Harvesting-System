@@ -7,10 +7,14 @@ export type UserType = {
 
 export type CropTypes = {
   crops_id: number
-  crops_name: string
-  expected_harvest: string
-  ogc: string
-  planting_date: string
   crops_img: string
+  crops_name: string
+  planting_method: string
+  expected_yield: string
+  harvesting_cal: string
+  pest: string
+  obnotes: string
+  created_at: string
   variety: string
+  image: string
 }

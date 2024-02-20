@@ -54,54 +54,30 @@ export default function CropsForm({
           <Label>Crop name</Label>
           <Input required onChange={handleInputChange} name="crops_name" />
         </div>
-
-        <div>
-          <Label>Planting Date (eg. around 5 months)</Label>
-          <Input required onChange={handleInputChange} name="planting_date" />
-        </div>
-
-        <div>
-          <Label>Expectedly Harvest: (eg. around 5 months)</Label>
-          <Input
-            required
-            onChange={handleInputChange}
-            name="expected_harvest"
-          />
-        </div>
-
-        {/* <div>
-          <Label>planting_date</Label>
-          <Input
-            required
-            type="date"
-            onChange={handleInputChange}
-            name="planting_date"
-          />
-        </div>
-
-        <div>
-          <Label>expected_harvest </Label>
-          <Input
-            required
-            type="date"
-            onChange={handleInputChange}
-            name="expected_harvest"
-          />
-        </div> */}
-
-        <div>
-          <Label>Note</Label>
-          <Input required onChange={handleInputChange} name="ogc" />
-        </div>
-
         <div>
           <Label>Variety</Label>
           <Input required onChange={handleInputChange} name="variety" />
         </div>
+        <div>
+          <Label>Planting Method</Label>
+          <Input required onChange={handleInputChange} name="planting_method" />
+        </div>
+        <div>
+          <Label>Expectedly Yield: (eg. around 5 months)</Label>
+          <Input required onChange={handleInputChange} name="expected_yield" />
+        </div>
+        <div>
+          <Label>Harvesting Calendar (eg. around 5 months)</Label>
+          <Input required onChange={handleInputChange} name="harvesting_cal" />
+        </div>
+        <div>
+          <Label>Pesticide Schedule</Label>
+          <Input required onChange={handleInputChange} name="pest" />
+        </div>
 
         <div>
-          <Label>Description</Label>
-          <Input required onChange={handleInputChange} name="ogc" />
+          <Label>Observation / Notes</Label>
+          <Input required onChange={handleInputChange} name="obnotes" />
         </div>
 
         <div className="gap-2 flex justify-center">

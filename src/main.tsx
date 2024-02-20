@@ -12,6 +12,7 @@ import FieldManagement from './pages/FieldManagement'
 import Reporting from './pages/Reporting'
 import ScheduleGeneration from './pages/ScheduleGeneration'
 import Crops from './pages/Crops'
+import Analytics from './pages/Analytics'
 
 const logoutUser = async () => {
   localStorage.removeItem('token')
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: 'reporting',
         element: <Reporting />,
+      },
+      {
+        path: 'analytics',
+        element: <Analytics />,
       },
       {
         path: 'generate-schedule',
