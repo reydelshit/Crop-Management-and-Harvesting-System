@@ -37,7 +37,7 @@ export default function CropsForm({
       >
         <div className="mb-2">
           <img
-            className="w-[40rem]  h-[25rem] object-cover rounded-lg mb-4"
+            className="w-full  h-[15rem] object-cover rounded-lg mb-4"
             src={image! ? image! : DefaultCropsImage}
           />
           <Label>Image</Label>
@@ -51,11 +51,25 @@ export default function CropsForm({
         </div>
 
         <div>
-          <Label>Crop Name</Label>
+          <Label>Crop name</Label>
           <Input required onChange={handleInputChange} name="crops_name" />
         </div>
 
         <div>
+          <Label>Planting Date (eg. around 5 months)</Label>
+          <Input required onChange={handleInputChange} name="planting_date" />
+        </div>
+
+        <div>
+          <Label>Expectedly Harvest: (eg. around 5 months)</Label>
+          <Input
+            required
+            onChange={handleInputChange}
+            name="expected_harvest"
+          />
+        </div>
+
+        {/* <div>
           <Label>planting_date</Label>
           <Input
             required
@@ -73,16 +87,21 @@ export default function CropsForm({
             onChange={handleInputChange}
             name="expected_harvest"
           />
-        </div>
+        </div> */}
 
         <div>
-          <Label>ogc</Label>
+          <Label>Note</Label>
           <Input required onChange={handleInputChange} name="ogc" />
         </div>
 
         <div>
-          <Label>variety</Label>
+          <Label>Variety</Label>
           <Input required onChange={handleInputChange} name="variety" />
+        </div>
+
+        <div>
+          <Label>Description</Label>
+          <Input required onChange={handleInputChange} name="ogc" />
         </div>
 
         <div className="gap-2 flex justify-center">
