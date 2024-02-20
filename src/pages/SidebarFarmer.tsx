@@ -14,7 +14,7 @@ export default function Sidebar() {
     window.location.reload()
   }
   return (
-    <div className="block w-[20rem] h-screen bg-primary-yellow text-primary-red fixed z-10">
+    <div className="block w-[18rem] h-screen bg-primary-yellow text-primary-red fixed z-10">
       <div className=" flex flex-col justify-between w-full h-[90%] mt-[5rem]">
         <div className="flex flex-col font-semibold px-[1rem]">
           <Link

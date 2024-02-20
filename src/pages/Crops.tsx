@@ -27,6 +27,7 @@ export default function Crops() {
   const [showUpdateForm, setShowUpdateForm] = useState(false)
   const [cropsId, setCropsId] = useState(0)
   const [searchCrops, setSearchCrops] = useState('')
+  const [error, setError] = useState('')
 
   const [updateCropsDefault, setUpdateCropsDefault] =
     useState<CropTypes | null>(null)
@@ -65,6 +66,17 @@ export default function Crops() {
   }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (
+      cropsDetails.crops_name === undefined ||
+      cropsDetails.planting_date === undefined ||
+      cropsDetails.expected_harvest === undefined ||
+      cropsDetails.ogc === undefined ||
+      cropsDetails.variety === undefined ||
+      image === null
+    ) {
+      return setError('All fields are required')
+    }
+
     console.log(cropsDetails)
     e.preventDefault()
     axios
@@ -79,6 +91,7 @@ export default function Crops() {
         if (res.data) {
           fetchCrops()
           setShowAddCrops(false)
+          setImage(null)
         }
         console.log(res.data)
       })
@@ -233,6 +246,8 @@ export default function Crops() {
           image={image}
           handleChangeImage={handleChangeImage}
           handleInputChange={handleInputChange}
+          error={error}
+          setError={setError}
         />
       )}
 
