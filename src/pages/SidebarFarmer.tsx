@@ -1,11 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { RxDashboard } from 'react-icons/rx'
 import { GiPlantSeed } from 'react-icons/gi'
 import { GrAnalytics } from 'react-icons/gr'
 import { GrSchedules } from 'react-icons/gr'
 import { Button } from '@/components/ui/button'
+import { useState } from 'react'
 
 export default function Sidebar() {
+  const [selectedPage, setSelectedPage] = useState('' as string)
+  const currentPath = useLocation().pathname
+
   const handleLogout = () => {
     localStorage.removeItem('cmhs_token')
     localStorage.removeItem('cmhs_account_type')
@@ -16,14 +20,22 @@ export default function Sidebar() {
       <div className=" flex flex-col justify-between w-full h-[90%] mt-[5rem]">
         <div className="flex flex-col font-semibold px-[1rem]">
           <Link
-            className="p-2 mb-2 flex items-center gap-2 text-[1.5rem]"
+            className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
+              currentPath == '/'
+                ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
+                : ''
+            } `}
             to="/"
           >
             <GiPlantSeed className="text-md h-[1.5rem] w-[1.5rem]" />
             Crops
           </Link>
           <Link
-            className="p-2 mb-2 flex items-center gap-2 text-[1.5rem]"
+            className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
+              currentPath == '/manage-field'
+                ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
+                : ''
+            } `}
             to="/manage-field"
           >
             <RxDashboard className="text-md h-[1.5rem] w-[1.5rem]" />
@@ -31,14 +43,22 @@ export default function Sidebar() {
           </Link>
 
           <Link
-            className="p-2 mb-2 flex items-center gap-2 text-[1.5rem]"
+            className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
+              currentPath == '/reporting'
+                ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
+                : ''
+            } `}
             to="/reporting"
           >
             <GrAnalytics className="text-md h-[1.5rem] w-[1.5rem]" /> Reporting
           </Link>
 
           <Link
-            className="p-2 mb-2 flex items-center gap-2 text-[1.5rem]"
+            className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
+              currentPath == '/generate-schedule'
+                ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
+                : ''
+            } `}
             to="/generate-schedule"
           >
             <GrSchedules className="text-md h-[1.5rem] w-[1.5rem]" /> Schedule
