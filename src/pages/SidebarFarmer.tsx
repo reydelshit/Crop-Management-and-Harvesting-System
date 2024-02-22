@@ -76,7 +76,7 @@ export default function Sidebar() {
         </div>
 
         <div className="flex justify-center flex-col items-center mt-1">
-          <WeatherApi />
+          {/* <WeatherApi /> */}
 
           <Button
             className="bg-primary-yellow border-4 border-primary-red p-6 rounded-full w-[10rem] font-bold text-primary-red hover:bg-primary-red hover:text-primary-yellow transition-all duration-300 ease-in-out text-2xl"

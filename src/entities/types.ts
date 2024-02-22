@@ -18,3 +18,14 @@ export type CropTypes = {
   variety: string
   image: string
 }
+
+export type FieldTypes = {
+  field_id: number
+  field_name: string
+  field_size: string
+  crop_history: string
+  location: string
+  soil_type: string
+  irrigation_system: string
+  created_at: string
+}
