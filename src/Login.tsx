@@ -2,10 +2,12 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@radix-ui/react-label'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Farmer from '@/assets/farmer.png'
 import { UserType } from '@/entities/types'
 import { Navigate } from 'react-router-dom'
+import { setTimeout } from 'timers/promises'
+import ButtonStyle from './lib/ButtonStyle'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 
@@ -50,6 +52,7 @@ export default function Login() {
         }
       })
   }
+
   return (
     <div className="w-dvw h-dvh flex justify-between items-center flex-row ">
       <div className="bg-primary-red text-primary-yellow shadow-slate-400 w-[40%] px-[5rem] h-full flex justify-center items-center flex-col p-4 rounded-md">
@@ -62,6 +65,7 @@ export default function Login() {
           className="mb-8 border-4 text-2xl border-primary-yellow rounded-full p-8 w-full text-primary-yellow focus:outline-none placeholder:text-primary-yellow placeholder:text-2xl placeholder:font-semibold"
           placeholder="Username"
           name="username"
+          required
         />
 
         {/* <Label className="mb-1 self-start text-sm">Password</Label> */}
@@ -71,16 +75,22 @@ export default function Login() {
           onChange={handleChange}
           name="password"
           placeholder="Password"
+          required
         />
 
-        <a
-          onClick={handleLogin}
-          className="text-primary-yellow bg-inherit text-3xl outline-none font-semibold cursor-pointer my-[1.5rem] hover:text-white"
-        >
+        <div className="w-full text-end px-4">
+          <a href="/register" className="text-[1.2rem] underline">
+            Create an account
+          </a>
+        </div>
+        <ButtonStyle background="yellow" onCLick={handleLogin}>
           Login
-        </a>
-
-        {errorInput && <p className="text-primary-red">{errorInput}</p>}
+        </ButtonStyle>
+        {errorInput && (
+          <p className="text-primary-red border-2 bg-white p-2 rounded-md font-semibold">
+            {errorInput}
+          </p>
+        )}
       </div>
 
       <div className="w-[60%] bg-primary-yellow h-full items-center flex justify-center relative">

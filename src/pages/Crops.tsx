@@ -18,6 +18,7 @@ import {
 import Search from '@/lib/Search'
 import CropsForm from '@/components/crops/CropsFom'
 import Pagination from '@/components/crops/Pagination'
+import ButtonStyle from '@/lib/ButtonStyle'
 
 export default function Crops() {
   const [image, setImage] = useState<string | null>(null)
@@ -188,25 +189,32 @@ export default function Crops() {
       })
   }
   return (
-    <div className="w-full h-dvh flex justify-center items-start flex-col pl-[20rem] border-none relative">
-      <div className="my-[4rem] flex justify-between items-center w-full">
+    <div className="w-full h-dvh flex justify-start items-start flex-col pl-[20rem] border-none relative">
+      <div className="py-[2rem] flex justify-between items-center w-full">
         <h1 className="text-[5rem] font-semibold text-primary-yellow">
           Crop Management
         </h1>
 
         <div className="flex items-center gap-4">
-          <Button
+          {/* <Button
             onClick={() => setShowAddCrops(!showAddCrops)}
             className="mt-2 w-[10rem] h-[3.5rem] bg-primary-yellow font-bold text-xl text-primary-red hover:bg-primary-red hover:text-primary-yellow transition-all duration-300 ease-in-out hover:border-primary-yellow hover:border-4"
           >
             Add Crops
-          </Button>
+          </Button> */}
+
+          <ButtonStyle
+            background="yellow"
+            onCLick={() => setShowAddCrops(!showAddCrops)}
+          >
+            Add Crops{' '}
+          </ButtonStyle>
 
           <Search onChange={(e) => setSearchCrops(e.target.value)} />
         </div>
       </div>
 
-      <div className="w-full grid grid-cols-4 grid-rows-2 gap-4 h-[40rem]">
+      <div className="w-full grid grid-cols-4 grid-rows-2 gap-4 h-[45rem]">
         {crops
           .filter((crop) =>
             crop.crops_name.toLowerCase().includes(searchCrops.toLowerCase()),

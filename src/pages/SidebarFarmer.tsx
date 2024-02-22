@@ -5,6 +5,7 @@ import { GrAnalytics } from 'react-icons/gr'
 import { GrSchedules } from 'react-icons/gr'
 import { Button } from '@/components/ui/button'
 import { MdOutlineAnalytics } from 'react-icons/md'
+import WeatherApi from '@/components/WeatherApi'
 export default function Sidebar() {
   const currentPath = useLocation().pathname
 
@@ -14,9 +15,9 @@ export default function Sidebar() {
     window.location.reload()
   }
   return (
-    <div className="block w-[18rem] h-screen bg-primary-yellow text-primary-red fixed z-10">
-      <div className=" flex flex-col justify-between w-full h-[90%] mt-[5rem]">
-        <div className="flex flex-col font-semibold px-[1rem]">
+    <div className="block w-[18rem] h-dvh bg-primary-yellow text-primary-red fixed z-10">
+      <div className=" flex flex-col justify-between w-full h-[90%]">
+        <div className="flex flex-col font-semibold px-[1rem] mt-[4rem] mb-2">
           <Link
             className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
               currentPath == '/' || currentPath.includes('/crops')
@@ -74,9 +75,8 @@ export default function Sidebar() {
           </Link>
         </div>
 
-        <div className="flex justify-center">
-          {/* <WeatherApi />
-           */}
+        <div className="flex justify-center flex-col items-center mt-1">
+          <WeatherApi />
 
           <Button
             className="bg-primary-yellow border-4 border-primary-red p-6 rounded-full w-[10rem] font-bold text-primary-red hover:bg-primary-red hover:text-primary-yellow transition-all duration-300 ease-in-out text-2xl"

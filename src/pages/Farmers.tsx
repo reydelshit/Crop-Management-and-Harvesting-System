@@ -1,4 +1,3 @@
-import Crops from './Crops'
 import ManageCrops from './ManageCrops'
 
 export default function Farmers() {

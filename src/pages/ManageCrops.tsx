@@ -15,7 +15,7 @@ export default function ManageCrops() {
   const [search, setSearch] = useState('')
   return (
     <div className="w-full h-full flex items-start flex-col px-[2rem] relative">
-      <div className="my-[4rem] flex justify-between items-center w-full">
+      <div className="my-[2rem] flex justify-between items-center w-full">
         <h1 className="text-[5rem] font-semibold text-primary-yellow">
           Crop Management
         </h1>
@@ -86,8 +86,8 @@ export default function ManageCrops() {
       </div>
 
       <div className="absolute bottom-5 right-2 w-full flex justify-end">
-        <div className="text-white flex-col flex">
-          <span>Legend:</span>
+        <div className="flex-col flex p-2 rounded-md bg-primary-yellow text-primary-red font-semibold">
+          <span className="font-bold">Legend:</span>
           <span>0 - not planted</span>
           <span>1 - planted</span>
           <span>2 - pestiscides</span>

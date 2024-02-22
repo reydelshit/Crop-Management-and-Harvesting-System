@@ -1,8 +1,10 @@
 import { CropTypes } from '@/entities/types'
 import axios from 'axios'
-import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+
+import CropsDetailsConditional from '@/lib/CropsDetailsConditional'
+
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -199,35 +201,40 @@ export default function ViewCrops() {
           </div>
           <div className="text-primary-yellow">
             <h1 className="uppercase font-bold text-[5rem]">
-              {crops.crops_name ? crops.crops_name : 'N/A'}
+              {crops.crops_name}
             </h1>
 
             <div className="flex justify-between items-start my-[2rem] flex-col">
-              <p className="text-[1.5rem]">
-                Planted Method:{' '}
-                {crops.planting_method ? crops.planting_method : 'N/A'}
-              </p>
+              <CropsDetailsConditional
+                title="Planting Method"
+                cropDetailsName={crops.planting_method}
+              />
 
-              <p className="text-[1.5rem]">
-                Expected Yield:{' '}
-                {crops.expected_yield ? crops.expected_yield : 'N/A'}
-              </p>
-              <p className="text-[1.5rem]">
-                Harvesting Calendar:{' '}
-                {crops.harvesting_cal ? crops.harvesting_cal : 'N/A'}
-              </p>
+              <CropsDetailsConditional
+                title="Expected Yield"
+                cropDetailsName={crops.expected_yield}
+              />
+              <CropsDetailsConditional
+                title="Harvesting Calendar"
+                cropDetailsName={crops.harvesting_cal}
+              />
+              <CropsDetailsConditional
+                title="Pesticide Schedule"
+                cropDetailsName={crops.pest}
+              />
+              <CropsDetailsConditional
+                title="Variety"
+                cropDetailsName={crops.variety}
+              />
 
-              <p className="text-[1.5rem]">
-                Pesticide Schedule: {crops.pest ? crops.pest : 'N/A'}
-              </p>
-              <p className="text-[1.5rem]">
-                Variety: {crops.variety ? crops.variety : 'N/A'}
-              </p>
-              <p className="text-[1.5rem]">
-                Observation/Notes: {crops.obnotes ? crops.obnotes : 'N/A'}
-              </p>
-
-              <p className="text-[1.5rem]">Date created: {crops.created_at}</p>
+              <CropsDetailsConditional
+                title="Observation/Notes"
+                cropDetailsName={crops.obnotes}
+              />
+              <CropsDetailsConditional
+                title="Date Created"
+                cropDetailsName={crops.created_at}
+              />
             </div>
           </div>
         </div>
