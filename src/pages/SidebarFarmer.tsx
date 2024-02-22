@@ -29,17 +29,7 @@ export default function Sidebar() {
             <GiPlantSeed className="text-md h-[1.5rem] w-[1.5rem]" />
             Crops
           </Link>
-          <Link
-            className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
-              currentPath == '/analytics'
-                ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
-                : ''
-            } `}
-            to="/analytics"
-          >
-            <MdOutlineAnalytics className="text-md h-[1.5rem] w-[1.5rem]" />
-            Analytics
-          </Link>
+
           <Link
             className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
               currentPath == '/manage-field'
@@ -51,7 +41,16 @@ export default function Sidebar() {
             <RxDashboard className="text-md h-[1.5rem] w-[1.5rem]" />
             Field
           </Link>
-
+          <Link
+            className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
+              currentPath == '/generate-schedule'
+                ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
+                : ''
+            } `}
+            to="/generate-schedule"
+          >
+            <GrSchedules className="text-md h-[1.5rem] w-[1.5rem]" /> Schedule
+          </Link>
           <Link
             className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
               currentPath == '/reporting'
@@ -65,13 +64,14 @@ export default function Sidebar() {
 
           <Link
             className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
-              currentPath == '/generate-schedule'
+              currentPath == '/analytics'
                 ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
                 : ''
             } `}
-            to="/generate-schedule"
+            to="/analytics"
           >
-            <GrSchedules className="text-md h-[1.5rem] w-[1.5rem]" /> Schedule
+            <MdOutlineAnalytics className="text-md h-[1.5rem] w-[1.5rem]" />
+            Analytics
           </Link>
         </div>
 
