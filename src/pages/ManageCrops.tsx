@@ -190,7 +190,6 @@ export default function ManageCrops() {
             </TableBody>
           </Table>
         </div>
-        S
       </div>
 
       <div className="absolute right-5 bottom-[50%]">

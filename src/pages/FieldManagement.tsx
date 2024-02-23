@@ -9,6 +9,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+
 import { FaPencilAlt } from 'react-icons/fa'
 import { FieldTypes } from '@/entities/types'
 import { MdDelete } from 'react-icons/md'
@@ -23,6 +32,7 @@ export default function FieldManagement() {
   const [fieldDetails, setFieldDetails] = useState({} as FieldTypes)
   const [fieldData, setFieldData] = useState<FieldTypes[]>([])
   const [showUpdateFormField, setShowUpdateFormField] = useState(false)
+  const [status, setStatus] = useState('' as string)
   const [fieldUpdateDetails, setFieldUpdateDetails] =
     useState<FieldTypes | null>(null)
   const [fieldUpdateID, setFieldUpdateID] = useState(0)
@@ -145,6 +155,27 @@ export default function FieldManagement() {
         // if()
       })
   }
+
+  const [sortOrder, setSortOrder] = useState('asc')
+
+  const toggleSortOrder = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc'
+    setSortOrder(newSortOrder)
+  }
+
+  const sortedData = [...fieldData].sort((a, b) => {
+    // Sort by crops name
+    if (sortOrder === 'asc') {
+      return a.field_name.localeCompare(b.location)
+    } else {
+      return b.field_name.localeCompare(a.location)
+    }
+  })
+
+  const handleStatus = (e: string) => {
+    setStatus(e)
+  }
+
   return (
     <div className="w-full h-dvh flex  items-start flex-col pl-[20rem] relative">
       <div className="my-[4rem] flex justify-between items-center w-full">
@@ -156,7 +187,16 @@ export default function FieldManagement() {
       <div className="flex gap-10 w-full h-full justify-around">
         <div className="w-full h-full flex justify-between items-start ">
           <div className="w-full h-[95%] bg-primary-yellow rounded-2xl p-4 gap-2 flex justify-start items-center flex-col">
-            <div className="w-full justify-end flex">
+            <div className="w-full justify-between flex">
+              <div>
+                <Button
+                  onClick={toggleSortOrder}
+                  className="rounded-full h-full bg-primary-red font-bold text-xl text-primary-yellow hover:bg-primary-red hover:text-primary-yellow hover:border-primary-yellow hover:border-4"
+                >
+                  {sortOrder === 'asc' ? 'Sort Descending' : 'Sort Ascending'}
+                </Button>
+              </div>
+
               <ButtonStyle
                 background="red"
                 onCLick={() => setShowAddField(!showAddField)}
@@ -198,7 +238,7 @@ export default function FieldManagement() {
                 </TableHeader>
                 <TableBody className="text-xl ">
                   {fieldData.length > 0 ? (
-                    fieldData.map((field, index) => (
+                    sortedData.map((field, index) => (
                       <TableRow
                         key={index}
                         className="text-primary-red border-b-4 border-primary-red"

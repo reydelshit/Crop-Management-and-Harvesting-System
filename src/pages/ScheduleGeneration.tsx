@@ -53,12 +53,7 @@ export default function ScheduleGeneration() {
   const [fieldData, setFieldData] = useState<FieldTypes[]>([])
   const [cropsData, setCropsData] = useState<CropTypes[]>([])
   const [scheduleData, setScheduleData] = useState<ScheduleTypes[]>([])
-
-  const [fieldDetails, setFieldDetails] = useState({} as FieldTypes)
-  const [showUpdateFormField, setShowUpdateFormField] = useState(false)
-  const [fieldUpdateDetails, setFieldUpdateDetails] =
-    useState<FieldTypes | null>(null)
-  const [fieldUpdateID, setFieldUpdateID] = useState(0)
+  const [status, setStatus] = useState('' as string)
 
   const user_id = localStorage.getItem('cmhs_token')
 
@@ -193,6 +188,30 @@ export default function ScheduleGeneration() {
       })
   }
 
+  const [sortOrder, setSortOrder] = useState('asc')
+
+  const toggleSortOrder = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc'
+    setSortOrder(newSortOrder)
+  }
+
+  const sortedData = [...scheduleData].sort((a, b) => {
+    console.log(a.scheduled_date, b.scheduled_date)
+    // Assuming scheduled_date is the property containing the date
+    const dateA = new Date(a.actual_start_date).getTime()
+    const dateB = new Date(b.actual_end_date).getTime()
+
+    if (sortOrder === 'asc') {
+      return dateA - dateB
+    } else {
+      return dateB - dateA
+    }
+  })
+
+  const handleStatus = (e: string) => {
+    setStatus(e)
+  }
+
   return (
     <div className="w-full h-dvh flex  items-start flex-col pl-[20rem] relative">
       <div className="my-[4rem] flex justify-between items-center w-full">
@@ -204,7 +223,25 @@ export default function ScheduleGeneration() {
       <div className="flex gap-10 w-full h-full justify-around">
         <div className="w-full h-full flex justify-between items-start ">
           <div className="w-full h-[95%] rounded-2xl p-4 gap-2 flex justify-start items-center flex-col">
-            <div className="w-full justify-end flex">
+            <div className="w-full justify-between flex">
+              <div className="flex gap-2">
+                <Button
+                  onClick={toggleSortOrder}
+                  className="rounded-full h-full bg-primary-yellow font-bold text-xl text-primary-red hover:bg-primary-red hover:text-primary-yellow hover:border-primary-yellow hover:border-4"
+                >
+                  {sortOrder === 'asc' ? 'Sort Date ' : 'Sort  Date'}
+                </Button>
+                <Select required onValueChange={(e: string) => handleStatus(e)}>
+                  <SelectTrigger className="w-[15rem] h-full bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="All">All</SelectItem>
+                    <SelectItem value="Ongoing">Ongoing</SelectItem>
+                    <SelectItem value="Done">Done</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               <ButtonStyle
                 background="yellow"
                 onCLick={() => setShowScheduleForm(!showScheduleForm)}
@@ -249,43 +286,52 @@ export default function ScheduleGeneration() {
                 </TableHeader>
 
                 <TableBody className="text-xl ">
-                  {scheduleData.map((sched, index) => (
-                    <TableRow
-                      key={index}
-                      className="text-primary-yellow border-b-4 border-primary-yellow"
-                    >
-                      <TableCell>{sched.schedule_id}</TableCell>
-                      <TableCell>{sched.crops_id}</TableCell>
-                      <TableCell>{sched.field_id}</TableCell>
-                      <TableCell>{sched.activity}</TableCell>
-                      <TableCell>{sched.scheduled_date}</TableCell>
-                      <TableCell>
-                        {moment(sched.actual_start_date).format('LL')}
-                      </TableCell>
-                      <TableCell>
-                        {moment(sched.actual_end_date).format('LL')}
-                      </TableCell>
-                      <TableCell>{sched.status}</TableCell>
+                  {sortedData
+                    .filter(
+                      (sched) =>
+                        sched.status.includes(status) || status === 'All',
+                    )
+                    .map((sched, index) => (
+                      <TableRow
+                        key={index}
+                        className="text-primary-yellow border-b-4 border-primary-yellow"
+                      >
+                        <TableCell>{sched.schedule_id}</TableCell>
+                        <TableCell>{sched.crops_id}</TableCell>
+                        <TableCell>{sched.field_id}</TableCell>
+                        <TableCell>{sched.activity}</TableCell>
+                        <TableCell>{sched.scheduled_date}</TableCell>
+                        <TableCell>
+                          {moment(sched.actual_start_date).format('LL')}
+                        </TableCell>
+                        <TableCell>
+                          {moment(sched.actual_end_date).format('LL')}
+                        </TableCell>
+                        <TableCell>{sched.status}</TableCell>
 
-                      <TableCell className="flex gap-2">
-                        <Button
-                          className="bg-primary-yellow text-primary-red font-bold h-[3rem] rounded-full hover:bg-primary-red hover:text-primary-yellow"
-                          onClick={() =>
-                            handleUpdateStatus(sched.schedule_id, sched.status)
-                          }
-                        >
-                          Set {sched.status === 'Ongoing' ? 'Done' : 'Ongoing'}
-                        </Button>
+                        <TableCell className="flex gap-2">
+                          <Button
+                            className="bg-primary-yellow text-primary-red font-bold h-[3rem] rounded-full hover:bg-primary-red hover:text-primary-yellow"
+                            onClick={() =>
+                              handleUpdateStatus(
+                                sched.schedule_id,
+                                sched.status,
+                              )
+                            }
+                          >
+                            Set{' '}
+                            {sched.status === 'Ongoing' ? 'Done' : 'Ongoing'}
+                          </Button>
 
-                        <MdDelete
-                          onClick={() =>
-                            handleDeleteSched(parseInt(sched.schedule_id))
-                          }
-                          className="p-2 text-[2.5rem] text-primary-yellow cursor-pointer"
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                          <MdDelete
+                            onClick={() =>
+                              handleDeleteSched(parseInt(sched.schedule_id))
+                            }
+                            className="p-2 text-[2.5rem] text-primary-yellow cursor-pointer"
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </div>
