@@ -20,7 +20,6 @@ import { FaArrowCircleRight } from 'react-icons/fa'
 import Search from '@/lib/Search'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import ButtonStyle from '@/lib/ButtonStyle'
 type ResponseData = {
   crops_id: string
   crops_name: string
@@ -29,6 +28,7 @@ type ResponseData = {
   field_name: string
   suitability: string
   suitable_month: string
+  status: string
 }
 
 export default function ManageCrops() {
@@ -51,11 +51,10 @@ export default function ManageCrops() {
         },
       })
       .then((res) => {
-        console.log(res.data)
-        setResponseData(res.data)
-        // if (res.data) {
-        //   setCrops(res.data)
-        // }
+        if (res.data !== null) {
+          console.log(res.data, 'dsdas')
+          setResponseData(res.data)
+        }
       })
   }
 
@@ -67,7 +66,6 @@ export default function ManageCrops() {
   }
 
   const sortedData = [...responseData].sort((a, b) => {
-    // Sort by crops name
     if (sortOrder === 'asc') {
       return a.crops_name.localeCompare(b.crops_name)
     } else {
@@ -144,7 +142,7 @@ export default function ManageCrops() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {responseData.length > 0 ? (
+              {sortedData.length > 0 ? (
                 sortedData
                   .filter((res) => {
                     const nameMatch = res.crops_name
@@ -165,7 +163,7 @@ export default function ManageCrops() {
                         <TableCell className="flex gap-2 items-center ">
                           <span
                             className={`w-[1rem] block h-[1rem] border-2 rounded-full ${
-                              res.suitability.includes('High') &&
+                              res.suitability.includes('High') ||
                               res.suitability === 'Suitable'
                                 ? 'bg-green-500'
                                 : res.suitability.includes('Moderate')
@@ -176,7 +174,7 @@ export default function ManageCrops() {
                           {res.suitability}
                         </TableCell>
                         <TableCell>{res.crops_name}</TableCell>
-                        <TableCell></TableCell>
+                        <TableCell>{res.status}</TableCell>
                         <TableCell>{res.field_name}</TableCell>
                       </TableRow>
                     )
@@ -202,11 +200,29 @@ export default function ManageCrops() {
       <div className="absolute bottom-5 right-2 w-full flex justify-end">
         <div className="flex-col flex p-2 rounded-md bg-primary-yellow text-primary-red font-semibold">
           <span className="font-bold">Legend:</span>
-          <span>0 - not planted</span>
-          <span>1 - planted</span>
-          <span>2 - pestiscides</span>
-          <span>3 -scheduled fo harvest</span>
-          <span>4 - harvested</span>
+          <span className="flex items-center gap-2">
+            <span className="w-[1rem] block h-[1rem] border-2 rounded-full bg-green-500 font-bold"></span>
+            Highly Suitable
+          </span>
+          <span className="flex items-center gap-2">
+            <span className="w-[1rem] block h-[1rem] border-2 rounded-full bg-green-500 font-bold"></span>
+            Suitable
+          </span>
+
+          <span className="flex items-center gap-2">
+            <span className="w-[1rem] block h-[1rem] border-2 rounded-full bg-yellow-500 font-bold"></span>
+            Moderately Suitable
+          </span>
+
+          <span className="flex items-center gap-2">
+            <span className="w-[1rem] block h-[1rem] border-2 rounded-full bg-red-500 font-bold"></span>
+            Less Suitable
+          </span>
+
+          <span className="flex items-center gap-2">
+            <span className="w-[1rem] block h-[1rem] border-2 rounded-full bg-red-500 font-bold"></span>
+            Not Suitable
+          </span>
         </div>
       </div>
     </div>

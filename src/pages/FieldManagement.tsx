@@ -32,7 +32,6 @@ export default function FieldManagement() {
   const [fieldDetails, setFieldDetails] = useState({} as FieldTypes)
   const [fieldData, setFieldData] = useState<FieldTypes[]>([])
   const [showUpdateFormField, setShowUpdateFormField] = useState(false)
-  const [status, setStatus] = useState('' as string)
   const [fieldUpdateDetails, setFieldUpdateDetails] =
     useState<FieldTypes | null>(null)
   const [fieldUpdateID, setFieldUpdateID] = useState(0)
@@ -147,12 +146,6 @@ export default function FieldManagement() {
         setShowUpdateFormField(false)
         fetchFieldData()
         console.log(res.data)
-        // if (res.data.status === 'success') {
-
-        //   // window.location.reload()
-        // }
-
-        // if()
       })
   }
 
@@ -171,10 +164,6 @@ export default function FieldManagement() {
       return b.field_name.localeCompare(a.location)
     }
   })
-
-  const handleStatus = (e: string) => {
-    setStatus(e)
-  }
 
   return (
     <div className="w-full h-dvh flex  items-start flex-col pl-[20rem] relative">
@@ -266,7 +255,11 @@ export default function FieldManagement() {
                       </TableRow>
                     ))
                   ) : (
-                    <h1>LOADING OR NO INTERNET</h1>
+                    <TableRow className="text-primary-red">
+                      <TableCell colSpan={8} className="text-center">
+                        No field found or loading...
+                      </TableCell>
+                    </TableRow>
                   )}
                 </TableBody>
               </Table>
