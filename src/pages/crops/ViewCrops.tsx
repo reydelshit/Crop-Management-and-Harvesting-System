@@ -146,21 +146,49 @@ export default function ViewCrops() {
       const rowData = newData[index]
       console.log(rowData, index)
 
-      axios
-        .post(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable.php`, {
-          suitable_month: rowData.month,
-          suitable_notes: rowData.notes,
-          suitable_index: index,
-          suitable_crops_id: id,
-          suitability: rowData.suitability,
-          user_id: user_id,
-        })
-        .then((res) => {
-          console.log(res.data)
-        })
-
       return newData
     })
+
+    axios
+      .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable-table.php`, {
+        params: {
+          suitable_crops_id: id,
+          suitable_index: index,
+          user_id: user_id,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.length, 'check')
+        if (res.data.length === 0) {
+          console.log(res.data, 'check')
+          axios
+            .post(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable.php`, {
+              suitable_month: rowData[index].month,
+              suitable_notes: rowData[index].notes,
+              suitable_index: index,
+              suitable_crops_id: id,
+              suitability: rowData[index].suitability,
+              user_id: user_id,
+            })
+            .then((res) => {
+              console.log(res.data)
+            })
+        } else {
+          axios
+            .put(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable.php`, {
+              suitable_month: rowData[index].month,
+              suitable_notes: rowData[index].notes,
+              suitable_index: index,
+              suitable_crops_id: id,
+              suitability: rowData[index].suitability,
+              user_id: user_id,
+              suitable_id: res.data[index].suitable_id,
+            })
+            .then((res) => {
+              console.log(res.data)
+            })
+        }
+      })
   }
 
   const handleFetchCrops = async () => {

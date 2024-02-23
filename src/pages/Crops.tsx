@@ -80,7 +80,6 @@ export default function Crops() {
       cropsDetails.expected_yield === undefined ||
       cropsDetails.harvesting_cal === undefined ||
       cropsDetails.pest === undefined ||
-      cropsDetails.obnotes === undefined ||
       cropsDetails.variety === undefined ||
       image === null
     ) {
