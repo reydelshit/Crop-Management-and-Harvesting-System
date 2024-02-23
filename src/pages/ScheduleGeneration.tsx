@@ -24,22 +24,41 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { FaPencilAlt } from 'react-icons/fa'
-import { FieldTypes } from '@/entities/types'
+import { CropTypes, FieldTypes } from '@/entities/types'
 import { MdDelete } from 'react-icons/md'
 import ButtonStyle from '@/lib/ButtonStyle'
 import { Input } from '@/components/ui/input'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
+import moment from 'moment'
+
+type ScheduleTypes = {
+  crops_id: string
+  field_id: string
+  activity: string
+  scheduled_date: string
+  actual_start_date: string
+  actual_end_date: string
+  user_id: string
+  schedule_id: string
+}
 
 export default function ScheduleGeneration() {
-  const [showAddField, setShowAddField] = useState(false)
-  const [fieldDetails, setFieldDetails] = useState({} as FieldTypes)
+  const [showScheduleForm, setShowScheduleForm] = useState(false)
+  const [selectedCrops, setSelectedCrops] = useState<string>('')
+  const [selectedField, setSelectedField] = useState<string>('')
+  const [selectedActivity, setSelectedActivity] = useState<string>('')
   const [fieldData, setFieldData] = useState<FieldTypes[]>([])
+  const [cropsData, setCropsData] = useState<CropTypes[]>([])
+  const [scheduleData, setScheduleData] = useState<ScheduleTypes[]>([])
+
+  const [fieldDetails, setFieldDetails] = useState({} as FieldTypes)
   const [showUpdateFormField, setShowUpdateFormField] = useState(false)
   const [fieldUpdateDetails, setFieldUpdateDetails] =
     useState<FieldTypes | null>(null)
   const [fieldUpdateID, setFieldUpdateID] = useState(0)
+
   const user_id = localStorage.getItem('cmhs_token')
 
   const [state, setState] = useState({
@@ -53,7 +72,31 @@ export default function ScheduleGeneration() {
     console.log(item.selection)
   }
 
-  const fetchFieldData = () => {
+  const handleCrops = (e: string) => {
+    setSelectedCrops(e)
+  }
+  const handleField = (e: string) => {
+    setSelectedField(e)
+  }
+  const handleActivity = (e: string) => {
+    setSelectedActivity(e)
+  }
+
+  const fetchCropsField = () => {
+    axios
+      .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/crops.php`, {
+        params: {
+          user_id: user_id,
+        },
+      })
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data)
+          setCropsData(res.data)
+          // setFieldData(res.data)
+        }
+      })
+
     axios
       .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/field.php`, {
         params: {
@@ -64,28 +107,53 @@ export default function ScheduleGeneration() {
         if (res.data) {
           console.log(res.data)
           setFieldData(res.data)
+          // setFieldData(res.data)
         }
       })
   }
 
+  const fetchSchedule = () => {
+    axios
+      .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/schedule.php`, {
+        params: {
+          user_id: user_id,
+        },
+      })
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data)
+          setScheduleData(res.data)
+        }
+      })
+  }
   useEffect(() => {
-    fetchFieldData()
+    fetchCropsField()
+    fetchSchedule()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleSubmit = () => {
+    if (
+      selectedCrops === '' ||
+      selectedField === '' ||
+      selectedActivity === ''
+    ) {
+      return
+    }
     axios
-      .post(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/field.php`, {
+      .post(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/schedule.php`, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        ...fieldDetails,
+        crops_id: selectedCrops,
+        field_id: selectedField,
+        activity: selectedActivity,
+        scheduled_date: moment().format('ll'),
+        actual_start_date: state.startDate,
+        actual_end_date: state.endDate,
         user_id: user_id,
       })
       .then((res) => {
         if (res.data) {
-          fetchFieldData()
-          setShowAddField(!showAddField)
         }
         console.log(res.data)
       })
@@ -107,7 +175,7 @@ export default function ScheduleGeneration() {
       .then((res) => {
         if (res.data) {
           console.log(res.data)
-          fetchFieldData()
+          // fetchFieldData()
         }
       })
   }
@@ -160,7 +228,7 @@ export default function ScheduleGeneration() {
       })
       .then((res) => {
         setShowUpdateFormField(false)
-        fetchFieldData()
+        // fetchFieldData()
         console.log(res.data)
         // if (res.data.status === 'success') {
 
@@ -181,119 +249,92 @@ export default function ScheduleGeneration() {
 
       <div className="flex gap-10 w-full h-full justify-around">
         <div className="w-full h-full flex justify-between items-start ">
-          <div className="w-full h-[95%] bg-primary-yellow rounded-2xl p-4 gap-2 flex justify-start items-center flex-col">
+          <div className="w-full h-[95%] rounded-2xl p-4 gap-2 flex justify-start items-center flex-col">
             <div className="w-full justify-end flex">
               <ButtonStyle
-                background="red"
-                onCLick={() => setShowAddField(!showAddField)}
+                background="yellow"
+                onCLick={() => setShowScheduleForm(!showScheduleForm)}
               >
                 Set Schedule
               </ButtonStyle>
             </div>
-            <div className="w-[100%] min-h-[80%] border-4 border-primary-red rounded-3xl p-4">
-              <Table className="w-full ">
+            <div className="w-[100%] min-h-[80%] border-4 rounded-3xl border-primary-yellow p-4">
+              <Table className="w-full">
                 <TableHeader>
-                  <TableRow className="text-primary-red border-b-4 border-primary-red">
-                    <TableHead className="text-primary-red text-xl">
+                  <TableRow className="text-primary-yellow border-b-4 border-primary-yellow">
+                    <TableHead className="text-primary-yellow text-xl">
                       Schedule ID
                     </TableHead>
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Crop ID
                     </TableHead>
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Field ID
                     </TableHead>
 
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Activity
                     </TableHead>
 
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Scheduled Date
                     </TableHead>
 
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Actual Start Date
                     </TableHead>
 
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Actual End Date
                     </TableHead>
-                    <TableHead className="text-primary-red text-xl w-[10rem]">
+                    <TableHead className="text-primary-yellow text-xl w-[10rem]">
                       Status
                     </TableHead>
-                    <TableHead className="text-primary-red text-xl w-[10rem]"></TableHead>
+                    <TableHead className="text-primary-yellow text-xl w-[10rem]"></TableHead>
                   </TableRow>
                 </TableHeader>
 
                 <TableBody className="text-xl ">
-                  <TableRow className="text-primary-red border-b-4 border-primary-red">
-                    <TableCell>SCH-001</TableCell>
-                    <TableCell>CROP-002</TableCell>
-                    <TableCell>FLD-001</TableCell>
-                    <TableCell>Land preparation (tilling, plowing)</TableCell>
-                    <TableCell>2024-03-15</TableCell>
-                    <TableCell>2024-03-17</TableCell>
-                    <TableCell>2024-03-20</TableCell>
-                    <TableCell>Completed</TableCell>
+                  {scheduleData.map((sched, index) => (
+                    <TableRow
+                      key={index}
+                      className="text-primary-yellow border-b-4 border-primary-yellow"
+                    >
+                      <TableCell>{sched.schedule_id}</TableCell>
+                      <TableCell>{sched.crops_id}</TableCell>
+                      <TableCell>{sched.field_id}</TableCell>
+                      <TableCell>{sched.activity}</TableCell>
+                      <TableCell>{sched.scheduled_date}</TableCell>
+                      <TableCell>{sched.actual_start_date}</TableCell>
+                      <TableCell>{sched.actual_end_date}</TableCell>
+                      <TableCell>Ongoing</TableCell>
 
-                    <TableCell className="flex gap-2">
-                      <FaPencilAlt className="p-2 text-[2.5rem] text-primary-red cursor-pointer" />
+                      <TableCell className="flex gap-2">
+                        <FaPencilAlt className="p-2 text-[2.5rem] text-primary-yellow cursor-pointer" />
 
-                      <MdDelete className="p-2 text-[2.5rem] text-primary-red cursor-pointer" />
-                    </TableCell>
-                  </TableRow>
+                        <MdDelete className="p-2 text-[2.5rem] text-primary-yellow cursor-pointer" />
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
-
-                {/* <TableBody className="text-xl ">
-                  {fieldData.length > 0 ? (
-                    fieldData.map((field, index) => (
-                      <TableRow
-                        key={index}
-                        className="text-primary-red border-b-4 border-primary-red"
-                      >
-                        <TableCell>{field.field_id}</TableCell>
-                        <TableCell>{field.field_name}</TableCell>
-                        <TableCell>{field.location}</TableCell>
-
-                        <TableCell>{field.field_size}</TableCell>
-                        <TableCell>{field.soil_type}</TableCell>
-                        <TableCell>{field.irrigation_system}</TableCell>
-                        <TableCell>{field.crop_history}</TableCell>
-
-                        <TableCell className="flex gap-2">
-                          <FaPencilAlt
-                            onClick={() => handleUpdateForm(field.field_id)}
-                            className="p-2 text-[2.5rem] text-primary-red cursor-pointer"
-                          />
-
-                          <MdDelete
-                            onClick={() => handleDeleteField(field.field_id)}
-                            className="p-2 text-[2.5rem] text-primary-red cursor-pointer"
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <h1>LOADING OR NO INTERNET</h1>
-                  )}
-                </TableBody> */}
               </Table>
             </div>
           </div>
         </div>
       </div>
 
-      {showAddField && (
+      {showScheduleForm && (
         <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
-          <div className="w-[80%]  flex gap-4 ml-[-15rem] p-5">
+          <div className="w-[80%]  flex gap-4 ml-[-8rem] p-5">
             <div className="w-[80%] bg-primary-yellow p-4 rounded-lg flex">
               <div className="w-[70%]">
                 <div className="flex items-center gap-4 w-full">
-                  <h1>Activity</h1>
-                  <Select>
-                    <SelectTrigger className="w-[17rem] bg-primary-red text-primary-yellow font-bold">
-                      <SelectValue placeholder="Activities" />
+                  <Select
+                    required
+                    onValueChange={(e: string) => handleActivity(e)}
+                  >
+                    <SelectTrigger className="w-[80%] h-full bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                      <SelectValue placeholder="Activity.." />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="PESTICIDES">PESTICIDES</SelectItem>
@@ -322,50 +363,77 @@ export default function ScheduleGeneration() {
               </div>
 
               <div className="p-4 w-full flex flex-col ">
-                <div className="w-full h-fit p-4">
-                  <div className="flex items-center gap-4 w-full border-4 border-primary-red p-2 rounded-full mb-4">
-                    <h1 className="font-bold text-[1.5rem] text-primary-red">
-                      Choose crop
+                <div className="w-full h-[23rem] flex items-center flex-col p-4 border-4 border-primary-red rounded-3xl">
+                  <div className="w-full text-start my-4 flex-col">
+                    <span className="block">Activity: {selectedActivity}</span>
+
+                    <span className="block">
+                      Start: {moment(state.startDate).format('ll')}
+                    </span>
+                    <span className="block">
+                      End: {moment(state.endDate).format('ll')}
+                    </span>
+
+                    <span className="block">
+                      Choosen Crops: {selectedCrops}
+                    </span>
+                    <span className="block">
+                      Choosen Fields: {selectedField}
+                    </span>
+                  </div>
+
+                  <div className="mb-5 flex items-center gap-2 w-full border-4 bg-primary-red border-primary-red p-2 rounded-full overflow-hidden">
+                    <h1 className="font-bold text-[1rem] text-primary-yellow text-center">
+                      Choose crops
                     </h1>
-                    <Select>
-                      <SelectTrigger className="w-[17rem] bg-primary-red text-primary-yellow font-bold">
-                        <SelectValue placeholder="Activities" />
+                    <Select
+                      required
+                      onValueChange={(e: string) => handleCrops(e)}
+                    >
+                      <SelectTrigger className="w-[80%] h-full bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                        <SelectValue placeholder="Crops.." />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="PESTICIDES">PESTICIDES</SelectItem>
-                        <SelectItem value="HARVEST PERIOD">
-                          HARVEST PERIOD
-                        </SelectItem>
-                        <SelectItem value="Land Preparation">
-                          Land Preparation (tilling, plowing)
-                        </SelectItem>
+                        {cropsData.map((crop) => (
+                          <SelectItem value={crop.crops_id.toString()}>
+                            {crop.crops_name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
 
-                  <div className="flex items-center gap-4 w-full border-4 border-primary-red p-2 rounded-full">
-                    <h1 className="font-bold text-[1.5rem] text-primary-red">
+                  <div className="flex items-center gap-4 w-full border-4 bg-primary-red border-primary-red p-2 rounded-full overflow-hidden">
+                    <h1 className="font-bold text-[1rem] text-primary-yellow text-center">
                       Choose field
                     </h1>
-                    <Select>
-                      <SelectTrigger className="w-[17rem] bg-primary-red text-primary-yellow font-bold">
-                        <SelectValue placeholder="Activities" />
+                    <Select
+                      required
+                      onValueChange={(e: string) => handleField(e)}
+                    >
+                      <SelectTrigger className="w-[80%] h-full bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                        <SelectValue placeholder="Field.." />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="PESTICIDES">PESTICIDES</SelectItem>
-                        <SelectItem value="HARVEST PERIOD">
-                          HARVEST PERIOD
-                        </SelectItem>
-                        <SelectItem value="Land Preparation">
-                          Land Preparation (tilling, plowing)
-                        </SelectItem>
+                        {fieldData.map((field) => (
+                          <SelectItem value={field.field_id.toString()}>
+                            {field.field_name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
 
-                <div className="flex w-full justify-end h-full flex-col items-end">
-                  <ButtonStyle onCLick={() => {}} background="red">
+                <div className="flex w-full justify-end gap-4">
+                  <ButtonStyle
+                    onCLick={() => setShowScheduleForm(false)}
+                    background="yellow"
+                  >
+                    Cancel
+                  </ButtonStyle>
+
+                  <ButtonStyle onCLick={handleSubmit} background="red">
                     Submit
                   </ButtonStyle>
                 </div>
