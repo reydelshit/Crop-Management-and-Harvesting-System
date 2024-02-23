@@ -4,8 +4,7 @@ import { GiPlantSeed } from 'react-icons/gi'
 import { GrAnalytics } from 'react-icons/gr'
 import { GrSchedules } from 'react-icons/gr'
 import { Button } from '@/components/ui/button'
-import { MdOutlineAnalytics } from 'react-icons/md'
-import WeatherApi from '@/components/WeatherApi'
+
 export default function Sidebar() {
   const currentPath = useLocation().pathname
 

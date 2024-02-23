@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { DateRange } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 
@@ -164,7 +163,7 @@ export default function ScheduleGeneration() {
 
   const sortedData = [...scheduleData].sort((a, b) => {
     console.log(a.scheduled_date, b.scheduled_date)
-    // Assuming scheduled_date is the property containing the date
+
     const dateA = new Date(a.actual_start_date).getTime()
     const dateB = new Date(b.actual_end_date).getTime()
 
