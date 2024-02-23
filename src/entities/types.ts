@@ -29,3 +29,26 @@ export type FieldTypes = {
   irrigation_system: string
   created_at: string
 }
+
+export type ResponseData = {
+  crops_id: string
+  crops_name: string
+  // crop_status: string
+  field_id: string
+  field_name: string
+  suitability: string
+  suitable_month: string
+  status: string
+}
+
+export type ScheduleTypes = {
+  crops_id: string
+  field_id: string
+  activity: string
+  scheduled_date: string
+  actual_start_date: string
+  actual_end_date: string
+  user_id: string
+  schedule_id: string
+  status: string
+}

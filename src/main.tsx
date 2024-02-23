@@ -12,7 +12,6 @@ import FieldManagement from './pages/FieldManagement'
 import Reporting from './pages/Reporting'
 import ScheduleGeneration from './pages/ScheduleGeneration'
 import Crops from './pages/Crops'
-import Analytics from './pages/Analytics'
 import Register from './pages/Register'
 
 const logoutUser = async () => {
@@ -46,10 +45,7 @@ const router = createBrowserRouter([
         path: 'reporting',
         element: <Reporting />,
       },
-      {
-        path: 'analytics',
-        element: <Analytics />,
-      },
+
       {
         path: 'generate-schedule',
         element: <ScheduleGeneration />,
@@ -68,22 +64,6 @@ const router = createBrowserRouter([
     element: <Register />,
     errorElement: <div>Not found</div>,
   },
-  // {
-  //   path: 'qa',
-  //   element: (
-  //     <LayoutQA>
-  //       <QualityARoot />
-  //     </LayoutQA>
-  //   ),
-  //   errorElement: <div>Not found</div>,
-
-  //   children: [
-  //     {
-  //       path: 'visit',
-  //       element: <div>yes</div>,
-  //     },
-  //   ],
-  // },
 
   {
     path: 'logout',
