@@ -9,10 +9,43 @@ import {
 import { Link } from 'react-router-dom'
 import { FaArrowCircleRight } from 'react-icons/fa'
 import Search from '@/lib/Search'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
+type ResponseData = {
+  crops_id: string
+  crops_name: string
+  // crop_status: string
+  field_id: string
+  field_name: string
+  suitability: string
+}
 
 export default function ManageCrops() {
   const [search, setSearch] = useState('')
+  const user_id = localStorage.getItem('cmhs_token')
+  const [responseData, setResponseData] = useState<ResponseData[]>([])
+
+  const fetchCropsFromFirstPage = async () => {
+    await axios
+      .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/crops-summary.php`, {
+        params: {
+          user_id: user_id,
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        setResponseData(res.data)
+        // if (res.data) {
+        //   setCrops(res.data)
+        // }
+      })
+  }
+
+  useEffect(() => {
+    fetchCropsFromFirstPage()
+  }, [])
+
   return (
     <div className="w-full h-full flex items-start flex-col px-[2rem] relative">
       <div className="my-[2rem] flex justify-between items-center w-full">
@@ -48,32 +81,25 @@ export default function ManageCrops() {
               </TableRow>
             </TableHeader>
             <TableBody className="border-4 border-primary-yellow">
-              <TableRow className="text-white border-none">
-                <TableCell>Paid</TableCell>
-                <TableCell>Credit Card</TableCell>
-                <TableCell>Credit Card</TableCell>
-
-                <TableCell>Credit Card</TableCell>
-                <TableCell>Credit Card</TableCell>
-              </TableRow>
-
-              <TableRow className="text-white border-none">
-                <TableCell>Paid</TableCell>
-                <TableCell>Credit Card</TableCell>
-                <TableCell>Credit Card</TableCell>
-
-                <TableCell>Credit Card</TableCell>
-                <TableCell>Credit Card</TableCell>
-              </TableRow>
-
-              <TableRow className="text-white border-none">
-                <TableCell>Paid</TableCell>
-                <TableCell>Credit Card</TableCell>
-                <TableCell>Credit Card</TableCell>
-
-                <TableCell>Credit Card</TableCell>
-                <TableCell>Credit Card</TableCell>
-              </TableRow>
+              {responseData.length > 0 ? (
+                responseData.map((crop, index) => {
+                  return (
+                    <TableRow key={index} className="text-white">
+                      <TableCell>{crop.crops_id}</TableCell>
+                      <TableCell>{crop.suitability}</TableCell>
+                      <TableCell>{crop.crops_name}</TableCell>
+                      <TableCell>Planted</TableCell>
+                      <TableCell>{crop.field_id}</TableCell>
+                    </TableRow>
+                  )
+                })
+              ) : (
+                <TableRow className="text-white">
+                  <TableCell colSpan={5} className="text-center">
+                    No crops found or loading...
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>

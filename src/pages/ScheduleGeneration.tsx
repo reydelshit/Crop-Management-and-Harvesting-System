@@ -42,6 +42,7 @@ type ScheduleTypes = {
   actual_end_date: string
   user_id: string
   schedule_id: string
+  status: string
 }
 
 export default function ScheduleGeneration() {
@@ -151,91 +152,44 @@ export default function ScheduleGeneration() {
         actual_start_date: state.startDate,
         actual_end_date: state.endDate,
         user_id: user_id,
+        status: 'Ongoing',
       })
       .then((res) => {
-        if (res.data) {
-        }
-        console.log(res.data)
-      })
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    console.log(name, value)
-    setFieldDetails((values) => ({ ...values, [name]: value }))
-  }
-
-  const handleDeleteField = (field_id: number) => {
-    axios
-      .delete(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/field.php`, {
-        data: {
-          field_id: field_id,
-        },
-      })
-      .then((res) => {
-        if (res.data) {
-          console.log(res.data)
-          // fetchFieldData()
+        if (res.data.status === 'success') {
+          fetchSchedule()
+          setShowScheduleForm(false)
         }
       })
   }
 
-  const fetchUpdateFieldData = (id: number) => {
+  const handleUpdateStatus = (id: string, status: string) => {
+    console.log('click')
     axios
-      .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/field.php`, {
-        params: {
-          field_id: id,
-        },
-      })
-      .then((res) => {
-        if (res.data) {
-          console.log(res.data)
-          setFieldUpdateDetails(res.data[0])
-
-          setShowUpdateFormField(true)
-        }
-      })
-  }
-  const handleUpdateForm = (field_id: number) => {
-    fetchUpdateFieldData(field_id)
-    setFieldUpdateID(field_id)
-  }
-
-  const handleUpdateSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    axios
-      .put(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/field.php`, {
-        field_id: fieldUpdateID,
-        field_name: fieldDetails.field_name
-          ? fieldDetails.field_name
-          : fieldUpdateDetails?.field_name!,
-        field_size: fieldDetails.field_size
-          ? fieldDetails.field_size
-          : fieldUpdateDetails?.field_size!,
-        soil_type: fieldDetails.soil_type
-          ? fieldDetails.soil_type
-          : fieldUpdateDetails?.soil_type!,
-        irrigation_system: fieldDetails.irrigation_system
-          ? fieldDetails.irrigation_system
-          : fieldUpdateDetails?.irrigation_system!,
-        location: fieldDetails.location
-          ? fieldDetails.location
-          : fieldUpdateDetails?.location!,
-        crop_history: fieldDetails.crop_history
-          ? fieldDetails.crop_history
-          : fieldUpdateDetails?.crop_history!,
+      .put(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/schedule.php`, {
+        schedule_id: id,
+        status: status === 'Ongoing' ? 'Done' : 'Ongoing',
         user_id: user_id,
       })
       .then((res) => {
-        setShowUpdateFormField(false)
-        // fetchFieldData()
         console.log(res.data)
-        // if (res.data.status === 'success') {
+        if (res.data.status === 'success') {
+          fetchSchedule()
+        }
+      })
+  }
 
-        //   // window.location.reload()
-        // }
-
-        // if()
+  const handleDeleteSched = (schedule_id: number) => {
+    axios
+      .delete(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/schedule.php`, {
+        data: {
+          schedule_id: schedule_id,
+        },
+      })
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data)
+          fetchSchedule()
+        }
       })
   }
 
@@ -287,10 +241,10 @@ export default function ScheduleGeneration() {
                     <TableHead className="text-primary-yellow text-xl">
                       Actual End Date
                     </TableHead>
-                    <TableHead className="text-primary-yellow text-xl w-[10rem]">
+                    <TableHead className="text-primary-yellow text-xl ">
                       Status
                     </TableHead>
-                    <TableHead className="text-primary-yellow text-xl w-[10rem]"></TableHead>
+                    <TableHead className="text-primary-yellow text-xl w-[5rem]"></TableHead>
                   </TableRow>
                 </TableHeader>
 
@@ -305,14 +259,30 @@ export default function ScheduleGeneration() {
                       <TableCell>{sched.field_id}</TableCell>
                       <TableCell>{sched.activity}</TableCell>
                       <TableCell>{sched.scheduled_date}</TableCell>
-                      <TableCell>{sched.actual_start_date}</TableCell>
-                      <TableCell>{sched.actual_end_date}</TableCell>
-                      <TableCell>Ongoing</TableCell>
+                      <TableCell>
+                        {moment(sched.actual_start_date).format('LL')}
+                      </TableCell>
+                      <TableCell>
+                        {moment(sched.actual_end_date).format('LL')}
+                      </TableCell>
+                      <TableCell>{sched.status}</TableCell>
 
                       <TableCell className="flex gap-2">
-                        <FaPencilAlt className="p-2 text-[2.5rem] text-primary-yellow cursor-pointer" />
+                        <Button
+                          className="bg-primary-yellow text-primary-red font-bold h-[3rem] rounded-full hover:bg-primary-red hover:text-primary-yellow"
+                          onClick={() =>
+                            handleUpdateStatus(sched.schedule_id, sched.status)
+                          }
+                        >
+                          Set {sched.status === 'Ongoing' ? 'Done' : 'Ongoing'}
+                        </Button>
 
-                        <MdDelete className="p-2 text-[2.5rem] text-primary-yellow cursor-pointer" />
+                        <MdDelete
+                          onClick={() =>
+                            handleDeleteSched(parseInt(sched.schedule_id))
+                          }
+                          className="p-2 text-[2.5rem] text-primary-yellow cursor-pointer"
+                        />
                       </TableCell>
                     </TableRow>
                   ))}
@@ -333,7 +303,7 @@ export default function ScheduleGeneration() {
                     required
                     onValueChange={(e: string) => handleActivity(e)}
                   >
-                    <SelectTrigger className="w-[80%] h-full bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                    <SelectTrigger className="w-[80%] h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
                       <SelectValue placeholder="Activity.." />
                     </SelectTrigger>
                     <SelectContent>
@@ -364,21 +334,25 @@ export default function ScheduleGeneration() {
 
               <div className="p-4 w-full flex flex-col ">
                 <div className="w-full h-[23rem] flex items-center flex-col p-4 border-4 border-primary-red rounded-3xl">
-                  <div className="w-full text-start my-4 flex-col">
-                    <span className="block">Activity: {selectedActivity}</span>
-
+                  <div className="w-full text-start my-4 flex-col bg-white p-2 rounded-lg">
                     <span className="block">
-                      Start: {moment(state.startDate).format('ll')}
-                    </span>
-                    <span className="block">
-                      End: {moment(state.endDate).format('ll')}
+                      Activity:{' '}
+                      <span className="font-bold text-primary-red">
+                        {selectedActivity}
+                      </span>
                     </span>
 
                     <span className="block">
-                      Choosen Crops: {selectedCrops}
+                      Start:{' '}
+                      <span className="font-bold text-primary-red">
+                        {moment(state.startDate).format('ll')}
+                      </span>
                     </span>
                     <span className="block">
-                      Choosen Fields: {selectedField}
+                      End:{' '}
+                      <span className="font-bold text-primary-red">
+                        {moment(state.endDate).format('ll')}
+                      </span>
                     </span>
                   </div>
 
@@ -427,7 +401,14 @@ export default function ScheduleGeneration() {
 
                 <div className="flex w-full justify-end gap-4">
                   <ButtonStyle
-                    onCLick={() => setShowScheduleForm(false)}
+                    onCLick={() => {
+                      setShowScheduleForm(false)
+                      setState({
+                        startDate: new Date(),
+                        endDate: new Date(),
+                        key: 'selection',
+                      })
+                    }}
                     background="yellow"
                   >
                     Cancel
