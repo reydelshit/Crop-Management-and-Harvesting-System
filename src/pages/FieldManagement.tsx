@@ -155,7 +155,7 @@ export default function FieldManagement() {
   })
 
   return (
-    <div className="w-full h-dvh flex  items-start flex-col pl-[20rem] relative">
+    <div className="w-full h-dvh flex items-start flex-col pl-[20rem] relative">
       <div className="my-[4rem] flex justify-between items-center w-full">
         <h1 className="text-[5rem] font-semibold text-primary-yellow">
           Field Management
@@ -164,63 +164,60 @@ export default function FieldManagement() {
 
       <div className="flex gap-10 w-full h-full justify-around">
         <div className="w-full h-full flex justify-between items-start ">
-          <div className="w-full h-[95%] bg-primary-yellow rounded-2xl p-4 gap-2 flex justify-start items-center flex-col">
+          <div className="w-full h-[95%] bg-primary-red rounded-2xl p-4 gap-2 flex justify-start items-center flex-col">
             <div className="w-full justify-between flex">
               <div>
                 <Button
                   onClick={toggleSortOrder}
-                  className="rounded-full h-full bg-primary-red font-bold text-xl text-primary-yellow hover:bg-primary-red hover:text-primary-yellow hover:border-primary-yellow hover:border-4"
+                  className="rounded-full h-full border-4 border-primary-yellow bg-primary-red font-bold text-xl text-primary-yellow hover:bg-primary-yellow hover:text-primary-red hover:border-primary-yellow hover:border-4"
                 >
                   {sortOrder === 'asc' ? 'Sort Descending' : 'Sort Ascending'}
                 </Button>
               </div>
 
               <ButtonStyle
-                background="red"
+                background="yellow"
                 onCLick={() => setShowAddField(!showAddField)}
               >
                 Add Field
               </ButtonStyle>
             </div>
-            <div className="w-[100%] min-h-[80%] border-4 border-primary-red rounded-3xl p-4">
+            <div className="w-[100%] min-h-[80%] border-4 border-primary-yellow rounded-3xl p-4">
               <Table className="w-full ">
                 <TableHeader>
-                  <TableRow className="text-primary-red border-b-4 border-primary-red">
-                    <TableHead className="text-primary-red text-xl">
+                  <TableRow className="text-primary-yellow border-b-4 border-primary-yellow">
+                    <TableHead className="text-primary-yellow text-xl">
                       Field ID
                     </TableHead>
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Field Name
                     </TableHead>
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Location
                     </TableHead>
 
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Size (Area)
                     </TableHead>
 
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Soil Type
                     </TableHead>
 
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Irrigation System
                     </TableHead>
 
-                    <TableHead className="text-primary-red text-xl">
+                    <TableHead className="text-primary-yellow text-xl">
                       Crop History
                     </TableHead>
-                    <TableHead className="text-primary-red text-xl w-[10rem]"></TableHead>
+                    <TableHead className="text-primary-yellow text-xl w-[10rem]"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody className="text-xl ">
                   {fieldData.length > 0 ? (
                     sortedData.map((field, index) => (
-                      <TableRow
-                        key={index}
-                        className="text-primary-red border-b-4 border-primary-red"
-                      >
+                      <TableRow key={index} className="text-primary-yellow">
                         <TableCell>{field.field_id}</TableCell>
                         <TableCell>{field.field_name}</TableCell>
                         <TableCell>{field.location}</TableCell>
@@ -233,18 +230,18 @@ export default function FieldManagement() {
                         <TableCell className="flex gap-2">
                           <FaPencilAlt
                             onClick={() => handleUpdateForm(field.field_id)}
-                            className="p-2 text-[2.5rem] text-primary-red cursor-pointer"
+                            className="p-2 text-[2.5rem] text-primary-yellow cursor-pointer"
                           />
 
                           <MdDelete
                             onClick={() => handleDeleteField(field.field_id)}
-                            className="p-2 text-[2.5rem] text-primary-red cursor-pointer"
+                            className="p-2 text-[2.5rem] text-primary-yellow cursor-pointer"
                           />
                         </TableCell>
                       </TableRow>
                     ))
                   ) : (
-                    <TableRow className="text-primary-red">
+                    <TableRow className="text-primary-yellow">
                       <TableCell colSpan={8} className="text-center">
                         No field found or loading...
                       </TableCell>
