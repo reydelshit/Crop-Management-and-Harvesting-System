@@ -146,14 +146,15 @@ export default function ManageCrops() {
             <TableBody>
               {responseData.length > 0 ? (
                 sortedData
-                  .filter(
-                    (res) =>
+                  .filter((res) => {
+                    const nameMatch = res.crops_name
+                      .toLowerCase()
+                      .includes(search.toLowerCase())
+                    const monthMatch =
                       res.suitable_month.includes(filterMonth) ||
-                      (filterMonth === 'All' &&
-                        res.crops_name
-                          .toLowerCase()
-                          .includes(search.toLowerCase())),
-                  )
+                      filterMonth === 'All'
+                    return nameMatch && monthMatch
+                  })
                   .map((res, index) => {
                     return (
                       <TableRow
