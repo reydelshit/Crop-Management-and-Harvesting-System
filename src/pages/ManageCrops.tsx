@@ -134,11 +134,14 @@ export default function ManageCrops() {
       {/* filter buttons  */}
 
       <div className="w-full flex justify-center items-center mt-[3rem] flex-col">
-        <div className="w-[80%] flex h-[3.5rem] gap-2 items-end justify-between mb-4">
+        <div className="w-[80%] flex h-[4rem] gap-2 items-end justify-between mb-4">
           {filterMonth && (
-            <h1 className="text-2xl font-bold bg-primary-yellow p-2 text-primary-red rounded-lg">
-              Month: {filterMonth}
-            </h1>
+            <div className=" bg-primary-yellow p-2 text-primary-red rounded-lg h-full">
+              <h1 className="text-xl font-bold">Month: {filterMonth}</h1>
+              <span className="block text-md font-semibold">
+                Note: If you see N/A set the suitability in the crops section
+              </span>
+            </div>
           )}
 
           <div className="flex gap-2 h-full">
