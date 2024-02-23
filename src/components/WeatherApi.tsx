@@ -5,10 +5,15 @@ import { TiWeatherCloudy } from 'react-icons/ti'
 
 export default function WeatherApi() {
   const [weather, setWeather] = useState<any[]>([])
+
+  // tupi latitude and longitude
+  const lat = 6.33219
+  const long = 124.950172
+
   const fetchWeather = async () => {
     await axios
       .get(
-        'https://api.open-meteo.com/v1/forecast?latitude=6.3344&longitude=124.9528&current=temperature_2m,relative_humidity_2m,rain,surface_pressure,wind_speed_10m&hourly=soil_temperature_6cm&daily=weather_code,temperature_2m_max,precipitation_sum,wind_speed_10m_max&timezone=Asia%2FSingapore',
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,relative_humidity_2m,rain,surface_pressure,wind_speed_10m&hourly=soil_temperature_6cm&daily=weather_code,temperature_2m_max,precipitation_sum,wind_speed_10m_max&timezone=Asia%2FSingapore`,
       )
       .then((res) => {
         console.log(res.data)

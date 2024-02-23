@@ -1,12 +1,8 @@
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@radix-ui/react-label'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Farmer from '@/assets/farmer.png'
-import { UserType } from '@/entities/types'
 import { Navigate, useNavigate } from 'react-router-dom'
-import { setTimeout } from 'timers/promises'
 import ButtonStyle from '@/lib/ButtonStyle'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>

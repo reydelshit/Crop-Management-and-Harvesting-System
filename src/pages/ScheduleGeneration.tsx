@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { DateRange } from 'react-date-range'
-import { addDays } from 'date-fns'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 
@@ -12,22 +11,17 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-import { FaArrowRight } from 'react-icons/fa'
-
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { FaPencilAlt } from 'react-icons/fa'
 import { CropTypes, FieldTypes } from '@/entities/types'
 import { MdDelete } from 'react-icons/md'
 import ButtonStyle from '@/lib/ButtonStyle'
-import { Input } from '@/components/ui/input'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'

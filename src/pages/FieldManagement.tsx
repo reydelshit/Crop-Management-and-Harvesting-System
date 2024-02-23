@@ -1,22 +1,11 @@
-import { FaArrowRight } from 'react-icons/fa'
-
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 
 import { FaPencilAlt } from 'react-icons/fa'
 import { FieldTypes } from '@/entities/types'

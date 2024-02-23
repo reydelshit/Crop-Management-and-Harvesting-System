@@ -36,7 +36,6 @@ export default function ManageCrops() {
   const user_id = localStorage.getItem('cmhs_token')
   const [responseData, setResponseData] = useState<ResponseData[]>([])
   const [filterMonth, setFilterMonth] = useState('' as string)
-  const [monthName, setMonthName] = useState('' as string)
 
   const handleMonth = (e: string) => {
     setFilterMonth(e)
@@ -140,6 +139,8 @@ export default function ManageCrops() {
               <h1 className="text-xl font-bold">Month: {filterMonth}</h1>
               <span className="block text-md font-semibold">
                 Note: If you see N/A set the suitability in the crops section
+                <br />
+                /to show n/a select all
               </span>
             </div>
           )}
@@ -239,7 +240,21 @@ export default function ManageCrops() {
                           {res.field_name.length > 0 ? res.field_name : 'n/a'}
                         </TableCell>
 
-                        <TableCell>{res.suitable_month}</TableCell>
+                        <TableCell>
+                          {res.suitable_month.toLowerCase() === 'n/a' ? (
+                            <>
+                              N/A
+                              <Link
+                                className="bg-primary-yellow p-1 rounded-lg text-primary-red ml-2"
+                                to={`/crops/${res.crops_id}`}
+                              >
+                                Set Suitability
+                              </Link>
+                            </>
+                          ) : (
+                            res.suitable_month
+                          )}
+                        </TableCell>
                       </TableRow>
                     )
                   })
@@ -253,6 +268,9 @@ export default function ManageCrops() {
             </TableBody>
           </Table>
         </div>
+        <span className=" text-md font-semibold justify-end flex w-[80%] text-primary-yellow my-2">
+          To show all the crops select all in the month filter
+        </span>
       </div>
 
       <div className="absolute right-5 bottom-[50%]">
