@@ -61,22 +61,10 @@ export default function Sidebar() {
           >
             <GrAnalytics className="text-md h-[1.5rem] w-[1.5rem]" /> Reporting
           </Link>
-
-          <Link
-            className={`p-2 mb-2 flex items-center gap-2 text-[1.5rem] ${
-              currentPath == '/analytics'
-                ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
-                : ''
-            } `}
-            to="/analytics"
-          >
-            <MdOutlineAnalytics className="text-md h-[1.5rem] w-[1.5rem]" />
-            Analytics
-          </Link>
         </div>
 
         <div className="flex justify-center flex-col items-center mt-1">
-          <WeatherApi />
+          {/* <WeatherApi /> */}
 
           <Button
             className="bg-primary-yellow border-4 border-primary-red p-6 rounded-full w-[10rem] font-bold text-primary-red hover:bg-primary-red hover:text-primary-yellow transition-all duration-300 ease-in-out text-2xl"
