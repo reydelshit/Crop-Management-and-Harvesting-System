@@ -36,10 +36,11 @@ export default function ManageCrops() {
   const user_id = localStorage.getItem('cmhs_token')
   const [responseData, setResponseData] = useState<ResponseData[]>([])
   const [filterMonth, setFilterMonth] = useState('' as string)
-  const [sortCrops, setSortCrops] = useState(false)
+  const [monthName, setMonthName] = useState('' as string)
 
   const handleMonth = (e: string) => {
     setFilterMonth(e)
+
     console.log(e)
   }
 
@@ -75,6 +76,49 @@ export default function ManageCrops() {
 
   useEffect(() => {
     fetchCropsFromFirstPage()
+
+    const currentMonth = new Date().getMonth() + 1
+
+    switch (currentMonth) {
+      case 1:
+        setFilterMonth('January')
+        break
+      case 2:
+        setFilterMonth('February')
+        break
+      case 3:
+        setFilterMonth('March')
+        break
+      case 4:
+        setFilterMonth('April')
+        break
+      case 5:
+        setFilterMonth('May')
+        break
+      case 6:
+        setFilterMonth('June')
+        break
+      case 7:
+        setFilterMonth('July')
+        break
+      case 8:
+        setFilterMonth('August')
+        break
+      case 9:
+        setFilterMonth('September')
+        break
+      case 10:
+        setFilterMonth('October')
+        break
+      case 11:
+        setFilterMonth('November')
+        break
+      case 12:
+        setFilterMonth('December')
+        break
+      default:
+        setFilterMonth('Unknown')
+    }
   }, [])
 
   return (
@@ -90,33 +134,41 @@ export default function ManageCrops() {
       {/* filter buttons  */}
 
       <div className="w-full flex justify-center items-center mt-[3rem] flex-col">
-        <div className="w-[80%] flex h-[3.5rem] gap-2 items-end justify-end mb-4">
-          <Button
-            onClick={toggleSortOrder}
-            className="rounded-full h-full bg-primary-yellow font-bold text-xl text-primary-red hover:bg-primary-red hover:text-primary-yellow hover:border-primary-yellow hover:border-4"
-          >
-            {sortOrder === 'asc' ? 'Sort Descending' : 'Sort Ascending'}
-          </Button>
-          <Select required onValueChange={(e: string) => handleMonth(e)}>
-            <SelectTrigger className="w-[20%] h-full bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
-              <SelectValue placeholder="Month" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="All">All</SelectItem>
-              <SelectItem value="January">January</SelectItem>
-              <SelectItem value="February">February</SelectItem>
-              <SelectItem value="March">March</SelectItem>
-              <SelectItem value="April">April</SelectItem>
-              <SelectItem value="May">May</SelectItem>
-              <SelectItem value="June">June</SelectItem>
-              <SelectItem value="July">July</SelectItem>
-              <SelectItem value="August">August</SelectItem>
-              <SelectItem value="September">September</SelectItem>
-              <SelectItem value="October">October</SelectItem>
-              <SelectItem value="November">November</SelectItem>
-              <SelectItem value="December">December</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="w-[80%] flex h-[3.5rem] gap-2 items-end justify-between mb-4">
+          {filterMonth && (
+            <h1 className="text-2xl font-bold bg-primary-yellow p-2 text-primary-red rounded-lg">
+              Month: {filterMonth}
+            </h1>
+          )}
+
+          <div className="flex gap-2 h-full">
+            <Button
+              onClick={toggleSortOrder}
+              className="rounded-full h-full bg-primary-yellow font-bold text-xl text-primary-red hover:bg-primary-red hover:text-primary-yellow hover:border-primary-yellow hover:border-4"
+            >
+              {sortOrder === 'asc' ? 'Sort Descending' : 'Sort Ascending'}
+            </Button>
+            <Select required onValueChange={(e: string) => handleMonth(e)}>
+              <SelectTrigger className="w-[10rem] h-full bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                <SelectValue placeholder="Month" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All</SelectItem>
+                <SelectItem value="January">January</SelectItem>
+                <SelectItem value="February">February</SelectItem>
+                <SelectItem value="March">March</SelectItem>
+                <SelectItem value="April">April</SelectItem>
+                <SelectItem value="May">May</SelectItem>
+                <SelectItem value="June">June</SelectItem>
+                <SelectItem value="July">July</SelectItem>
+                <SelectItem value="August">August</SelectItem>
+                <SelectItem value="September">September</SelectItem>
+                <SelectItem value="October">October</SelectItem>
+                <SelectItem value="November">November</SelectItem>
+                <SelectItem value="December">December</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <div className="w-[80%] border-4 border-primary-yellow p-8 rounded-[5rem]">
           <Table className="w-full text-lg ">
@@ -139,6 +191,10 @@ export default function ManageCrops() {
                 <TableHead className="text-primary-yellow text-2xl">
                   Field Name
                 </TableHead>
+
+                <TableHead className="text-primary-yellow text-2xl">
+                  Suitability Month
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -149,7 +205,8 @@ export default function ManageCrops() {
                       .toLowerCase()
                       .includes(search.toLowerCase())
                     const monthMatch =
-                      res.suitable_month.includes(filterMonth) ||
+                      (res.suitable_month &&
+                        res.suitable_month.includes(filterMonth)) ||
                       filterMonth === 'All'
                     return nameMatch && monthMatch
                   })
@@ -171,11 +228,15 @@ export default function ManageCrops() {
                                 : 'bg-red-500'
                             }`}
                           ></span>
-                          {res.suitability}
+                          {res.suitability.length > 0 ? res.suitability : 'n/a'}
                         </TableCell>
                         <TableCell>{res.crops_name}</TableCell>
                         <TableCell>{res.status}</TableCell>
-                        <TableCell>{res.field_name}</TableCell>
+                        <TableCell>
+                          {res.field_name.length > 0 ? res.field_name : 'n/a'}
+                        </TableCell>
+
+                        <TableCell>{res.suitable_month}</TableCell>
                       </TableRow>
                     )
                   })
