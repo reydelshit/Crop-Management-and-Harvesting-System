@@ -16,8 +16,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import Search from '@/lib/Search'
-import CropsForm from '@/components/crops/CropsFom'
-import Pagination from '@/components/crops/Pagination'
+import CropsForm from '@/pages/crops/CropsFom'
+import Pagination from '@/pages/crops/Pagination'
 import ButtonStyle from '@/lib/ButtonStyle'
 
 export default function Crops() {

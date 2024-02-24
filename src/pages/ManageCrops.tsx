@@ -97,8 +97,8 @@ export default function ManageCrops() {
   }, [])
 
   return (
-    <div className="w-full h-full flex items-start flex-col px-[2rem] relative">
-      <div className="my-[2rem] flex justify-between items-center w-full">
+    <div className="w-full h-full flex items-start flex-col  relative">
+      <div className="my-[2.5rem] flex justify-between items-center w-full">
         <h1 className="text-[5rem] font-semibold text-primary-yellow">
           Crop Management
         </h1>

@@ -58,7 +58,10 @@ export default function FieldManagementTable({
       <TableBody className="text-xl ">
         {fieldData.length > 0 ? (
           sortedData.map((field, index) => (
-            <TableRow key={index} className="text-primary-yellow">
+            <TableRow
+              key={index}
+              className="text-primary-yellow border-b-4 border-primary-yellow"
+            >
               <TableCell>{field.field_id}</TableCell>
               <TableCell>{field.field_name}</TableCell>
               <TableCell>{field.location}</TableCell>

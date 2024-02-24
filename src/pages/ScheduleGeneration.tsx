@@ -180,7 +180,7 @@ export default function ScheduleGeneration() {
 
   return (
     <div className="w-full h-dvh flex  items-start flex-col pl-[20rem] relative">
-      <div className="my-[4rem] flex justify-between items-center w-full">
+      <div className="my-[2.5rem] flex justify-between items-center w-full">
         <h1 className="text-[5rem] font-semibold text-primary-yellow">
           Schedule
         </h1>
