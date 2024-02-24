@@ -9,7 +9,7 @@ import FarmerRoot from './root/FarmerRoot'
 import Login from './Login'
 import ViewCrops from './pages/crops/ViewCrops'
 import FieldManagement from './pages/FieldManagement'
-import Reporting from './pages/Reporting'
+import Reports from './pages/Reports'
 import ScheduleGeneration from './pages/ScheduleGeneration'
 import Crops from './pages/Crops'
 import Register from './pages/Register'
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
         element: <FieldManagement />,
       },
       {
-        path: 'reporting',
-        element: <Reporting />,
+        path: 'Reports',
+        element: <Reports />,
       },
 
       {

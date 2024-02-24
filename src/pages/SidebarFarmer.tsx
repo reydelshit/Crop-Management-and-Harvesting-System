@@ -56,9 +56,9 @@ export default function Sidebar() {
                 ? ' bg-primary-red text-primary-yellow rounded-full self-center flex justify-center w-full active:text-primary-yellow'
                 : ''
             } `}
-            to="/reporting"
+            to="/reports"
           >
-            <GrAnalytics className="text-md h-[1.5rem] w-[1.5rem]" /> Reporting
+            <GrAnalytics className="text-md h-[1.5rem] w-[1.5rem]" /> Reports
           </Link>
         </div>
 

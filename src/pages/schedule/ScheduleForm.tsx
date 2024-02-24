@@ -108,8 +108,8 @@ export default function ScheduleForm({
                     <SelectValue placeholder="Crops.." />
                   </SelectTrigger>
                   <SelectContent>
-                    {cropsData.map((crop) => (
-                      <SelectItem value={crop.crops_id.toString()}>
+                    {cropsData.map((crop, index) => (
+                      <SelectItem key={index} value={crop.crops_id.toString()}>
                         {crop.crops_name}
                       </SelectItem>
                     ))}
@@ -126,8 +126,8 @@ export default function ScheduleForm({
                     <SelectValue placeholder="Field.." />
                   </SelectTrigger>
                   <SelectContent>
-                    {fieldData.map((field) => (
-                      <SelectItem value={field.field_id.toString()}>
+                    {fieldData.map((field, index) => (
+                      <SelectItem key={index} value={field.field_id.toString()}>
                         {field.field_name}
                       </SelectItem>
                     ))}
