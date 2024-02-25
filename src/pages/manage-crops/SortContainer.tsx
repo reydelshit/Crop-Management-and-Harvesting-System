@@ -21,12 +21,10 @@ export default function SortContainer({
   return (
     <div className="w-[80%] flex h-[4rem] gap-2 items-end justify-between mb-4">
       {filterMonth && (
-        <div className=" bg-primary-yellow p-2 text-primary-red rounded-lg h-full">
+        <div className="p-2 text-primary-yellow rounded-lg h-full">
           <h1 className="text-xl font-bold">Month: {filterMonth}</h1>
           <span className="block text-md font-semibold">
             Note: If you see N/A set the suitability in the crops section
-            <br />
-            /to show n/a select all
           </span>
         </div>
       )}

@@ -30,33 +30,48 @@ type ResponseType = {
 
 const styles = StyleSheet.create({
   page: {
-    fontFamily: 'Helvetica',
-    flexDirection: 'column',
-    margin: 20,
+    backgroundColor: 'white',
+    padding: 20,
   },
   section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
+    marginBottom: 10,
   },
   heading: {
     fontSize: 18,
-    marginBottom: 100,
-    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   dataContainer: {
-    marginBottom: 5,
-    padding: 10,
-    color: 'black',
+    marginBottom: 20,
   },
-  dataText: {
-    fontSize: 12,
-    marginBottom: 5,
+  tableContainer: {
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: '#000',
+  },
+  columnHeader: {
+    flex: 1,
+    fontWeight: 'bold',
+    padding: 5,
+    textAlign: 'center',
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#000',
+  },
+  tableCell: {
+    flex: 1,
+    padding: 5,
+    textAlign: 'center',
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#000',
   },
   noDataText: {
-    fontSize: 12,
     fontStyle: 'italic',
-    color: '#888',
   },
 })
 
@@ -190,7 +205,7 @@ export default function Reports() {
       <Document>
         <Page size="A4" style={styles.page}>
           <View style={styles.section}>
-            <Text style={styles.heading}>
+            <Text style={{ textAlign: 'center', marginVertical: 40 }}>
               REPORT FOR{' '}
               {fieldName
                 ? fieldName.toUpperCase()
@@ -199,62 +214,52 @@ export default function Reports() {
             </Text>
 
             <View style={styles.dataContainer}>
-              <Text>List Crops Planted</Text>
+              <Text style={{ marginBottom: 10 }}>List Crops Planted</Text>
               {responseData.length > 0 ? (
-                responseData.map((data: any, index: number) => (
-                  <View style={styles.dataContainer} key={index}>
-                    <Text style={styles.dataText}>
-                      Crop Name: {data.crops_name}
-                    </Text>
-                    <Text style={styles.dataText}>
-                      Harvesting Duration:{data.harvesting_cal}
-                    </Text>
-                    <Text style={styles.dataText}>
-                      Notes / Description: {data.obnotes}
-                    </Text>
+                <View style={styles.tableContainer}>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.columnHeader}>Crop Name</Text>
+                    <Text style={styles.columnHeader}>Harvesting Duration</Text>
+                    <Text style={styles.columnHeader}>Notes / Description</Text>
                   </View>
-                ))
+                  {responseData.map((data: any, index: number) => (
+                    <View style={styles.tableRow} key={index}>
+                      <Text style={styles.tableCell}>{data.crops_name}</Text>
+                      <Text style={styles.tableCell}>
+                        {data.harvesting_cal}
+                      </Text>
+                      <Text style={styles.tableCell}>{data.obnotes}</Text>
+                    </View>
+                  ))}
+                </View>
               ) : (
                 <Text style={styles.noDataText}>No data to display</Text>
               )}
             </View>
 
             <View style={styles.dataContainer}>
-              <Text>Field Details</Text>
+              <Text style={{ marginBottom: 10 }}>Field Details</Text>
               {fieldDetails.length > 0 ? (
-                fieldDetails.map((data, index) => (
-                  <View key={index} style={styles.dataContainer}>
-                    <View style={{ marginBottom: 5 }}>
-                      <Text style={styles.dataText}>
-                        Field Size: {data.field_size}
-                      </Text>
-                    </View>
-
-                    <View style={{ marginBottom: 5 }}>
-                      <Text style={styles.dataText}>
-                        Irrigation System: {data.irrigation_system}
-                      </Text>
-                    </View>
-
-                    <View style={{ marginBottom: 5 }}>
-                      <Text style={styles.dataText}>
-                        Location: {data.location}
-                      </Text>
-                    </View>
-
-                    <View style={{ marginBottom: 5 }}>
-                      <Text style={styles.dataText}>
-                        Soil Type: {data.soil_type}
-                      </Text>
-                    </View>
-
-                    <View style={{ marginBottom: 5 }}>
-                      <Text style={styles.dataText}>
-                        Crop History: {data.crop_history}
-                      </Text>
-                    </View>
+                <View style={styles.tableContainer}>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.columnHeader}>Field Size</Text>
+                    <Text style={styles.columnHeader}>Irrigation System</Text>
+                    <Text style={styles.columnHeader}>Location</Text>
+                    <Text style={styles.columnHeader}>Soil Type</Text>
+                    <Text style={styles.columnHeader}>Crop History</Text>
                   </View>
-                ))
+                  {fieldDetails.map((data, index) => (
+                    <View style={styles.tableRow} key={index}>
+                      <Text style={styles.tableCell}>{data.field_size}</Text>
+                      <Text style={styles.tableCell}>
+                        {data.irrigation_system}
+                      </Text>
+                      <Text style={styles.tableCell}>{data.location}</Text>
+                      <Text style={styles.tableCell}>{data.soil_type}</Text>
+                      <Text style={styles.tableCell}>{data.crop_history}</Text>
+                    </View>
+                  ))}
+                </View>
               ) : (
                 <Text style={styles.noDataText}>No data to display</Text>
               )}
@@ -264,7 +269,6 @@ export default function Reports() {
       </Document>
     )
   }
-
   return (
     <div className="w-full min-h-dvh flex items-start flex-col pl-[20rem] relative">
       <div className="my-[2.5rem] flex justify-between items-center w-full">

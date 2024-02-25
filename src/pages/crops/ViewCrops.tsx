@@ -1,7 +1,7 @@
 import { CropTypes } from '@/entities/types'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import CropsDetailsConditional from '@/lib/CropsDetailsConditional'
 
@@ -22,12 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import GoBackBtn from '@/lib/GoBackBtn'
 
 export default function ViewCrops() {
   const [crops, setCrops] = useState({} as CropTypes)
   const { id } = useParams()
   const user_id = localStorage.getItem('cmhs_token')
-
+  const [suitabilityID, setSuitabilityID] = useState(0)
   const [rowData, setRowData] = useState([
     {
       month: 'January',
@@ -139,15 +140,10 @@ export default function ViewCrops() {
   }
 
   const handleSave = (index: number) => {
-    setRowData((prevData) => {
-      const newData = [...prevData]
-      newData[index].editMode = false
+    const updatedRowData = [...rowData]
+    updatedRowData[index].editMode = false
 
-      const rowData = newData[index]
-      console.log(rowData, index)
-
-      return newData
-    })
+    const rowDataToUpdate = updatedRowData[index]
 
     axios
       .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable-table.php`, {
@@ -158,36 +154,35 @@ export default function ViewCrops() {
         },
       })
       .then((res) => {
-        console.log(res.data.length, 'check')
-        if (res.data.length === 0) {
-          console.log(res.data, 'check')
-          axios
-            .post(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable.php`, {
-              suitable_month: rowData[index].month,
-              suitable_notes: rowData[index].notes,
-              suitable_index: index,
-              suitable_crops_id: id,
-              suitability: rowData[index].suitability,
-              user_id: user_id,
-            })
-            .then((res) => {
-              console.log(res.data)
-            })
-        } else {
-          axios
-            .put(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable.php`, {
-              suitable_month: rowData[index].month,
-              suitable_notes: rowData[index].notes,
-              suitable_index: index,
-              suitable_crops_id: id,
-              suitability: rowData[index].suitability,
-              user_id: user_id,
-              suitable_id: res.data[index].suitable_id,
-            })
-            .then((res) => {
-              console.log(res.data)
-            })
+        const existingData = res.data.length > 0 ? res.data[0] : null
+
+        const requestData = {
+          suitable_month: rowDataToUpdate.month,
+          suitable_notes: rowDataToUpdate.notes,
+          suitable_index: index,
+          suitable_crops_id: id,
+          suitability: rowDataToUpdate.suitability,
+          user_id: user_id,
+          suitable_id: existingData ? existingData.suitable_id : null,
         }
+
+        const axiosRequest = existingData
+          ? axios.put(
+              `${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable.php`,
+              requestData,
+            )
+          : axios.post(
+              `${import.meta.env.VITE_CMHS_LOCAL_HOST}/suitable.php`,
+              requestData,
+            )
+
+        return axiosRequest.then((res) => {
+          console.log(res.data)
+          setSuitabilityID(res.data.suitable_id)
+        })
+      })
+      .catch((error) => {
+        console.error('Error:', error)
       })
   }
 
@@ -205,7 +200,6 @@ export default function ViewCrops() {
         }
       })
   }
-
   useEffect(() => {
     handleFetchCrops()
     fetchSuitableData()
@@ -218,6 +212,7 @@ export default function ViewCrops() {
           Crop Management
         </h1>
       </div>
+      <GoBackBtn />
       <div className="flex flex-row justify-between">
         <div>
           <div className="w-[20rem] h-[20rem]">
@@ -266,7 +261,6 @@ export default function ViewCrops() {
             </div>
           </div>
         </div>
-
         <div className="w-[70%]">
           <Table className="w-full">
             <TableHeader className="bg-primary-yellow border-4 border-primary-yellow">
@@ -354,13 +348,15 @@ export default function ViewCrops() {
                       ) : (
                         <Button
                           className="bg-primary-yellow text-primary-red w-[5rem] font-bold hover:bg-primary-red hover:text-primary-yellow"
-                          onClick={() =>
+                          onClick={() => {
                             setRowData((prevData) => {
                               const newData = [...prevData]
                               newData[index].editMode = true
                               return newData
                             })
-                          }
+
+                            // setSuitabilityID(row.suitable_id)
+                          }}
                         >
                           Edit
                         </Button>
@@ -371,6 +367,7 @@ export default function ViewCrops() {
             </TableBody>
           </Table>
         </div>
+        G
       </div>
     </div>
   )

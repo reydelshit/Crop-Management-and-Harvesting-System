@@ -7,6 +7,7 @@ import { ResponseData } from '@/entities/types'
 import ManageCropsTable from './manage-crops/ManageCropsTable'
 import SortContainer from './manage-crops/SortContainer'
 import Legend from './manage-crops/Legend'
+import GoFrontBtn from '@/lib/GoFront'
 export default function ManageCrops() {
   const [search, setSearch] = useState('')
   const user_id = localStorage.getItem('cmhs_token')
@@ -129,7 +130,7 @@ export default function ManageCrops() {
 
       <div className="absolute right-5 bottom-[50%]">
         <Link to="/crops">
-          <FaArrowCircleRight className="text-primary-yellow text-[4rem]" />
+          <GoFrontBtn />
         </Link>
       </div>
 

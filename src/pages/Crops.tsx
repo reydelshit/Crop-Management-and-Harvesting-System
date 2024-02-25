@@ -19,6 +19,7 @@ import Search from '@/lib/Search'
 import CropsForm from '@/pages/crops/CropsFom'
 import Pagination from '@/pages/crops/Pagination'
 import ButtonStyle from '@/lib/ButtonStyle'
+import GoBackBtn from '@/lib/GoBackBtn'
 
 export default function Crops() {
   const [image, setImage] = useState<string | null>(null)
@@ -205,7 +206,7 @@ export default function Crops() {
           <Search onChange={(e) => setSearchCrops(e.target.value)} />
         </div>
       </div>
-
+      <GoBackBtn />
       <div className="w-full grid grid-cols-4 grid-rows-2 gap-4 h-[45rem]">
         {crops
           .filter((crop) =>
