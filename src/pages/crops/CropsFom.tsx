@@ -10,7 +10,7 @@ import {
   DialogTrigger,
   DialogClose,
 } from '@/components/ui/dialog'
-import DefaultCropsImage from '@/assets/default-image.jpg'
+import DefaultCropsImage from '@/assets/default-product.jpg'
 
 export default function CropsForm({
   handleSubmit,
@@ -62,16 +62,13 @@ export default function CropsForm({
           <Label>Planting Method</Label>
           <Input required onChange={handleInputChange} name="planting_method" />
         </div>
+
         <div>
-          <Label>Expectedly Yield: (eg. around 5 months)</Label>
-          <Input required onChange={handleInputChange} name="expected_yield" />
-        </div>
-        <div>
-          <Label>Harvesting Calendar (eg. around 5 months)</Label>
+          <Label>Harvesting Calendar (eg. 5 months / 1 year/s)</Label>
           <Input required onChange={handleInputChange} name="harvesting_cal" />
         </div>
         <div>
-          <Label>Pesticide Schedule</Label>
+          <Label>Pesticide Schedule (eg. 15 days)</Label>
           <Input required onChange={handleInputChange} name="pest" />
         </div>
 
@@ -83,7 +80,7 @@ export default function CropsForm({
         <div className="gap-2 flex justify-center">
           <Button
             onClick={() => setShowAddCrops(false)}
-            className="mt-2 bg-primary-red  p-2 text-white font-bold w-[8rem]"
+            className="mt-2 hover:bg-primary-yellow hover:text-primary-red bg-primary-red  p-2 text-white font-bold w-[8rem]"
           >
             Cancel
           </Button>

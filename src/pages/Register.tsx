@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Farmer from '@/assets/farmer.png'
 import { Navigate, useNavigate } from 'react-router-dom'
 import ButtonStyle from '@/lib/ButtonStyle'
+import GoBackBtn from '@/lib/GoBackBtn'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 
@@ -79,6 +80,10 @@ export default function Register() {
   return (
     <div className="w-dvw h-dvh flex justify-between items-center flex-row ">
       <div className="bg-primary-red text-primary-yellow shadow-slate-400 w-[40%] px-[5rem] h-full flex justify-center items-center flex-col p-4 rounded-md">
+        <div className="flex justify-start items-start w-full my-[2rem]">
+          <GoBackBtn />
+        </div>
+
         <h1 className="mb-[5rem] font-semibold text-3xl">
           CROP MANAGEMENT AND HARVESTING SCHEDULE SYSTEM
         </h1>

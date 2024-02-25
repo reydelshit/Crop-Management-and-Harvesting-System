@@ -11,6 +11,7 @@ import { ScheduleTypes } from '@/entities/types'
 import ScheduleTable from './schedule/ScheduleTable'
 import ScheduleForm from './schedule/ScheduleForm'
 import FilterContainer from './schedule/FilterContainer'
+import { id } from 'date-fns/locale'
 
 export default function ScheduleGeneration() {
   const [showScheduleForm, setShowScheduleForm] = useState(false)
@@ -22,8 +23,10 @@ export default function ScheduleGeneration() {
   const [scheduleData, setScheduleData] = useState<ScheduleTypes[]>([])
   const [status, setStatus] = useState('' as string)
   const [sortOrder, setSortOrder] = useState('asc')
-
+  const [pesticidesDate, setPesticidesDate] = useState<string>('')
+  const [harvestDate, setHarvestDate] = useState<string>('')
   const user_id = localStorage.getItem('cmhs_token')
+  const [selectedCropsName, setSelectedCropsName] = useState<string>('')
 
   const [state, setState] = useState({
     startDate: new Date(),
@@ -33,15 +36,110 @@ export default function ScheduleGeneration() {
 
   const handleChange = (item: any) => {
     setState(item.selection)
-    console.log(item.selection)
+
+    switch (selectedActivity) {
+      case 'Pesticides':
+        if (pesticidesDate.includes('days')) {
+          const numberRegex = /\d+/
+
+          const match = pesticidesDate.match(numberRegex)
+
+          if (match) {
+            const days = parseInt(match[0])
+
+            const startDate = new Date(state.startDate)
+            const endDate = new Date(startDate)
+
+            endDate.setDate(startDate.getDate() + days)
+
+            setState((prevState) => ({
+              ...prevState,
+              endDate: endDate,
+            }))
+          }
+        }
+        break
+      case 'Harvest Period':
+        if (harvestDate.includes('months')) {
+          const numberRegex = /\d+/
+
+          const match = harvestDate.match(numberRegex)
+
+          if (match) {
+            const months = parseInt(match[0])
+
+            const startDate = new Date(state.startDate)
+            const endDate = new Date(startDate)
+
+            endDate.setMonth(startDate.getMonth() + months)
+
+            setState((prevState) => ({
+              ...prevState,
+              endDate: endDate,
+            }))
+          }
+        } else if (
+          harvestDate.includes('years') ||
+          harvestDate.includes('year')
+        ) {
+          const numberRegex = /\d+/
+
+          const match = harvestDate.match(numberRegex)
+
+          if (match) {
+            const years = parseInt(match[0])
+
+            const startDate = new Date(state.startDate)
+            const endDate = new Date(startDate)
+
+            endDate.setFullYear(startDate.getFullYear() + years)
+
+            setState((prevState) => ({
+              ...prevState,
+              endDate: endDate,
+            }))
+          }
+        }
+        break
+      case 'Land Preparation':
+        break
+    }
+    // console.log(item.selection)
   }
 
   const handleCrops = (e: string) => {
-    setSelectedCrops(e)
+    const numberRegex = /\d+/
+    const match = e.match(numberRegex)
+
+    setSelectedCropsName(e.replace(numberRegex, ''))
+
+    if (match) {
+      const id = match[0]
+
+      setSelectedCrops(id)
+      axios
+        .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/schedule-calc.php`, {
+          params: {
+            user_id: user_id,
+            crops_id: id,
+          },
+        })
+        .then((res) => {
+          console.log(res.data)
+
+          if (res.data !== null) {
+            console.log(res.data[0].pest)
+            console.log(res.data[0].harvesting_cal)
+            setPesticidesDate(res.data[0].pest)
+            setHarvestDate(res.data[0].harvesting_cal)
+          }
+        })
+    }
   }
   const handleField = (e: string) => {
     setSelectedField(e)
   }
+
   const handleActivity = (e: string) => {
     setSelectedActivity(e)
   }
@@ -85,7 +183,7 @@ export default function ScheduleGeneration() {
       })
       .then((res) => {
         if (res.data) {
-          console.log(res.data)
+          // console.log(res.data)
           setScheduleData(res.data)
         }
       })
@@ -203,7 +301,6 @@ export default function ScheduleGeneration() {
                 handleDeleteSched={handleDeleteSched}
                 status={status}
               />
-              F
             </div>
           </div>
         </div>
@@ -222,6 +319,9 @@ export default function ScheduleGeneration() {
           fieldData={fieldData}
           handleCrops={handleCrops}
           handleField={handleField}
+          pesticidesDate={pesticidesDate}
+          harvestDate={harvestDate}
+          selectedCropsName={selectedCropsName}
         />
       )}
     </div>

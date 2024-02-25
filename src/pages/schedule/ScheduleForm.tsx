@@ -28,6 +28,9 @@ export default function ScheduleForm({
   fieldData,
   handleCrops,
   handleField,
+  pesticidesDate,
+  harvestDate,
+  selectedCropsName,
 }: {
   handleActivity: (e: string) => void
   handleChange: (item: any) => void
@@ -40,20 +43,23 @@ export default function ScheduleForm({
   fieldData: FieldTypes[]
   handleCrops: (e: string) => void
   handleField: (e: string) => void
+  pesticidesDate: string
+  harvestDate: string
+  selectedCropsName: string
 }) {
   return (
     <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
-      <div className="w-[80%]  flex gap-4 ml-[-8rem] p-5">
-        <div className="w-[80%] bg-primary-yellow p-4 rounded-lg flex">
-          <div className="w-[70%]">
-            <div className="flex items-center gap-4 w-full">
+      <div className="w-[80%] flex gap-4 ml-[-15rem] p-5">
+        <div className="w-[90%] bg-primary-yellow p-4 rounded-lg flex">
+          <div className="w-full">
+            <div className="flex items-center gap-4 w-full mb-2">
               <Select required onValueChange={(e: string) => handleActivity(e)}>
                 <SelectTrigger className="w-[80%] h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
                   <SelectValue placeholder="Activity.." />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="PESTICIDES">PESTICIDES</SelectItem>
-                  <SelectItem value="HARVEST PERIOD">HARVEST PERIOD</SelectItem>
+                  <SelectItem value="Pesticides">PESTICIDES</SelectItem>
+                  <SelectItem value="Harvest Period">HARVEST PERIOD</SelectItem>
                   <SelectItem value="Land Preparation">
                     Land Preparation (tilling, plowing)
                   </SelectItem>
@@ -61,7 +67,25 @@ export default function ScheduleForm({
               </Select>
             </div>
 
-            <div className="mt-[3rem]">
+            <div className="flex items-center gap-4 w-full mb-2">
+              <Select required onValueChange={(e: string) => handleCrops(e)}>
+                <SelectTrigger className="w-[80%] h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                  <SelectValue placeholder="Crops.." />
+                </SelectTrigger>
+                <SelectContent>
+                  {cropsData.map((crop, index) => (
+                    <SelectItem
+                      key={index}
+                      value={crop.crops_name + crop.crops_id.toString()}
+                    >
+                      {crop.crops_name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
               <DateRangePicker
                 editableDateInputs={true}
                 onChange={handleChange}
@@ -75,68 +99,56 @@ export default function ScheduleForm({
             </div>
           </div>
 
-          <div className="p-4 w-full flex flex-col ">
-            <div className="w-full h-[23rem] flex items-center flex-col p-4 border-4 border-primary-red rounded-3xl">
+          <div className="w-full flex flex-col ">
+            <div className="flex items-center gap-4 w-full mb-2">
+              <Select required onValueChange={(e: string) => handleField(e)}>
+                <SelectTrigger className="w-full h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                  <SelectValue placeholder="Field.." />
+                </SelectTrigger>
+                <SelectContent>
+                  {fieldData.map((field, index) => (
+                    <SelectItem key={index} value={field.field_id.toString()}>
+                      {field.field_name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="w-full h-fit flex items-center flex-col p-4 border-4 border-primary-red rounded-3xl">
               <div className="w-full text-start my-4 flex-col bg-white p-2 rounded-lg">
-                <span className="block">
+                {pesticidesDate.length > 0 && (
+                  <span className="block mb-[2rem] font-semibold text-[1.2rem] p-2 rounded-xl">
+                    {selectedCropsName}{' '}
+                    {selectedActivity === 'Harvest Period'
+                      ? harvestDate +
+                        '. - Automatically set the end date based on the start date selected'
+                      : pesticidesDate}{' '}
+                  </span>
+                )}
+
+                <span className="block text-[1.2rem] p-2">
                   Activity:{' '}
                   <span className="font-bold text-primary-red">
                     {selectedActivity}
                   </span>
                 </span>
 
-                <span className="block">
+                <span className="block text-[1.2rem] p-2">
                   Start:{' '}
                   <span className="font-bold text-primary-red">
                     {moment(state.startDate).format('ll')}
                   </span>
                 </span>
-                <span className="block">
+                <span className="block text-[1.2rem] p-2">
                   End:{' '}
                   <span className="font-bold text-primary-red">
                     {moment(state.endDate).format('ll')}
                   </span>
                 </span>
               </div>
-
-              <div className="mb-5 flex items-center gap-2 w-full border-4 bg-primary-red border-primary-red p-2 rounded-full overflow-hidden">
-                <h1 className="font-bold text-[1rem] text-primary-yellow text-center">
-                  Choose crops
-                </h1>
-                <Select required onValueChange={(e: string) => handleCrops(e)}>
-                  <SelectTrigger className="w-[80%] h-full bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
-                    <SelectValue placeholder="Crops.." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {cropsData.map((crop, index) => (
-                      <SelectItem key={index} value={crop.crops_id.toString()}>
-                        {crop.crops_name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex items-center gap-4 w-full border-4 bg-primary-red border-primary-red p-2 rounded-full overflow-hidden">
-                <h1 className="font-bold text-[1rem] text-primary-yellow text-center">
-                  Choose field
-                </h1>
-                <Select required onValueChange={(e: string) => handleField(e)}>
-                  <SelectTrigger className="w-[80%] h-full bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
-                    <SelectValue placeholder="Field.." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {fieldData.map((field, index) => (
-                      <SelectItem key={index} value={field.field_id.toString()}>
-                        {field.field_name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
 
-            <div className="flex w-full justify-end gap-4">
+            <div className="flex w-full justify-end gap-4 mt-2">
               <ButtonStyle
                 onCLick={() => {
                   setShowScheduleForm(false)

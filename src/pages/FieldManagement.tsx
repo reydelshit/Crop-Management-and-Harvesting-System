@@ -16,6 +16,9 @@ export default function FieldManagement() {
   const [fieldUpdateDetails, setFieldUpdateDetails] =
     useState<FieldTypes | null>(null)
   const [fieldUpdateID, setFieldUpdateID] = useState(0)
+  const [irrigationSystem, setIrrigationSystem] = useState('')
+  const [soilType, setSoilType] = useState('')
+
   const user_id = localStorage.getItem('cmhs_token')
 
   const fetchFieldData = () => {
@@ -33,6 +36,14 @@ export default function FieldManagement() {
       })
   }
 
+  const handleIrrigation = (e: string) => {
+    setIrrigationSystem(e)
+  }
+
+  const handleSoitType = (e: string) => {
+    setSoilType(e)
+  }
+
   useEffect(() => {
     fetchFieldData()
   }, [])
@@ -45,6 +56,8 @@ export default function FieldManagement() {
           'Content-Type': 'multipart/form-data',
         },
         ...fieldDetails,
+        irrigation_system: irrigationSystem,
+        soil_type: soilType,
         user_id: user_id,
       })
       .then((res) => {
@@ -188,6 +201,8 @@ export default function FieldManagement() {
 
       {showAddField && (
         <AddFieldFom
+          handleIrrigation={handleIrrigation}
+          handleSoitType={handleSoitType}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setShowAddField={setShowAddField}

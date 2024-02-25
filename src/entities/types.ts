@@ -10,7 +10,6 @@ export type CropTypes = {
   crops_img: string
   crops_name: string
   planting_method: string
-  expected_yield: string
   harvesting_cal: string
   pest: string
   obnotes: string

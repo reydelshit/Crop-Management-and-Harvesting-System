@@ -1,16 +1,27 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 export default function AddFieldFom({
   handleSubmit,
   handleInputChange,
   showAddField,
   setShowAddField,
+  handleIrrigation,
+  handleSoitType,
 }: {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   showAddField: boolean
   setShowAddField: (e: boolean) => void
+  handleIrrigation: (e: string) => void
+  handleSoitType: (e: string) => void
 }) {
   return (
     <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
@@ -43,20 +54,58 @@ export default function AddFieldFom({
             required
             onChange={handleInputChange}
           />
-          <Input
+          <div className="flex items-center gap-4 w-full ">
+            <Select required onValueChange={(e: string) => handleSoitType(e)}>
+              <SelectTrigger className="w-full h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                <SelectValue placeholder="Soil type.." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Alluvial soil">Alluvial soil</SelectItem>
+                <SelectItem value="Clayey soil">Clayey soil</SelectItem>
+                <SelectItem value="Loamy soil">Loamy soil</SelectItem>
+
+                <SelectItem value="Sandy soil">Sandy soil</SelectItem>
+                <SelectItem value="Volcanic soil">Volcanic soil</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          {/* <Input
             className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
             placeholder="Soil Type"
             name="soil_type"
             required
             onChange={handleInputChange}
-          />
-          <Input
+          /> */}
+          {/* <Input
             className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
             placeholder="Irrigation System"
             name="irrigation_system"
             required
             onChange={handleInputChange}
-          />
+          /> */}
+          <div className="flex items-center gap-4 w-full my-2">
+            <Select required onValueChange={(e: string) => handleIrrigation(e)}>
+              <SelectTrigger className="w-full h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                <SelectValue placeholder="Irrigation system.." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Sprinkler irrigation">
+                  Sprinkler irrigation
+                </SelectItem>
+                <SelectItem value="Drip irrigation">Drip irrigation</SelectItem>
+                <SelectItem value="Furrow irrigation">
+                  Furrow irrigation
+                </SelectItem>
+
+                <SelectItem value="Canal irrigation">
+                  Canal irrigation
+                </SelectItem>
+                <SelectItem value="Subsurface irrigation">
+                  Subsurface irrigation
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <Input
             className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
             placeholder="Past Crop History"
@@ -64,7 +113,6 @@ export default function AddFieldFom({
             required
             onChange={handleInputChange}
           />
-
           <div className="flex gap-2 justify-end items-center">
             <Button
               onClick={() => setShowAddField(!showAddField)}

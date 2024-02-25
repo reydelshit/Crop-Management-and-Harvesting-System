@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react'
 import { CropTypes } from '@/entities/types'
 import { PiDotsThreeVerticalBold } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
-import DefaultCropsImage from '@/assets/default-image.jpg'
+import DefaultCropsImage from '@/assets/default-product.jpg'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -78,7 +79,6 @@ export default function Crops() {
     if (
       cropsDetails.crops_name === undefined ||
       cropsDetails.planting_method === undefined ||
-      cropsDetails.expected_yield === undefined ||
       cropsDetails.harvesting_cal === undefined ||
       cropsDetails.pest === undefined ||
       cropsDetails.variety === undefined ||
@@ -161,9 +161,6 @@ export default function Crops() {
         planting_method: cropsDetails.planting_method
           ? cropsDetails.planting_method
           : updateCropsDefault?.planting_method!,
-        expected_yield: cropsDetails.expected_yield
-          ? cropsDetails.expected_yield
-          : updateCropsDefault?.expected_yield!,
         harvesting_cal: cropsDetails.harvesting_cal
           ? cropsDetails.harvesting_cal
           : updateCropsDefault?.harvesting_cal!,
@@ -329,16 +326,9 @@ export default function Crops() {
                 name="planting_method"
               />
             </div>
+
             <div>
-              <Label>Expectedly Yield: (eg. around 5 months)</Label>
-              <Input
-                defaultValue={updateCropsDefault?.expected_yield}
-                onChange={handleInputChange}
-                name="expected_yield"
-              />
-            </div>
-            <div>
-              <Label>Harvesting Calendar (eg. around 5 months)</Label>
+              <Label>Harvesting Calendar (eg. 5 months / 1 year/s)</Label>
               <Input
                 defaultValue={updateCropsDefault?.harvesting_cal}
                 onChange={handleInputChange}
@@ -346,7 +336,7 @@ export default function Crops() {
               />
             </div>
             <div>
-              <Label>Pesticide Schedule</Label>
+              <Label>Pesticide Schedule (eg. 15 days)</Label>
               <Input
                 defaultValue={updateCropsDefault?.pest}
                 onChange={handleInputChange}
@@ -366,7 +356,7 @@ export default function Crops() {
             <div className="gap-2 flex">
               <Button
                 onClick={() => setShowUpdateForm(false)}
-                className="mt-2 bg-primary-yellow p-2 text-primary-red font-bold w-[8rem]"
+                className="mt-2 bg-primary-yellow p-2 hover:bg-primary-yellow hover:text-primary-red text-primary-red font-bold w-[8rem]"
               >
                 Cancel
               </Button>

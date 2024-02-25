@@ -74,7 +74,7 @@ export default function Login() {
           required
         />
 
-        <div className="w-full text-end px-4">
+        <div className="w-full text-end px-2">
           <a href="/register" className="text-[1.2rem] underline">
             Create an account
           </a>

@@ -234,10 +234,6 @@ export default function ViewCrops() {
               />
 
               <CropsDetailsConditional
-                title="Expected Yield"
-                cropDetailsName={crops.expected_yield}
-              />
-              <CropsDetailsConditional
                 title="Harvesting Calendar"
                 cropDetailsName={crops.harvesting_cal}
               />

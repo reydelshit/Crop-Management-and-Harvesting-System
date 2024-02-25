@@ -1,6 +1,7 @@
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { FieldTypes } from '@/entities/types'
+import { Label } from '@/components/ui/label'
 export default function UpdateForm({
   handleUpdateSubmit,
   handleInputChange,
@@ -22,6 +23,7 @@ export default function UpdateForm({
           <h1 className="font-bold text-2xl text-primary-red py-4">
             UPDATE SOIL
           </h1>
+          <Label className="text-primary-red my-2 block">Field name</Label>
           <Input
             className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
             placeholder="Field name"
@@ -29,6 +31,9 @@ export default function UpdateForm({
             onChange={handleInputChange}
             defaultValue={fieldUpdateDetails?.field_name}
           />
+
+          <Label className="text-primary-red my-2 block">Location</Label>
+
           <Input
             className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
             placeholder="Location"
@@ -36,6 +41,9 @@ export default function UpdateForm({
             onChange={handleInputChange}
             defaultValue={fieldUpdateDetails?.location}
           />
+
+          <Label className="text-primary-red my-2 block">Size</Label>
+
           <Input
             className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
             placeholder="Size (Area)"
@@ -43,6 +51,9 @@ export default function UpdateForm({
             onChange={handleInputChange}
             defaultValue={fieldUpdateDetails?.field_size}
           />
+
+          <Label className="text-primary-red my-2 block">Soil Type</Label>
+
           <Input
             className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
             placeholder="Soil Type"
@@ -50,6 +61,10 @@ export default function UpdateForm({
             onChange={handleInputChange}
             defaultValue={fieldUpdateDetails?.soil_type}
           />
+
+          <Label className="text-primary-red my-2 block">
+            Irrigation System
+          </Label>
           <Input
             className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
             placeholder="Irrigation System"
@@ -57,6 +72,10 @@ export default function UpdateForm({
             onChange={handleInputChange}
             defaultValue={fieldUpdateDetails?.irrigation_system}
           />
+
+          <Label className="text-primary-red my-2 block">
+            Past Crop History
+          </Label>
           <Input
             className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
             placeholder="Past Crop History"
