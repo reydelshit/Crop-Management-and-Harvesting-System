@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import GoBackBtn from '@/lib/GoBackBtn'
+import moment from 'moment'
 
 export default function ViewCrops() {
   const [crops, setCrops] = useState({} as CropTypes)
@@ -252,7 +253,7 @@ export default function ViewCrops() {
               />
               <CropsDetailsConditional
                 title="Date Created"
-                cropDetailsName={crops.created_at}
+                cropDetailsName={moment(crops.created_at).format('LL')}
               />
             </div>
           </div>

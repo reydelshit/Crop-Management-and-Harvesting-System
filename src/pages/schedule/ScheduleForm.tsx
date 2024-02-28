@@ -116,7 +116,7 @@ export default function ScheduleForm({
             </div>
             <div className="w-full h-fit flex items-center flex-col p-4 border-4 border-primary-red rounded-3xl">
               <div className="w-full text-start my-4 flex-col bg-white p-2 rounded-lg">
-                {pesticidesDate.length > 0 && (
+                {harvestDate.length > 0 && (
                   <span className="block mb-[2rem] font-semibold text-[1.2rem] p-2 rounded-xl">
                     {selectedCropsName}{' '}
                     {selectedActivity === 'Harvest Period'

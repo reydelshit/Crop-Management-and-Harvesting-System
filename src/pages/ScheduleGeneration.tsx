@@ -11,7 +11,6 @@ import { ScheduleTypes } from '@/entities/types'
 import ScheduleTable from './schedule/ScheduleTable'
 import ScheduleForm from './schedule/ScheduleForm'
 import FilterContainer from './schedule/FilterContainer'
-import { id } from 'date-fns/locale'
 
 export default function ScheduleGeneration() {
   const [showScheduleForm, setShowScheduleForm] = useState(false)

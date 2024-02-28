@@ -80,7 +80,7 @@ export default function Crops() {
       cropsDetails.crops_name === undefined ||
       cropsDetails.planting_method === undefined ||
       cropsDetails.harvesting_cal === undefined ||
-      cropsDetails.pest === undefined ||
+      // cropsDetails.pest === undefined ||
       cropsDetails.variety === undefined ||
       image === null
     ) {
