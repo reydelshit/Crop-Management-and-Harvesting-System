@@ -1,19 +1,10 @@
 import { CropTypes } from '@/entities/types'
+import CropsDetailsConditional from '@/lib/CropsDetailsConditional'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-
-import CropsDetailsConditional from '@/lib/CropsDetailsConditional'
+import { useParams } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -22,6 +13,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import GoBackBtn from '@/lib/GoBackBtn'
 import moment from 'moment'
 
