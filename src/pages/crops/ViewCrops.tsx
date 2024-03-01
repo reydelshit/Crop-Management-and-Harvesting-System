@@ -224,9 +224,9 @@ export default function ViewCrops() {
             />
           </div>
           <div className="text-primary-yellow">
-            <h1 className="uppercase font-bold text-[5rem]">
+            <span className="uppercase font-bold text-[5rem] w-[30rem] text-wrap block break-words">
               {crops.crops_name}
-            </h1>
+            </span>
 
             <div className="flex justify-between items-start my-[2rem] flex-col">
               <CropsDetailsConditional
@@ -364,7 +364,6 @@ export default function ViewCrops() {
             </TableBody>
           </Table>
         </div>
-        G
       </div>
     </div>
   )
