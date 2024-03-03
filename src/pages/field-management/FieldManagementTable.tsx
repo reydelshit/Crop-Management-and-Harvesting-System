@@ -12,17 +12,18 @@ import { FaPencilAlt } from 'react-icons/fa'
 
 import { FieldTypes } from '@/entities/types'
 
+type FieldManagementTableProps = {
+  fieldData: FieldTypes[]
+  sortedData: FieldTypes[]
+  handleUpdateForm: (id: number) => void
+  handleDeleteField: (id: number) => void
+}
 export default function FieldManagementTable({
   fieldData,
   sortedData,
   handleUpdateForm,
   handleDeleteField,
-}: {
-  fieldData: FieldTypes[]
-  sortedData: FieldTypes[]
-  handleUpdateForm: (id: number) => void
-  handleDeleteField: (id: number) => void
-}) {
+}: FieldManagementTableProps) {
   return (
     <Table className="w-full ">
       <TableHeader>

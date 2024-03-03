@@ -8,19 +8,20 @@ import {
 import { Button } from '@/components/ui/button'
 import ButtonStyle from '@/lib/ButtonStyle'
 
+type FilterContainerProps = {
+  toggleSortOrder: () => void
+  sortOrder: string
+  handleStatus: (e: string) => void
+  showScheduleForm: boolean
+  setShowScheduleForm: (e: boolean) => void
+}
 export default function FilterContainer({
   toggleSortOrder,
   sortOrder,
   handleStatus,
   showScheduleForm,
   setShowScheduleForm,
-}: {
-  toggleSortOrder: () => void
-  sortOrder: string
-  handleStatus: (e: string) => void
-  showScheduleForm: boolean
-  setShowScheduleForm: (e: boolean) => void
-}) {
+}: FilterContainerProps) {
   return (
     <div className="w-full justify-between flex">
       <div className="flex gap-2">

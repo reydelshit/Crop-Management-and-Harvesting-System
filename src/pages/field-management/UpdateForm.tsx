@@ -2,17 +2,20 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { FieldTypes } from '@/entities/types'
 import { Label } from '@/components/ui/label'
+
+type UpdateFromProps = {
+  handleUpdateSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  fieldUpdateDetails: FieldTypes | null
+  setShowUpdateFormField: (e: boolean) => void
+}
+
 export default function UpdateForm({
   handleUpdateSubmit,
   handleInputChange,
   fieldUpdateDetails,
   setShowUpdateFormField,
-}: {
-  handleUpdateSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  fieldUpdateDetails: FieldTypes | null
-  setShowUpdateFormField: (e: boolean) => void
-}) {
+}: UpdateFromProps) {
   return (
     <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
       <div className="w-[80%] flex justify-center gap-4 ml-[-15rem] p-5">

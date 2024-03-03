@@ -8,6 +8,15 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+type AddFieldFomProps = {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  showAddField: boolean
+  setShowAddField: (e: boolean) => void
+  handleIrrigation: (e: string) => void
+  handleSoitType: (e: string) => void
+}
+
 export default function AddFieldFom({
   handleSubmit,
   handleInputChange,
@@ -15,14 +24,7 @@ export default function AddFieldFom({
   setShowAddField,
   handleIrrigation,
   handleSoitType,
-}: {
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  showAddField: boolean
-  setShowAddField: (e: boolean) => void
-  handleIrrigation: (e: string) => void
-  handleSoitType: (e: string) => void
-}) {
+}: AddFieldFomProps) {
   return (
     <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
       <div className="w-[80%] flex gap-4 ml-[-15rem] p-5">

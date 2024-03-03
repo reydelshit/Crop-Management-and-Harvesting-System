@@ -11,17 +11,18 @@ import { MdDelete } from 'react-icons/md'
 import { ScheduleTypes } from '@/entities/types'
 import { Button } from '@/components/ui/button'
 
+type ScheduleTableProps = {
+  sortedData: ScheduleTypes[]
+  handleDeleteSched: (id: number) => void
+  handleUpdateStatus: (id: string, status: string) => void
+  status: string
+}
 export default function ScheduleTable({
   sortedData,
   handleUpdateStatus,
   handleDeleteSched,
   status,
-}: {
-  sortedData: ScheduleTypes[]
-  handleDeleteSched: (id: number) => void
-  handleUpdateStatus: (id: string, status: string) => void
-  status: string
-}) {
+}: ScheduleTableProps) {
   return (
     <Table className="w-full">
       <TableHeader>

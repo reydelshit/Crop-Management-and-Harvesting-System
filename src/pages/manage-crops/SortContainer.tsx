@@ -7,17 +7,18 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+type SortContainerProps = {
+  filterMonth: string
+  handleMonth: (e: string) => void
+  sortOrder: string
+  toggleSortOrder: () => void
+}
 export default function SortContainer({
   filterMonth,
   handleMonth,
   sortOrder,
   toggleSortOrder,
-}: {
-  filterMonth: string
-  handleMonth: (e: string) => void
-  sortOrder: string
-  toggleSortOrder: () => void
-}) {
+}: SortContainerProps) {
   return (
     <div className="w-[80%] flex h-[4rem] gap-2 items-end justify-between mb-4">
       {filterMonth && (

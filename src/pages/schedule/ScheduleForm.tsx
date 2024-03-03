@@ -16,6 +16,23 @@ interface StateProps {
   endDate: Date
   key: string
 }
+
+type ScheduleFormProps = {
+  handleActivity: (e: string) => void
+  handleChange: (item: any) => void
+  handleSubmit: () => void
+  setState: (e: StateProps) => void
+  state: StateProps
+  setShowScheduleForm: (e: boolean) => void
+  selectedActivity: string
+  cropsData: CropTypes[]
+  fieldData: FieldTypes[]
+  handleCrops: (e: string) => void
+  handleField: (e: string) => void
+  pesticidesDate: string
+  harvestDate: string
+  selectedCropsName: string
+}
 export default function ScheduleForm({
   handleActivity,
   handleChange,
@@ -31,22 +48,7 @@ export default function ScheduleForm({
   pesticidesDate,
   harvestDate,
   selectedCropsName,
-}: {
-  handleActivity: (e: string) => void
-  handleChange: (item: any) => void
-  handleSubmit: () => void
-  setState: (e: StateProps) => void
-  state: StateProps
-  setShowScheduleForm: (e: boolean) => void
-  selectedActivity: string
-  cropsData: CropTypes[]
-  fieldData: FieldTypes[]
-  handleCrops: (e: string) => void
-  handleField: (e: string) => void
-  pesticidesDate: string
-  harvestDate: string
-  selectedCropsName: string
-}) {
+}: ScheduleFormProps) {
   return (
     <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
       <div className="w-[80%] flex gap-4 ml-[-15rem] p-5">

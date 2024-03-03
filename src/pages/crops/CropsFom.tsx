@@ -12,6 +12,15 @@ import {
 } from '@/components/ui/dialog'
 import DefaultCropsImage from '@/assets/default-product.jpg'
 
+type CropsFormType = {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  handleChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  image: string | null
+  setShowAddCrops: (show: boolean) => void
+  error: string
+  setError: (error: string) => void
+}
 export default function CropsForm({
   handleSubmit,
   handleChangeImage,
@@ -20,15 +29,7 @@ export default function CropsForm({
   setShowAddCrops,
   error,
   setError,
-}: {
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  handleChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  image: string | null
-  setShowAddCrops: (show: boolean) => void
-  error: string
-  setError: (error: string) => void
-}) {
+}: CropsFormType) {
   return (
     <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
       <form

@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { CropTypes } from '@/entities/types'
 
 export default function Pagination({
   crops,
@@ -6,7 +7,7 @@ export default function Pagination({
   currentPage,
   pageChangeHandler,
 }: {
-  crops: any[]
+  crops: CropTypes[]
   itemsPerPage: number
   currentPage: number
   pageChangeHandler: (page: number) => void

@@ -8,15 +8,18 @@ import {
 } from '@/components/ui/table'
 import { Link } from 'react-router-dom'
 import { ResponseData } from '@/entities/types'
+
+type ManageCropsTableProps = {
+  sortedData: ResponseData[]
+  search: string
+  filterMonth: string
+}
+
 export default function ManageCropsTable({
   sortedData,
   search,
   filterMonth,
-}: {
-  sortedData: ResponseData[]
-  search: string
-  filterMonth: string
-}) {
+}: ManageCropsTableProps) {
   return (
     <Table className="w-full text-lg ">
       <TableHeader>
