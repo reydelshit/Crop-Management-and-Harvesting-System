@@ -38,7 +38,7 @@ export default function ScheduleGeneration() {
 
     switch (selectedActivity) {
       case 'Pesticides':
-        if (pesticidesDate.includes('days')) {
+        if (pesticidesDate && pesticidesDate.includes('days')) {
           const numberRegex = /\d+/
 
           const match = pesticidesDate.match(numberRegex)
@@ -56,6 +56,16 @@ export default function ScheduleGeneration() {
               endDate: endDate,
             }))
           }
+        } else {
+          const startDate = new Date(state.startDate)
+          const endDate = new Date(startDate)
+
+          endDate.setDate(startDate.getDate() + 1)
+
+          setState((prevState) => ({
+            ...prevState,
+            endDate: endDate,
+          }))
         }
         break
       case 'Harvest Period':
