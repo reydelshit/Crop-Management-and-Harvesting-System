@@ -249,7 +249,7 @@ export default function Reports() {
             <h1 className="text-[5rem] text-primary-yellow mb-5 font-bold">
               {fieldName ? fieldName : 'Select Field to view reports'}
             </h1>
-            <div className="flex justify-end flex-col w-[50%]">
+            <div className="flex justify-end flex-col w-[80%]">
               {fieldDetails.length > 0 ? (
                 fieldDetails.map((data, index: number) => {
                   return (
@@ -258,45 +258,45 @@ export default function Reports() {
                       className="grid place-content-center gap-2 mb-2 grid-cols-2 w-full bg-primary-yellow rounded-xl mt-[1rem] p-4 h-full "
                     >
                       <div className="bg-primary-red w-full p-1 rounded-xl h-fit">
-                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[0.9rem]">
+                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[1.5rem]">
                           Field Size
                         </Label>
-                        <h1 className="text-[0.9rem] text-primary-yellow">
+                        <h1 className="text-[1.5rem] text-primary-yellow">
                           {data.field_size}
                         </h1>
                       </div>
                       <div className="bg-primary-red w-full p-1 rounded-xl">
-                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[0.9rem]">
+                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[1.5rem]">
                           Irrigation System
                         </Label>
-                        <p className="text-[0.9rem] text-primary-yellow">
+                        <p className="text-[1.5rem] text-primary-yellow">
                           {data.irrigation_system}
                         </p>
                       </div>
 
                       <div className="bg-primary-red w-full p-1 rounded-xl">
-                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[0.9rem]">
+                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[1.5rem]">
                           Location
                         </Label>
-                        <p className="text-[0.9rem] text-primary-yellow">
+                        <p className="text-[1.5rem] text-primary-yellow">
                           {data.location}
                         </p>
                       </div>
 
                       <div className="bg-primary-red w-full p-1 rounded-xl">
-                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[0.9rem]">
+                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[1.5rem]">
                           Soil Type
                         </Label>
-                        <p className="text-[0.9rem] text-primary-yellow">
+                        <p className="text-[1.5rem] text-primary-yellow">
                           {data.soil_type}
                         </p>
                       </div>
 
                       <div className="bg-primary-red w-full p-1 rounded-xl">
-                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[0.9rem]">
+                        <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[1.5rem]">
                           Crop History
                         </Label>
-                        <p className="text-[0.9rem] text-primary-yellow">
+                        <p className="text-[1.5rem] text-primary-yellow">
                           {data.crop_history}
                         </p>
                       </div>
@@ -323,7 +323,7 @@ export default function Reports() {
                       {index + 1}
                     </div>
                     <div className="bg-primary-red w-full p-1 rounded-xl">
-                      <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[0.9rem]">
+                      <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[1.5rem]">
                         Crop Name
                       </Label>
                       <h1 className="text-[1.5rem] text-primary-yellow">
@@ -332,7 +332,7 @@ export default function Reports() {
                     </div>
 
                     <div className="bg-primary-red w-full p-1 rounded-xl my-2">
-                      <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[0.9rem]">
+                      <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[1.5rem]">
                         {data.activity}
                       </Label>
 
@@ -343,7 +343,7 @@ export default function Reports() {
                     </div>
 
                     <div className="bg-primary-red w-full p-1 rounded-xl my-2">
-                      <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[0.9rem] mt-[1rem]">
+                      <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[1.5rem] mt-[1rem]">
                         Notes / Desciption
                       </Label>
                       <p className="text-[1.5rem] text-primary-yellow">
