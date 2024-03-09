@@ -1,12 +1,11 @@
+import { Button } from '@/components/ui/button'
 import { FieldTypes } from '@/entities/types'
 import ButtonStyle from '@/lib/ButtonStyle'
-import { Input } from '@/components/ui/input'
-import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Button } from '@/components/ui/button'
+import { useEffect, useState } from 'react'
+import AddFieldFom from './field-management/AddFieldForm'
 import FieldManagementTable from './field-management/FieldManagementTable'
 import UpdateForm from './field-management/UpdateForm'
-import AddFieldFom from './field-management/AddFieldForm'
 
 export default function FieldManagement() {
   const [showAddField, setShowAddField] = useState(false)
@@ -20,7 +19,6 @@ export default function FieldManagement() {
   const [soilType, setSoilType] = useState('')
 
   const user_id = localStorage.getItem('cmhs_token')
-
 
   const fetchFieldData = () => {
     axios

@@ -6,19 +6,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { CropTypes, FieldTypes } from '@/entities/types'
+import { FieldTypes } from '@/entities/types'
 import ButtonStyle from '@/lib/ButtonStyle'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
 import {
+  Document,
+  PDFViewer,
   Page,
+  StyleSheet,
   Text,
   View,
-  Document,
-  StyleSheet,
-  PDFViewer,
 } from '@react-pdf/renderer'
+import axios from 'axios'
 import moment from 'moment'
+import { useEffect, useState } from 'react'
 
 type ResponseType = {
   field_id: string
