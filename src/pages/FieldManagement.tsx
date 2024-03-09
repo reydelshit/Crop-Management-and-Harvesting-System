@@ -21,6 +21,7 @@ export default function FieldManagement() {
 
   const user_id = localStorage.getItem('cmhs_token')
 
+
   const fetchFieldData = () => {
     axios
       .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/field.php`, {

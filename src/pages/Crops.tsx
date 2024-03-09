@@ -55,7 +55,7 @@ export default function Crops() {
       })
   }
 
-  const handleFetchCrops = async (id: number) => {
+  const handleFetchSpecificCrops = async (id: number) => {
     await axios
       .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/crops.php`, {
         params: {
@@ -145,7 +145,7 @@ export default function Crops() {
   }
 
   const handleShowUpdate = (id: number) => {
-    handleFetchCrops(id)
+    handleFetchSpecificCrops(id)
     setShowUpdateForm(true)
     setCropsId(id)
   }

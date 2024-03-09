@@ -18,6 +18,8 @@ import {
   StyleSheet,
   PDFViewer,
 } from '@react-pdf/renderer'
+import moment from 'moment'
+
 type ResponseType = {
   field_id: string
   field_name: string
@@ -26,6 +28,9 @@ type ResponseType = {
   location: string
   soil_type: string
   crop_history: string
+  actual_start_date: string
+  actual_end_date: string
+  activity: string
 }
 
 const styles = StyleSheet.create({
@@ -77,8 +82,6 @@ const styles = StyleSheet.create({
 
 export default function Reports() {
   const [fieldData, setFieldData] = useState<FieldTypes[]>([])
-  const [cropsData, setCropsData] = useState<CropTypes[]>([])
-  const [selectedField, setSelectedField] = useState<string>('')
   const [fieldName, setFieldName] = useState<string>('')
   const [showPDF, setShowPDF] = useState(false)
   const [fieldDetails, setFieldDetails] = useState<FieldTypes[]>([])
@@ -87,20 +90,6 @@ export default function Reports() {
   const user_id = localStorage.getItem('cmhs_token')
 
   const fetchCropsField = () => {
-    axios
-      .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/crops.php`, {
-        params: {
-          user_id: user_id,
-        },
-      })
-      .then((res) => {
-        if (res.data) {
-          console.log(res.data)
-          setCropsData(res.data)
-          // setFieldData(res.data)
-        }
-      })
-
     axios
       .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/field.php`, {
         params: {
@@ -120,51 +109,7 @@ export default function Reports() {
     fetchCropsField()
   }, [])
 
-  const ExtractDuration = ({ text }: { text: string }) => {
-    const lowercaseText = text.toLowerCase()
-    const numberRegex = /\d+/
-
-    if (lowercaseText.includes('months')) {
-      const match = lowercaseText.match(numberRegex)
-      if (match) {
-        const number = parseInt(match[0])
-        const days = number * 30
-        console.log(number, days)
-
-        return (
-          <span>
-            Approximately {days} days in {number} months
-          </span>
-        )
-      } else {
-        console.log('No number found')
-      }
-    } else if (
-      lowercaseText.includes('years') ||
-      lowercaseText.includes('year')
-    ) {
-      const match = lowercaseText.match(numberRegex)
-      if (match) {
-        const number = parseInt(match[0])
-        const days = number * 365
-        console.log(number, days)
-
-        return (
-          <span>
-            Approximately {days} days in {number} year/s
-          </span>
-        )
-      } else {
-        console.log('No number found')
-      }
-    } else {
-      console.log('No match')
-    }
-  }
-
   const handleField = (e: string) => {
-    setSelectedField(e)
-
     axios
       .get(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/reports.php`, {
         params: {
@@ -193,8 +138,6 @@ export default function Reports() {
         },
       })
       .then((res: any) => {
-        // console.log(res.data[0].harvesting_cal)
-        // extractDuration(res.data[0].harvesting_cal)
         console.log(res.data, 'field details')
         setFieldDetails(res.data)
       })
@@ -219,15 +162,18 @@ export default function Reports() {
                 <View style={styles.tableContainer}>
                   <View style={styles.tableRow}>
                     <Text style={styles.columnHeader}>Crop Name</Text>
-                    <Text style={styles.columnHeader}>Harvesting Duration</Text>
+                    <Text style={styles.columnHeader}>Duration</Text>
+                    <Text style={styles.columnHeader}>Activity</Text>
                     <Text style={styles.columnHeader}>Notes / Description</Text>
                   </View>
                   {responseData.map((data: any, index: number) => (
                     <View style={styles.tableRow} key={index}>
                       <Text style={styles.tableCell}>{data.crops_name}</Text>
                       <Text style={styles.tableCell}>
-                        {data.harvesting_cal}
+                        {moment(data.actual_start_date).format('LL')} to{' '}
+                        {moment(data.actual_end_date).format('LL')}
                       </Text>
+                      <Text style={styles.tableCell}>{data.activity}</Text>
                       <Text style={styles.tableCell}>{data.obnotes}</Text>
                     </View>
                   ))}
@@ -387,11 +333,12 @@ export default function Reports() {
 
                     <div className="bg-primary-red w-full p-1 rounded-xl my-2">
                       <Label className="text-primary-yellow bg-primary-red p-1 rounded-lg text-[0.9rem]">
-                        Harvesting Duration
+                        {data.activity}
                       </Label>
 
                       <p className="text-[1.5rem] text-primary-yellow">
-                        <ExtractDuration text={data.harvesting_cal} />
+                        From {moment(data.actual_start_date).format('LL')} to{' '}
+                        {moment(data.actual_end_date).format('LL')}
                       </p>
                     </div>
 
