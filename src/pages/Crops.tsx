@@ -244,7 +244,7 @@ export default function Crops() {
 
                 <h1 className="uppercase font-semibold text-center mt-2 text-2xl">
                   <Link
-                    className="flex flex-col"
+                    className="flex flex-col hover:text-black"
                     to={`/crops/${crop.crops_id}`}
                   >
                     {crop.crops_name}

@@ -63,11 +63,11 @@ export default function Sidebar() {
           </Link>
         </div>
 
-        <div className="flex justify-center flex-col items-center mt-1">
+        <div className="flex justify-center flex-col items-center mt-[2rem]">
           <WeatherApi />
 
           <Button
-            className="bg-primary-yellow border-4 border-primary-red p-6 rounded-full w-[10rem] font-bold text-primary-red hover:bg-primary-red hover:text-primary-yellow transition-all duration-300 ease-in-out text-2xl"
+            className="bg-primary-yellow border-4 mt-[2rem] border-primary-red p-6 rounded-full w-[10rem] font-bold text-primary-red hover:bg-primary-red hover:text-primary-yellow transition-all duration-300 ease-in-out text-2xl"
             onClick={handleLogout}
           >
             Logout

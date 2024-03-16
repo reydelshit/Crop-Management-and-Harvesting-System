@@ -223,7 +223,7 @@ export default function ViewCrops() {
             />
           </div>
           <div className="text-primary-yellow">
-            <span className="uppercase font-bold text-[5rem] w-[30rem] text-wrap block break-words">
+            <span className="uppercase font-bold text-[2.5rem] w-[30rem] text-wrap block break-words">
               {crops.crops_name}
             </span>
 
@@ -277,7 +277,7 @@ export default function ViewCrops() {
             <TableBody className="border-4 border-primary-yellow">
               {rowData &&
                 rowData.map((row, index) => (
-                  <TableRow key={index} className="text-white border-2">
+                  <TableRow key={index} className="border-2">
                     <TableCell>{row.month}</TableCell>
                     <TableCell>
                       {row.editMode ? (
@@ -292,7 +292,7 @@ export default function ViewCrops() {
                             })
                           }}
                         >
-                          <SelectTrigger className="w-[180px] bg-primary-yellow text-black">
+                          <SelectTrigger className="w-[180px] bg-primary-yellow text-primary-red">
                             <SelectValue placeholder="Choose Suitability" />
                           </SelectTrigger>
                           <SelectContent>
@@ -318,7 +318,7 @@ export default function ViewCrops() {
                     <TableCell>
                       {row.editMode ? (
                         <Input
-                          className="w-full p-2 outline-none bg-primary-yellow text-black focus:outline-none"
+                          className="w-full p-2 outline-none bg-primary-yellow text-primary-red focus:outline-none"
                           type="text"
                           value={row.notes}
                           onChange={(e) =>
