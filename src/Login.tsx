@@ -41,10 +41,12 @@ export default function Login() {
       })
       .then((res) => {
         console.log(res.data)
-        if (res.data) {
+        if (res.data && res.data.length > 0) {
           localStorage.setItem('cmhs_token', res.data[0].user_id)
           localStorage.setItem('cmhs_account_type', res.data[0].account_type)
           window.location.href = '/'
+        } else {
+          setErrorInput('Invalid username or password')
         }
       })
   }
@@ -83,7 +85,7 @@ export default function Login() {
           Login
         </ButtonStyle>
         {errorInput && (
-          <p className="text-primary-red border-2 bg-white p-2 rounded-md font-semibold">
+          <p className="text-red-500 border-2 bg-white p-2 rounded-md font-semibold my-[2rem]">
             {errorInput}
           </p>
         )}

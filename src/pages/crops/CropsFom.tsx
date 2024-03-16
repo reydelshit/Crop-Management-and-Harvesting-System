@@ -33,7 +33,7 @@ export default function CropsForm({
   return (
     <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
       <form
-        className="bg-white w-[35rem] h-fit p-4 rounded-md ml-[-15rem]"
+        className="bg-white w-[35rem] h-fit p-4 rounded-md ml-[-15rem]  border-2"
         onSubmit={handleSubmit}
       >
         <div className="mb-2">
@@ -81,7 +81,7 @@ export default function CropsForm({
         <div className="gap-2 flex justify-center">
           <Button
             onClick={() => setShowAddCrops(false)}
-            className="mt-2 hover:bg-primary-yellow hover:text-primary-red bg-primary-red  p-2 text-white font-bold w-[8rem]"
+            className="mt-2 hover:bg-primary-yellow hover:text-primary-red bg-primary-red  p-2 border-2 text-black font-bold w-[8rem]"
           >
             Cancel
           </Button>

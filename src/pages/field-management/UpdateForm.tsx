@@ -28,7 +28,7 @@ export default function UpdateForm({
           </h1>
           <Label className="text-primary-red my-2 block">Field name</Label>
           <Input
-            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
+            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl text-primary-red"
             placeholder="Field name"
             name="field_name"
             onChange={handleInputChange}
@@ -38,7 +38,7 @@ export default function UpdateForm({
           <Label className="text-primary-red my-2 block">Location</Label>
 
           <Input
-            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
+            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl text-primary-red"
             placeholder="Location"
             name="location"
             onChange={handleInputChange}
@@ -48,7 +48,7 @@ export default function UpdateForm({
           <Label className="text-primary-red my-2 block">Size</Label>
 
           <Input
-            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
+            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl text-primary-red"
             placeholder="Size (Area)"
             name="field_size"
             onChange={handleInputChange}
@@ -58,7 +58,7 @@ export default function UpdateForm({
           <Label className="text-primary-red my-2 block">Soil Type</Label>
 
           <Input
-            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
+            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl text-primary-red"
             placeholder="Soil Type"
             name="soil_type"
             onChange={handleInputChange}
@@ -69,7 +69,7 @@ export default function UpdateForm({
             Irrigation System
           </Label>
           <Input
-            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
+            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl text-primary-red"
             placeholder="Irrigation System"
             name="irrigation_system"
             onChange={handleInputChange}
@@ -80,7 +80,7 @@ export default function UpdateForm({
             Past Crop History
           </Label>
           <Input
-            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl"
+            className="mb-2 border-4 border-primary-red p-6 rounded-full placeholder:text-primary-red placeholder:text-xl text-primary-red"
             placeholder="Past Crop History"
             name="crop_history"
             onChange={handleInputChange}
