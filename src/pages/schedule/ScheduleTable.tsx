@@ -30,10 +30,8 @@ export default function ScheduleTable({
           <TableHead className="text-primary-yellow text-xl">
             Schedule ID
           </TableHead>
-          <TableHead className="text-primary-yellow text-xl">Crop ID</TableHead>
-          <TableHead className="text-primary-yellow text-xl">
-            Field ID
-          </TableHead>
+          <TableHead className="text-primary-yellow text-xl">Crop</TableHead>
+          <TableHead className="text-primary-yellow text-xl">Field</TableHead>
 
           <TableHead className="text-primary-yellow text-xl">
             Activity
@@ -67,8 +65,8 @@ export default function ScheduleTable({
                 className="text-primary-yellow border-b-4 border-primary-yellow"
               >
                 <TableCell>{sched.schedule_id}</TableCell>
-                <TableCell>{sched.crops_id}</TableCell>
-                <TableCell>{sched.field_id}</TableCell>
+                <TableCell>{sched.crops_name}</TableCell>
+                <TableCell>{sched.field_name}</TableCell>
                 <TableCell>{sched.activity}</TableCell>
                 <TableCell>{sched.scheduled_date}</TableCell>
                 <TableCell>

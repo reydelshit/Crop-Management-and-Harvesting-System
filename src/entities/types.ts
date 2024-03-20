@@ -50,4 +50,6 @@ export type ScheduleTypes = {
   user_id: string
   schedule_id: string
   status: string
+  crops_name: string
+  field_name: string
 }

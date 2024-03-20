@@ -27,6 +27,8 @@ export default function ManageCropsTable({
           <TableHead className="text-primary-yellow text-2xl">
             Crop ID
           </TableHead>
+          <TableHead className="text-primary-yellow text-2xl">Month</TableHead>
+
           <TableHead className="text-primary-yellow text-2xl">
             Suitability
           </TableHead>
@@ -38,10 +40,6 @@ export default function ManageCropsTable({
 
           <TableHead className="text-primary-yellow text-2xl">
             Field Name
-          </TableHead>
-
-          <TableHead className="text-primary-yellow text-2xl">
-            Suitability Month
           </TableHead>
         </TableRow>
       </TableHeader>
@@ -65,6 +63,21 @@ export default function ManageCropsTable({
                   className="text-primary-yellow border-none"
                 >
                   <TableCell>{res.crops_id}</TableCell>
+                  <TableCell>
+                    {res.suitable_month.toLowerCase() === 'n/a' ? (
+                      <>
+                        N/A
+                        <Link
+                          className="bg-primary-yellow p-1 rounded-lg text-primary-red ml-2"
+                          to={`/crops/${res.crops_id}`}
+                        >
+                          Set Suitability
+                        </Link>
+                      </>
+                    ) : (
+                      res.suitable_month
+                    )}
+                  </TableCell>
                   <TableCell className="flex gap-2 items-center ">
                     <span
                       className={`w-[1rem] block h-[1rem] border-2 rounded-full ${
@@ -82,22 +95,6 @@ export default function ManageCropsTable({
                   <TableCell>{res.status}</TableCell>
                   <TableCell>
                     {res.field_name.length > 0 ? res.field_name : 'n/a'}
-                  </TableCell>
-
-                  <TableCell>
-                    {res.suitable_month.toLowerCase() === 'n/a' ? (
-                      <>
-                        N/A
-                        <Link
-                          className="bg-primary-yellow p-1 rounded-lg text-primary-red ml-2"
-                          to={`/crops/${res.crops_id}`}
-                        >
-                          Set Suitability
-                        </Link>
-                      </>
-                    ) : (
-                      res.suitable_month
-                    )}
                   </TableCell>
                 </TableRow>
               )
