@@ -28,9 +28,9 @@ export default function FieldManagementTable({
     <Table className="w-full ">
       <TableHeader>
         <TableRow className="text-primary-yellow border-b-4 border-primary-yellow">
-          <TableHead className="text-primary-yellow text-xl">
+          {/* <TableHead className="text-primary-yellow text-xl">
             Field ID
-          </TableHead>
+          </TableHead> */}
           <TableHead className="text-primary-yellow text-xl">
             Field Name
           </TableHead>
@@ -63,7 +63,7 @@ export default function FieldManagementTable({
               key={index}
               className="text-primary-yellow border-b-4 border-primary-yellow"
             >
-              <TableCell>{field.field_id}</TableCell>
+              {/* <TableCell>{field.field_id}</TableCell> */}
               <TableCell>{field.field_name}</TableCell>
               <TableCell>{field.location}</TableCell>
 

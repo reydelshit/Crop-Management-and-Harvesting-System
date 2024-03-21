@@ -30,6 +30,7 @@ type ScheduleFormProps = {
   handleCrops: (e: string) => void
   handleField: (e: string) => void
   pesticidesDate: string
+  fertilizerDate: string
   harvestDate: string
   selectedCropsName: string
 }
@@ -46,6 +47,7 @@ export default function ScheduleForm({
   handleCrops,
   handleField,
   pesticidesDate,
+  fertilizerDate,
   harvestDate,
   selectedCropsName,
 }: ScheduleFormProps) {
@@ -65,6 +67,7 @@ export default function ScheduleForm({
                   <SelectItem value="Land Preparation">
                     Land Preparation (tilling, plowing)
                   </SelectItem>
+                  <SelectItem value="Fertilizer">FERTILIZER</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -118,32 +121,38 @@ export default function ScheduleForm({
             </div>
             <div className="w-full h-fit flex items-center flex-col p-4 border-4 border-primary-red rounded-3xl">
               <div className="w-full text-start my-4 flex-col bg-white p-2 rounded-lg">
-                {harvestDate.length > 0 && (
+                {harvestDate && harvestDate.length > 0 && (
                   <span className="block mb-[2rem] font-semibold text-[1.2rem] p-2 rounded-xl">
                     {selectedCropsName}{' '}
                     {selectedActivity === 'Harvest Period'
-                      ? harvestDate +
-                        '. - Automatically set the end date based on the start date selected'
-                      : pesticidesDate}{' '}
+                      ? 'Harvest Period '
+                      : ' '}
+                    {selectedActivity === 'Pesticides'
+                      ? (pesticidesDate ? pesticidesDate : '') + ' type'
+                      : ' '}
+                    {selectedActivity === 'Land Preparation'
+                      ? 'Land Preparation'
+                      : ' '}
+                    {selectedActivity === 'Fertilizer'
+                      ? (fertilizerDate ? fertilizerDate : '') + 'type'
+                      : ' '}
                   </span>
                 )}
 
                 <span className="block text-[1.2rem] p-2">
                   Activity:{' '}
-                  <span className="font-bold text-primary-red">
-                    {selectedActivity}
-                  </span>
+                  <span className="font-bold ">{selectedActivity}</span>
                 </span>
 
                 <span className="block text-[1.2rem] p-2">
                   Start:{' '}
-                  <span className="font-bold text-primary-red">
+                  <span className="font-bold ">
                     {moment(state.startDate).format('ll')}
                   </span>
                 </span>
                 <span className="block text-[1.2rem] p-2">
                   End:{' '}
-                  <span className="font-bold text-primary-red">
+                  <span className="font-bold ">
                     {moment(state.endDate).format('ll')}
                   </span>
                 </span>

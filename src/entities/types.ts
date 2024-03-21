@@ -16,6 +16,9 @@ export type CropTypes = {
   created_at: string
   variety: string
   image: string
+  fertilizer: string
+  fertilizer_type: string
+  pest_brand: string
 }
 
 export type FieldTypes = {

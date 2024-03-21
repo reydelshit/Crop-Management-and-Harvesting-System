@@ -60,6 +60,14 @@ export default function CropsForm({
           <Input required onChange={handleInputChange} name="variety" />
         </div>
         <div>
+          <Label>Fertilizer (eg. 15 days)</Label>
+          <Input required onChange={handleInputChange} name="fertilizer" />
+        </div>
+        <div>
+          <Label>Fertilizer Type</Label>
+          <Input onChange={handleInputChange} name="fertilizer_type" />
+        </div>
+        <div>
           <Label>Planting Method</Label>
           <Input required onChange={handleInputChange} name="planting_method" />
         </div>
@@ -71,6 +79,10 @@ export default function CropsForm({
         <div>
           <Label>Pesticide Schedule (eg. 15 days)</Label>
           <Input required onChange={handleInputChange} name="pest" />
+        </div>
+        <div>
+          <Label>Pesticide Brand</Label>
+          <Input onChange={handleInputChange} name="pest_brand" />
         </div>
 
         <div>

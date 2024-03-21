@@ -23,6 +23,7 @@ export default function ScheduleGeneration() {
   const [status, setStatus] = useState('' as string)
   const [sortOrder, setSortOrder] = useState('asc')
   const [pesticidesDate, setPesticidesDate] = useState<string>('')
+  const [fertilizerDate, setFertilizerDate] = useState<string>('')
   const [harvestDate, setHarvestDate] = useState<string>('')
   const user_id = localStorage.getItem('cmhs_token')
   const [selectedCropsName, setSelectedCropsName] = useState<string>('')
@@ -56,16 +57,6 @@ export default function ScheduleGeneration() {
               endDate: endDate,
             }))
           }
-        } else {
-          const startDate = new Date(state.startDate)
-          const endDate = new Date(startDate)
-
-          endDate.setDate(startDate.getDate() + 1)
-
-          setState((prevState) => ({
-            ...prevState,
-            endDate: endDate,
-          }))
         }
         break
       case 'Harvest Period':
@@ -112,8 +103,28 @@ export default function ScheduleGeneration() {
         break
       case 'Land Preparation':
         break
+      case 'Fertilizer':
+        if (fertilizerDate && fertilizerDate.includes('days')) {
+          const numberRegex = /\d+/
+
+          const match = fertilizerDate.match(numberRegex)
+
+          if (match) {
+            const days = parseInt(match[0])
+
+            const startDate = new Date(state.startDate)
+            const endDate = new Date(startDate)
+
+            endDate.setDate(startDate.getDate() + days)
+
+            setState((prevState) => ({
+              ...prevState,
+              endDate: endDate,
+            }))
+          }
+        }
+        break
     }
-    // console.log(item.selection)
   }
 
   const handleCrops = (e: string) => {
@@ -139,8 +150,11 @@ export default function ScheduleGeneration() {
           if (res.data !== null) {
             console.log(res.data[0].pest)
             console.log(res.data[0].harvesting_cal)
+            console.log(res.data[0].fertilizer)
+
             setPesticidesDate(res.data[0].pest)
             setHarvestDate(res.data[0].harvesting_cal)
+            setFertilizerDate(res.data[0].fertilizer)
           }
         })
     }
@@ -329,6 +343,7 @@ export default function ScheduleGeneration() {
           handleCrops={handleCrops}
           handleField={handleField}
           pesticidesDate={pesticidesDate}
+          fertilizerDate={fertilizerDate}
           harvestDate={harvestDate}
           selectedCropsName={selectedCropsName}
         />

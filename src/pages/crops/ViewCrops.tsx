@@ -232,7 +232,6 @@ export default function ViewCrops() {
                 title="Planting Method"
                 cropDetailsName={crops.planting_method}
               />
-
               <CropsDetailsConditional
                 title="Harvesting Calendar"
                 cropDetailsName={crops.harvesting_cal}
@@ -242,14 +241,26 @@ export default function ViewCrops() {
                 cropDetailsName={crops.pest}
               />
               <CropsDetailsConditional
+                title="Pesticide Brand"
+                cropDetailsName={crops.pest_brand}
+              />
+              <CropsDetailsConditional
+                title="Fertilizer"
+                cropDetailsName={crops.fertilizer}
+              />
+              <CropsDetailsConditional
+                title="Fertilizer"
+                cropDetailsName={crops.fertilizer_type}
+              />
+              <CropsDetailsConditional
                 title="Variety"
                 cropDetailsName={crops.variety}
               />
-
               <CropsDetailsConditional
                 title="Observation/Notes"
                 cropDetailsName={crops.obnotes}
               />
+
               <CropsDetailsConditional
                 title="Date Created"
                 cropDetailsName={moment(crops.created_at).format('LL')}

@@ -1,12 +1,12 @@
+import DefaultCropsImage from '@/assets/default-product.jpg'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { CropTypes } from '@/entities/types'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { CropTypes } from '@/entities/types'
 import { PiDotsThreeVerticalBold } from 'react-icons/pi'
 import { Link } from 'react-router-dom'
-import DefaultCropsImage from '@/assets/default-product.jpg'
 
 import {
   DropdownMenu,
@@ -16,11 +16,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import ButtonStyle from '@/lib/ButtonStyle'
+import GoBackBtn from '@/lib/GoBackBtn'
 import Search from '@/lib/Search'
 import CropsForm from '@/pages/crops/CropsFom'
 import Pagination from '@/pages/crops/Pagination'
-import ButtonStyle from '@/lib/ButtonStyle'
-import GoBackBtn from '@/lib/GoBackBtn'
 
 export default function Crops() {
   const [image, setImage] = useState<string | null>(null)
@@ -75,11 +75,11 @@ export default function Crops() {
   }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(cropsDetails)
+    console.log(cropsDetails, 'test')
     if (
       cropsDetails.crops_name === undefined ||
       cropsDetails.planting_method === undefined ||
-      cropsDetails.harvesting_cal === undefined ||
+      // cropsDetails.harvesting_cal === undefined ||
       // cropsDetails.pest === undefined ||
       cropsDetails.variety === undefined ||
       image === null
@@ -87,7 +87,6 @@ export default function Crops() {
       return setError('All fields are required')
     }
 
-    console.log(cropsDetails)
     e.preventDefault()
     axios
       .post(`${import.meta.env.VITE_CMHS_LOCAL_HOST}/crops.php`, {
@@ -165,6 +164,9 @@ export default function Crops() {
           ? cropsDetails.harvesting_cal
           : updateCropsDefault?.harvesting_cal!,
         pest: cropsDetails.pest ? cropsDetails.pest : updateCropsDefault?.pest!,
+        fertilizer: cropsDetails.fertilizer
+          ? cropsDetails.fertilizer
+          : updateCropsDefault?.fertilizer!,
         obnotes: cropsDetails.obnotes
           ? cropsDetails.obnotes
           : updateCropsDefault?.obnotes!,
@@ -176,10 +178,11 @@ export default function Crops() {
         user_id: user_id,
       })
       .then((res) => {
-        if (res.data.status === 'success') {
-          setShowUpdateForm(false)
+        if (res.data) {
           fetchCrops()
-          window.location.reload()
+          setShowUpdateForm(false)
+
+          console.log(res.data)
         }
 
         // if()
@@ -214,7 +217,7 @@ export default function Crops() {
             return (
               <div
                 key={index}
-                className="w-full h-[20rem] overflow-hidden shadow-sm relative text-primary-yellow cursor-pointer hover:shadow-sm hover:shadow-primary-yellow hover:text-white transition-all duration-300 ease-in-out"
+                className="w-full h-[20rem] overflow-hidden shadow-sm relative text-primary-yellow cursor-pointer hover:shadow-sm hover:shadow-primary-yellow transition-all duration-300 ease-in-out"
               >
                 <DropdownMenu>
                   <DropdownMenuTrigger className="absolute right-2 top-2 bg-primary-yellow p-1 rounded-md">
@@ -319,6 +322,22 @@ export default function Crops() {
               />
             </div>
             <div>
+              <Label>Fertilizer</Label>
+              <Input
+                defaultValue={updateCropsDefault?.fertilizer}
+                onChange={handleInputChange}
+                name="fertilizer"
+              />
+            </div>
+            <div>
+              <Label>Fertilizer</Label>
+              <Input
+                defaultValue={updateCropsDefault?.fertilizer}
+                onChange={handleInputChange}
+                name="fertilizer_type"
+              />
+            </div>
+            <div>
               <Label>Planting Method</Label>
               <Input
                 defaultValue={updateCropsDefault?.planting_method}
@@ -341,6 +360,15 @@ export default function Crops() {
                 defaultValue={updateCropsDefault?.pest}
                 onChange={handleInputChange}
                 name="pest"
+              />
+            </div>
+
+            <div>
+              <Label>Pesticide Schedule (eg. 15 days)</Label>
+              <Input
+                defaultValue={updateCropsDefault?.pest_brand}
+                onChange={handleInputChange}
+                name="pest_brand"
               />
             </div>
 

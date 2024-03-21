@@ -317,9 +317,9 @@ export default function Reports() {
                 return (
                   <div
                     key={index}
-                    className="w-[100%] bg-primary-yellow rounded-xl p-4 h-full flex justify-start flex-col items-start"
+                    className="w-[100%]  rounded-xl p-4 h-full flex justify-start flex-col items-start"
                   >
-                    <div className="bg-primary-red text-center my-2 w-[3rem] h-[3rem] rounded-full text-primary-yellow font-bold text-[2rem]">
+                    <div className="bg-primary-yellow text-primary-red text-center my-2 w-[3rem] h-[3rem] rounded-full font-bold text-[2rem]">
                       {index + 1}
                     </div>
                     <div className="bg-primary-red w-full p-1 rounded-xl">
