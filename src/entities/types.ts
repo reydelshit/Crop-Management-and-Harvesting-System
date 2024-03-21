@@ -41,6 +41,7 @@ export type ResponseData = {
   suitability: string
   suitable_month: string
   status: string
+  activity: string
 }
 
 export type ScheduleTypes = {

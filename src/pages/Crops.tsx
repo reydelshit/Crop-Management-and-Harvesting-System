@@ -167,6 +167,12 @@ export default function Crops() {
         fertilizer: cropsDetails.fertilizer
           ? cropsDetails.fertilizer
           : updateCropsDefault?.fertilizer!,
+        fertilizer_type: cropsDetails.fertilizer_type
+          ? cropsDetails.fertilizer_type
+          : updateCropsDefault?.fertilizer_type!,
+        pest_brand: cropsDetails.pest_brand
+          ? cropsDetails.pest_brand
+          : updateCropsDefault?.pest_brand!,
         obnotes: cropsDetails.obnotes
           ? cropsDetails.obnotes
           : updateCropsDefault?.obnotes!,
@@ -178,14 +184,14 @@ export default function Crops() {
         user_id: user_id,
       })
       .then((res) => {
-        if (res.data) {
-          fetchCrops()
-          setShowUpdateForm(false)
+        // if (res.data) {
+        //   fetchCrops()
+        //   setShowUpdateForm(false)
 
-          console.log(res.data)
-        }
+        //   console.log(res.data)
+        // }
 
-        // if()
+        console.log(res.data)
       })
   }
   return (
@@ -330,9 +336,9 @@ export default function Crops() {
               />
             </div>
             <div>
-              <Label>Fertilizer</Label>
+              <Label>Fertilizer Type</Label>
               <Input
-                defaultValue={updateCropsDefault?.fertilizer}
+                defaultValue={updateCropsDefault?.fertilizer_type}
                 onChange={handleInputChange}
                 name="fertilizer_type"
               />
@@ -364,7 +370,7 @@ export default function Crops() {
             </div>
 
             <div>
-              <Label>Pesticide Schedule (eg. 15 days)</Label>
+              <Label>Pesticide Brand</Label>
               <Input
                 defaultValue={updateCropsDefault?.pest_brand}
                 onChange={handleInputChange}

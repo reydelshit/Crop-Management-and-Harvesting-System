@@ -24,9 +24,9 @@ export default function ManageCropsTable({
     <Table className="w-full text-lg ">
       <TableHeader>
         <TableRow className="text-primary-yellow border-none">
-          <TableHead className="text-primary-yellow text-2xl">
+          {/* <TableHead className="text-primary-yellow text-2xl">
             Crop ID
-          </TableHead>
+          </TableHead> */}
           <TableHead className="text-primary-yellow text-2xl">Month</TableHead>
 
           <TableHead className="text-primary-yellow text-2xl">
@@ -37,6 +37,9 @@ export default function ManageCropsTable({
           </TableHead>
 
           <TableHead className="text-primary-yellow text-2xl">Status</TableHead>
+          <TableHead className="text-primary-yellow text-2xl">
+            Activity
+          </TableHead>
 
           <TableHead className="text-primary-yellow text-2xl">
             Field Name
@@ -62,7 +65,7 @@ export default function ManageCropsTable({
                   key={index}
                   className="text-primary-yellow border-none"
                 >
-                  <TableCell>{res.crops_id}</TableCell>
+                  {/* <TableCell>{res.crops_id}</TableCell> */}
                   <TableCell>
                     {res.suitable_month.toLowerCase() === 'n/a' ? (
                       <>
@@ -78,7 +81,7 @@ export default function ManageCropsTable({
                       res.suitable_month
                     )}
                   </TableCell>
-                  <TableCell className="flex gap-2 items-center ">
+                  <TableCell className="flex gap-2 items-center font-bold">
                     <span
                       className={`w-[1rem] block h-[1rem] border-2 rounded-full ${
                         res.suitability.includes('High') ||
@@ -91,8 +94,10 @@ export default function ManageCropsTable({
                     ></span>
                     {res.suitability.length > 0 ? res.suitability : 'n/a'}
                   </TableCell>
-                  <TableCell>{res.crops_name}</TableCell>
+                  <TableCell className="font-bold">{res.crops_name}</TableCell>
                   <TableCell>{res.status}</TableCell>
+                  <TableCell>{res.activity}</TableCell>
+
                   <TableCell>
                     {res.field_name.length > 0 ? res.field_name : 'n/a'}
                   </TableCell>

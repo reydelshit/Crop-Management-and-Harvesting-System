@@ -231,38 +231,47 @@ export default function ViewCrops() {
               <CropsDetailsConditional
                 title="Planting Method"
                 cropDetailsName={crops.planting_method}
+                style="text-[1.5rem]"
               />
               <CropsDetailsConditional
                 title="Harvesting Calendar"
+                style="text-[1.5rem]"
                 cropDetailsName={crops.harvesting_cal}
               />
               <CropsDetailsConditional
                 title="Pesticide Schedule"
+                style="text-[1.5rem]"
                 cropDetailsName={crops.pest}
               />
               <CropsDetailsConditional
                 title="Pesticide Brand"
+                style="text-[1.5rem]"
                 cropDetailsName={crops.pest_brand}
               />
               <CropsDetailsConditional
                 title="Fertilizer"
+                style="text-[1.5rem]"
                 cropDetailsName={crops.fertilizer}
               />
               <CropsDetailsConditional
-                title="Fertilizer"
+                title="Fertilizer Type"
+                style="text-[1.5rem]"
                 cropDetailsName={crops.fertilizer_type}
               />
               <CropsDetailsConditional
                 title="Variety"
+                style="text-[1.5rem]"
                 cropDetailsName={crops.variety}
               />
               <CropsDetailsConditional
                 title="Observation/Notes"
+                style="text-[1.5rem]"
                 cropDetailsName={crops.obnotes}
               />
 
               <CropsDetailsConditional
                 title="Date Created"
+                style="text-[1.5rem]"
                 cropDetailsName={moment(crops.created_at).format('LL')}
               />
             </div>

@@ -10,6 +10,7 @@ import ButtonStyle from '@/lib/ButtonStyle'
 import moment from 'moment'
 import { FieldTypes } from '@/entities/types'
 import { CropTypes } from '@/entities/types'
+import CropsDetailsConditional from '@/lib/CropsDetailsConditional'
 
 interface StateProps {
   startDate: Date
@@ -33,6 +34,10 @@ type ScheduleFormProps = {
   fertilizerDate: string
   harvestDate: string
   selectedCropsName: string
+  selectedTypeBrand: string
+  selectedTypeFerti: string
+  selectedBrandPest: string
+  selectedCropsDetails: CropTypes
 }
 export default function ScheduleForm({
   handleActivity,
@@ -46,16 +51,37 @@ export default function ScheduleForm({
   fieldData,
   handleCrops,
   handleField,
+  selectedCropsDetails,
   pesticidesDate,
   fertilizerDate,
   harvestDate,
   selectedCropsName,
+  selectedTypeBrand,
+  selectedTypeFerti,
+  selectedBrandPest,
 }: ScheduleFormProps) {
   return (
     <div className="absolute w-[100%] h-full top-0 z-50 bg-primary-red bg-opacity-90 flex justify-center items-center">
       <div className="w-[80%] flex gap-4 ml-[-15rem] p-5">
         <div className="w-[90%] bg-primary-yellow p-4 rounded-lg flex">
           <div className="w-full">
+            <div className="flex items-center gap-4 w-full mb-2">
+              <Select required onValueChange={(e: string) => handleCrops(e)}>
+                <SelectTrigger className="w-[80%] h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
+                  <SelectValue placeholder="Crops.." />
+                </SelectTrigger>
+                <SelectContent>
+                  {cropsData.map((crop, index) => (
+                    <SelectItem
+                      key={index}
+                      value={crop.crops_name + crop.crops_id.toString()}
+                    >
+                      {crop.crops_name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
             <div className="flex items-center gap-4 w-full mb-2">
               <Select required onValueChange={(e: string) => handleActivity(e)}>
                 <SelectTrigger className="w-[80%] h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
@@ -73,17 +99,14 @@ export default function ScheduleForm({
             </div>
 
             <div className="flex items-center gap-4 w-full mb-2">
-              <Select required onValueChange={(e: string) => handleCrops(e)}>
+              <Select required onValueChange={(e: string) => handleField(e)}>
                 <SelectTrigger className="w-[80%] h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
-                  <SelectValue placeholder="Crops.." />
+                  <SelectValue placeholder="Field.." />
                 </SelectTrigger>
                 <SelectContent>
-                  {cropsData.map((crop, index) => (
-                    <SelectItem
-                      key={index}
-                      value={crop.crops_name + crop.crops_id.toString()}
-                    >
-                      {crop.crops_name}
+                  {fieldData.map((field, index) => (
+                    <SelectItem key={index} value={field.field_id.toString()}>
+                      {field.field_name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -105,41 +128,59 @@ export default function ScheduleForm({
           </div>
 
           <div className="w-full flex flex-col ">
-            <div className="flex items-center gap-4 w-full mb-2">
-              <Select required onValueChange={(e: string) => handleField(e)}>
-                <SelectTrigger className="w-full h-[4rem] bg-primary-red text-primary-yellow border-4 border-primary-yellow font-bold rounded-full">
-                  <SelectValue placeholder="Field.." />
-                </SelectTrigger>
-                <SelectContent>
-                  {fieldData.map((field, index) => (
-                    <SelectItem key={index} value={field.field_id.toString()}>
-                      {field.field_name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="w-full h-fit flex items-center flex-col p-4 border-4 border-primary-red rounded-3xl">
-              <div className="w-full text-start my-4 flex-col bg-white p-2 rounded-lg">
-                {harvestDate && harvestDate.length > 0 && (
-                  <span className="block mb-[2rem] font-semibold text-[1.2rem] p-2 rounded-xl">
-                    {selectedCropsName}{' '}
-                    {selectedActivity === 'Harvest Period'
-                      ? 'Harvest Period '
-                      : ' '}
-                    {selectedActivity === 'Pesticides'
-                      ? (pesticidesDate ? pesticidesDate : '') + ' type'
-                      : ' '}
-                    {selectedActivity === 'Land Preparation'
-                      ? 'Land Preparation'
-                      : ' '}
-                    {selectedActivity === 'Fertilizer'
-                      ? (fertilizerDate ? fertilizerDate : '') + 'type'
-                      : ' '}
-                  </span>
+            <div className="w-full h-full flex items-center flex-col p-4 border-4 border-primary-red rounded-3xl">
+              <div className="w-full h-full text-start my-4 flex-col bg-white p-2 rounded-lg">
+                {selectedCropsDetails.crops_id && selectedCropsDetails && (
+                  <div className="flex gap-4">
+                    <img
+                      src={selectedCropsDetails.crops_img}
+                      alt={selectedCropsDetails.crops_name}
+                      className="w-[10rem] h-[10rem]"
+                    />
+                    <div>
+                      <h1 className="font-bold">
+                        {selectedCropsDetails.crops_name}
+                      </h1>
+                      <CropsDetailsConditional
+                        title="Fertilizer"
+                        cropDetailsName={selectedCropsDetails.fertilizer}
+                        style="text-[1rem]"
+                      />
+                      <CropsDetailsConditional
+                        title="Fertilizer Type"
+                        cropDetailsName={selectedCropsDetails.fertilizer_type}
+                        style="text-[1rem]"
+                      />
+                      <CropsDetailsConditional
+                        title="Pesticide"
+                        cropDetailsName={selectedCropsDetails.pest}
+                        style="text-[1rem]"
+                      />{' '}
+                      <CropsDetailsConditional
+                        title="Pesticide Brand"
+                        cropDetailsName={selectedCropsDetails.pest_brand}
+                        style="text-[1rem]"
+                      />
+                      <CropsDetailsConditional
+                        title="Planting Method"
+                        cropDetailsName={selectedCropsDetails.planting_method}
+                        style="text-[1rem]"
+                      />{' '}
+                      <CropsDetailsConditional
+                        title="Harvesting Calendar"
+                        cropDetailsName={selectedCropsDetails.harvesting_cal}
+                        style="text-[1rem]"
+                      />{' '}
+                      <CropsDetailsConditional
+                        title="Variet"
+                        cropDetailsName={selectedCropsDetails.variety}
+                        style="text-[1rem]"
+                      />
+                    </div>
+                  </div>
                 )}
 
-                <span className="block text-[1.2rem] p-2">
+                <span className="block text-[1.2rem] p-2 mt-[2rem]">
                   Activity:{' '}
                   <span className="font-bold ">{selectedActivity}</span>
                 </span>

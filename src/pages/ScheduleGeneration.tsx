@@ -27,6 +27,14 @@ export default function ScheduleGeneration() {
   const [harvestDate, setHarvestDate] = useState<string>('')
   const user_id = localStorage.getItem('cmhs_token')
   const [selectedCropsName, setSelectedCropsName] = useState<string>('')
+  const [selectedTypeFerti, setSelectedTypeFerti] = useState<string>('')
+  const [selectedBrandPest, setSelectedBrandPest] = useState<string>('')
+
+  const [selectedTypeBrand, setSelectedTypeBrand] = useState<string>('')
+
+  const [selectedCropsDetails, setSelectedCropsDetails] = useState<CropTypes>(
+    {} as CropTypes,
+  )
 
   const [state, setState] = useState({
     startDate: new Date(),
@@ -151,6 +159,20 @@ export default function ScheduleGeneration() {
             console.log(res.data[0].pest)
             console.log(res.data[0].harvesting_cal)
             console.log(res.data[0].fertilizer)
+            setSelectedCropsDetails(res.data[0])
+
+            if (
+              res.data[0].fertilizer &&
+              res.data[0].fertilizer_type.length > 0
+            ) {
+              setSelectedTypeFerti(res.data[0].fertilizer_type)
+              setSelectedTypeBrand(res.data[0].fertilizer_type)
+            }
+
+            if (res.data[0].pest && res.data[0].pest_brand.length > 0) {
+              setSelectedBrandPest(res.data[0].pest_brand)
+              setSelectedTypeBrand(res.data[0].pest_brand)
+            }
 
             setPesticidesDate(res.data[0].pest)
             setHarvestDate(res.data[0].harvesting_cal)
@@ -231,7 +253,12 @@ export default function ScheduleGeneration() {
         },
         crops_id: selectedCrops,
         field_id: selectedField,
-        activity: selectedActivity,
+        activity:
+          selectedActivity === 'Pesticides'
+            ? `${selectedActivity} (${selectedTypeBrand})`
+            : selectedActivity === 'Fertilizer'
+            ? `${selectedActivity} (${selectedTypeFerti})`
+            : selectedActivity,
         scheduled_date: moment().format('ll'),
         actual_start_date: state.startDate,
         actual_end_date: state.endDate,
@@ -346,6 +373,10 @@ export default function ScheduleGeneration() {
           fertilizerDate={fertilizerDate}
           harvestDate={harvestDate}
           selectedCropsName={selectedCropsName}
+          selectedTypeFerti={selectedTypeFerti}
+          selectedBrandPest={selectedBrandPest}
+          selectedTypeBrand={selectedTypeBrand}
+          selectedCropsDetails={selectedCropsDetails}
         />
       )}
     </div>
